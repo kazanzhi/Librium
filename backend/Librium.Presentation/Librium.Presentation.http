@@ -1,0 +1,6 @@
+@Librium.Presentation_HostAddress = http://localhost:5106
+
+GET {{Librium.Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
