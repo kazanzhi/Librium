@@ -1,9 +1,39 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35818.85 d17.13
+VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Librium.Domain", "Librium.Domain\Librium.Domain.csproj", "{6D1F8D18-B0F3-4040-ACA7-98BB46FE706A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Librium.Application", "Librium.Application\Librium.Application.csproj", "{550CEA9E-03FA-410E-9FDB-3FBCA4EAE3B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Librium.Persistence", "Librium.Persistence\Librium.Persistence.csproj", "{DA02C98D-AC50-4584-9665-97F664216A8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Librium.Presentation", "Librium.Presentation\Librium.Presentation.csproj", "{1AE2E369-17C6-42DE-871B-511788B5539F}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6D1F8D18-B0F3-4040-ACA7-98BB46FE706A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D1F8D18-B0F3-4040-ACA7-98BB46FE706A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D1F8D18-B0F3-4040-ACA7-98BB46FE706A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D1F8D18-B0F3-4040-ACA7-98BB46FE706A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{550CEA9E-03FA-410E-9FDB-3FBCA4EAE3B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{550CEA9E-03FA-410E-9FDB-3FBCA4EAE3B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{550CEA9E-03FA-410E-9FDB-3FBCA4EAE3B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{550CEA9E-03FA-410E-9FDB-3FBCA4EAE3B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA02C98D-AC50-4584-9665-97F664216A8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA02C98D-AC50-4584-9665-97F664216A8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA02C98D-AC50-4584-9665-97F664216A8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA02C98D-AC50-4584-9665-97F664216A8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AE2E369-17C6-42DE-871B-511788B5539F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AE2E369-17C6-42DE-871B-511788B5539F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AE2E369-17C6-42DE-871B-511788B5539F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AE2E369-17C6-42DE-871B-511788B5539F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
