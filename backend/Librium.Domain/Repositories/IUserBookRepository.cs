@@ -9,8 +9,8 @@ namespace Librium.Domain.Repositories
 {
     public interface IUserBookRepository
     {
-        Task<List<UserBook>> GetUserBooksAsync(string userId);
-        Task<int> AddUserBookAsync(string userId, int bookId);
-        Task<int> RemoveUserBookAsync(string userId, int bookId);
+        Task<List<UserBook>> GetUserBooks(string userId);
+        Task<int> AddUserBook(string userId, int bookId);
+        Task<int> RemoveUserBook(string userId, int bookId);
     }
 }
