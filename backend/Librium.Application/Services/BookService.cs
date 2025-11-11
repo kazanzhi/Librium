@@ -1,8 +1,8 @@
 ﻿using Librium.Application.Common.Exceptions;
-using Librium.Domain.Dtos;
-using Librium.Domain.Entities.Books;
-using Librium.Domain.Interfaces;
-using Librium.Domain.Repositories;
+using Librium.Domain.Books.Dtos;
+using Librium.Domain.Books.Models;
+using Librium.Domain.Books.Repositories;
+using Librium.Domain.Books.Services;
 
 namespace Librium.Application.Services;
 public class BookService : IBookService

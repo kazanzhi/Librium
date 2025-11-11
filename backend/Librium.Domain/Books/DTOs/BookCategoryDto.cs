@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Librium.Domain.Dtos
+namespace Librium.Domain.Books.DTOs;
+public class BookCategoryDto
 {
-    public class BookCategoryDto
-    {
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }
