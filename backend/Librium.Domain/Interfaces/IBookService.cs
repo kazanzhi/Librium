@@ -6,15 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Librium.Domain.Interfaces
+namespace Librium.Domain.Interfaces;
+public interface IBookService
 {
-    public interface IBookService
-    {
-        Task<List<Book>> GetBooksAsync();
-        Task<Book> GetBookByIdAsync(int bookId);
+    Task<List<Book>> GetBooksAsync();
+    Task<Book> GetBookByIdAsync(int bookId);
 
-        Task<Book> CreateBookAsync(BookDto bookDto);
-        Task<int> DeleteBookAsync(int bookId);
-        Task<int> UpdateBookAsync(int bookId, BookDto bookDto);
-    }
+    Task<Book> CreateBookAsync(BookDto bookDto);
+    Task<int> DeleteBookAsync(int bookId);
+    Task<int> UpdateBookAsync(int bookId, BookDto bookDto);
 }

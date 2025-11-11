@@ -5,12 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Librium.Domain.Interfaces
+namespace Librium.Domain.Interfaces;
+public interface IUserBookService
 {
-    public interface IUserBookService
-    {
-        Task<List<UserBook>> GetUserBooksAsync(string userId);
-        Task<int> AddUserBookAsync(string userId, int bookId);
-        Task<int> RemoveUserBookAsync(string userId, int bookId);
-    }
+    Task<List<UserBook>> GetUserBooksAsync(string userId);
+    Task<int> AddUserBookAsync(string userId, int bookId);
+    Task<int> RemoveUserBookAsync(string userId, int bookId);
 }
