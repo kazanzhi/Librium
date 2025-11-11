@@ -1,4 +1,5 @@
-﻿using Librium.Domain.Users.Models;
+﻿using Librium.Domain.Entities.Books;
+using Librium.Domain.Users.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
