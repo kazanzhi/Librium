@@ -1,5 +1,5 @@
-﻿using Librium.Domain.Dtos;
-using Librium.Domain.Entities.Books;
+﻿using Librium.Domain.Books.Dtos;
+using Librium.Domain.Books.Models;
 
 namespace Librium.Domain.Repositories;
 public interface IBookRepository

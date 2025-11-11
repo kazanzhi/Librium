@@ -1,4 +1,4 @@
-﻿using Librium.Domain.Entities;
+﻿using Librium.Domain.Users.Models;
 
 namespace Librium.Application.Interfaces;
 public interface ITokenService

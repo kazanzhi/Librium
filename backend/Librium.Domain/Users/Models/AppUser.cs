@@ -1,7 +1,6 @@
-﻿using Librium.Domain.Entities.Books;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
-namespace Librium.Domain.Entities;
+namespace Librium.Domain.Users.Models;
 public class AppUser : IdentityUser
 {
     public string UserName { get; set; }
