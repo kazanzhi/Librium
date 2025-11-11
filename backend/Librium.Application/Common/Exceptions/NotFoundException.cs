@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Librium.Application.Common.Exceptions
+namespace Librium.Application.Common.Exceptions;
+public class NotFoundException : Exception
 {
-    public class NotFoundException : Exception
+    public NotFoundException(string entityName, object key) : base($"{entityName} with key ({key}) not found.")
     {
-        public NotFoundException(string entityName, object key) : base($"{entityName} with key ({key}) not found.")
-        {
 
-        }
     }
 }

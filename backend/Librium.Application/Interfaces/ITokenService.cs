@@ -1,9 +1,7 @@
 ﻿using Librium.Domain.Entities;
 
-namespace Librium.Application.Interfaces
+namespace Librium.Application.Interfaces;
+public interface ITokenService
 {
-    public interface ITokenService
-    {
-        Task<string> CreateToken(AppUser user);
-    }
+    Task<string> CreateToken(AppUser user);
 }
