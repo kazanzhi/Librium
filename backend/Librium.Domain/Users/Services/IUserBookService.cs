@@ -1,14 +1,10 @@
-﻿using Librium.Domain.Users.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Librium.Domain.Common;
+using Librium.Domain.Users.Models;
 
 namespace Librium.Domain.Interfaces;
 public interface IUserBookService
 {
     Task<List<UserBook>> GetUserBooksAsync(string userId);
-    Task<int> AddUserBookAsync(string userId, int bookId);
-    Task<int> RemoveUserBookAsync(string userId, int bookId);
+    Task<ValueOrResult> AddUserBookAsync(string userId, int bookId);
+    Task<ValueOrResult> RemoveUserBookAsync(string userId, int bookId);
 }
