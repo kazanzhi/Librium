@@ -5,7 +5,7 @@ using Librium.Domain.Entities.Books;
 namespace Librium.Domain.Interfaces;
 public interface IBookCategoryService
 {
-    Task<List<BookCategory>> GetBookCategoriesAsync();
+    Task<List<BookCategory>> GetAllBookCategoriesAsync();
 
     Task<ValueOrResult<int>> AddBookCategoryAsync(BookCategoryDto categoryDto);
     Task<ValueOrResult> DeleteBookCategoryAsync(int categoryId);

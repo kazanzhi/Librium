@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Librium.Domain.Common.Repositories;
 
-namespace Librium.Domain.Common.Repositories;
-
-public interface IBaseRepository
+public interface IBaseRepository<T> where T : class
 {
     Task<bool> SaveChanges();
+    Task Delete(T entity);
 }

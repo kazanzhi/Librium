@@ -2,8 +2,9 @@
 using Librium.Domain.Users.Models;
 
 namespace Librium.Domain.Repositories;
-public interface IUserBookRepository : IBaseRepository
+public interface IUserBookRepository : IBaseRepository<UserBook>
 {
     Task<UserBook?> GetUserBookById(string userId, int bookId);
+    Task<List<UserBook>> GetAllUserBooks(string userId);
     Task<UserBook> AddUserBook(string userId, int bookId);
 }
