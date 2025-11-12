@@ -1,11 +1,7 @@
-﻿using Librium.Domain.Entities.Books;
+﻿using Librium.Domain.Common;
+using Librium.Domain.Entities.Books;
 using Librium.Domain.Users.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Librium.Domain.Books.Models;
 public class Book
@@ -20,4 +16,32 @@ public class Book
 
     [JsonIgnore]
     public ICollection<UserBook> UserBooks { get; set; } = new List<UserBook>();
+
+    public static ValueOrResult<Book> Create(string title, string author, string category, string content, int publishedYear)
+    {
+        if (title is null)
+            return ValueOrResult<Book>.Failure("Title is required.");
+
+        if (author is null)
+            return ValueOrResult<Book>.Failure("Author is required.");
+
+        if (category is null)
+            return ValueOrResult<Book>.Failure("Category is required.");
+
+        if (content is null)
+            return ValueOrResult<Book>.Failure("Content is required.");
+
+        if (publishedYear < 0)
+            return ValueOrResult<Book>.Failure("Invalid published year.");
+
+        var book = new Book
+        {
+            Title = title.Trim(),
+            Author = author.Trim(),
+            Content = content.Trim(),
+            PublishedYear = publishedYear
+        };
+
+        return ValueOrResult<Book>.Success(book);
+    }
 }

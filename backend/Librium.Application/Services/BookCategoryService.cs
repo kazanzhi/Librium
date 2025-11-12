@@ -1,39 +1,34 @@
-﻿using Librium.Domain.Books.Dtos;
-using Librium.Domain.Books.Models;
-using Librium.Domain.Books.Repositories;
-using Librium.Domain.Books.Services;
+﻿using Librium.Domain.Books.DTOs;
+using Librium.Domain.Common;
+using Librium.Domain.Entities.Books;
+using Librium.Domain.Interfaces;
+using Librium.Domain.Repositories;
 
 namespace Librium.Application.Services;
 public class BookCategoryService : IBookCategoryService
 {
-    private readonly IBookCategoryRepository _repo;
-    public BookCategoryService(IBookCategoryRepository bookCategoryRepository)
+    private readonly IBookCategoryRepository _repository;
+    public BookCategoryService(IBookCategoryRepository repository)
     {
-        _repo = bookCategoryRepository;
+        _repository = repository;
+    }
+    public Task<ValueOrResult<int>> AddBookCategoryAsync(BookCategoryDto categoryDto)
+    {
+        
     }
 
-    public async Task<BookCategory> CreateBookCategoryAsync(BookCategoryDto categoryDto)
+    public Task<ValueOrResult> DeleteBookCategoryAsync(int categoryId)
     {
-        return await _repo.CreateBookCategory(categoryDto);
+
     }
 
-    public async Task<int> DeleteBookCategoryAsync(int categoryId)
+    public Task<List<BookCategory>> GetBookCategoriesAsync()
     {
-        return await _repo.DeleteBookCategory(categoryId);
+
     }
 
-    public async Task<List<BookCategory>> GetBookCategoriesAsync()
+    public Task<ValueOrResult> UpdateBookCategoryAsync(int categoryId, BookCategoryDto categoryDto)
     {
-        return await _repo.GetBookCategories();
-    }
 
-    public async Task<BookCategory> GetBookCategoryByIdAsync(int categoryId)
-    {
-        return await _repo.GetBookCategory(categoryId);
-    }
-
-    public async Task<int> UpdateBookCategoryAsync(int categoryId, BookCategoryDto categoryDto)
-    {
-        return await _repo.UpdateBookCategory(categoryId, categoryDto);
     }
 }
