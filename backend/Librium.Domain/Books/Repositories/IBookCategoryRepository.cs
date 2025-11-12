@@ -1,14 +1,10 @@
-﻿using Librium.Domain.Books.Dtos;
-using Librium.Domain.Books.DTOs;
-using Librium.Domain.Books.Models;
+﻿using Librium.Domain.Books.DTOs;
+using Librium.Domain.Common.Repositories;
 using Librium.Domain.Entities.Books;
 
 namespace Librium.Domain.Repositories;
-public interface IBookCategoryRepository
+public interface IBookCategoryRepository : IBaseRepository
 {
-    Task<List<BookCategory>> GetBookCategories();
-    Task<BookCategory> GetBookCategory(int categoryId);
-    Task<BookCategory> CreateBookCategory(BookCategoryDto categoryDto);
-    Task<int> DeleteBookCategory(int categoryId);
-    Task<int> UpdateBookCategory(int categoryId, BookCategoryDto categoryDto);
+    Task<BookCategory?> GetBookCategoryById(int categoryId);
+    Task<BookCategory> AddBookCategory(BookCategoryDto categoryDto);
 }

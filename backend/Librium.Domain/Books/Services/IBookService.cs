@@ -1,19 +1,13 @@
-﻿using Librium.Domain.Books.Dtos;
-using Librium.Domain.Books.DTOs;
+﻿using Librium.Domain.Books.DTOs;
 using Librium.Domain.Books.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Librium.Domain.Common;
 
 namespace Librium.Domain.Interfaces;
 public interface IBookService
 {
     Task<List<Book>> GetBooksAsync();
-    Task<Book> GetBookByIdAsync(int bookId);
 
-    Task<Book> CreateBookAsync(BookDto bookDto);
-    Task<int> DeleteBookAsync(int bookId);
-    Task<int> UpdateBookAsync(int bookId, BookDto bookDto);
+    Task<ValueOrResult<int>> AddBookAsync(BookDto bookDto);
+    Task<ValueOrResult> DeleteBookAsync(int bookId);
+    Task<ValueOrResult> UpdateBookAsync(int bookId, BookDto bookDto);
 }

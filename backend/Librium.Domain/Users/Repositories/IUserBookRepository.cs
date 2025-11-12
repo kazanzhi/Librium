@@ -1,14 +1,9 @@
-﻿using Librium.Domain.Users.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Librium.Domain.Common.Repositories;
+using Librium.Domain.Users.Models;
 
 namespace Librium.Domain.Repositories;
-public interface IUserBookRepository
+public interface IUserBookRepository : IBaseRepository
 {
-    Task<List<UserBook>> GetUserBooks(string userId);
-    Task<int> AddUserBook(string userId, int bookId);
-    Task<int> RemoveUserBook(string userId, int bookId);
+    Task<UserBook?> GetUserBookById(string userId, int bookId);
+    Task<UserBook> AddUserBook(string userId, int bookId);
 }
