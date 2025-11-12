@@ -1,10 +1,10 @@
-﻿using Librium.Domain.Books.DTOs;
-using Librium.Domain.Books.Models;
+﻿using Librium.Domain.Books.Models;
 using Librium.Domain.Common.Repositories;
 
 namespace Librium.Domain.Repositories;
-public interface IBookRepository : IBaseRepository
+public interface IBookRepository : IBaseRepository<Book>
 {
-    Task<Book?> GetBookById(int bookId); 
+    Task<Book?> GetBookById(int bookId);
+    Task<List<Book>> GetAllBooks();
     Task<Book> AddBook(Book book);
 }

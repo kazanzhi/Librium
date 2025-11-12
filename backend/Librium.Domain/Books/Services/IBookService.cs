@@ -5,7 +5,7 @@ using Librium.Domain.Common;
 namespace Librium.Domain.Interfaces;
 public interface IBookService
 {
-    Task<List<Book>> GetBooksAsync();
+    Task<List<Book>> GetAllBooksAsync();
 
     Task<ValueOrResult<int>> AddBookAsync(BookDto bookDto);
     Task<ValueOrResult> DeleteBookAsync(int bookId);
