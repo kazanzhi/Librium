@@ -12,7 +12,7 @@ public class UserBookService : IUserBookService
         _repository = repository;
     }
 
-    public async Task<ValueOrResult> AddUserBookAsync(string userId, int bookId)
+    public async Task<ValueOrResult> AddUserBookAsync(string userId, int bookId)    
     {
         var existingUserBook = await _repository.GetUserBookById(userId, bookId);
 
@@ -23,7 +23,7 @@ public class UserBookService : IUserBookService
         if (!userBookResult.isSuccess)
             return ValueOrResult.Failure(userBookResult.ErrorMessage!);
 
-        await _repository.AddUserBook(userId, bookId);
+        await _repository.AddUserBook(userBookResult.Value!);
         await _repository.SaveChanges();
 
         return ValueOrResult.Success();
