@@ -46,11 +46,16 @@ public class BookCategoryService : IBookCategoryService
 
     }
 
+    public async Task<BookCategory> GetBookCategoryById(int categoryId)
+    {
+        return await _repository.GetBookCategoryById(categoryId);
+    }
+
     public async Task<ValueOrResult> UpdateBookCategoryAsync(int categoryId, BookCategoryDto categoryDto)
     {
         var category = await _repository.GetBookCategoryById(categoryId);
         if (category is null)
-            return ValueOrResult.Failure("Category not found");
+            return ValueOrResult.Failure("Category not found.");
 
         category.Name = categoryDto.Name.Trim();
 

@@ -6,7 +6,7 @@ namespace Librium.Domain.Interfaces;
 public interface IBookCategoryService
 {
     Task<List<BookCategory>> GetAllBookCategoriesAsync();
-
+    Task<BookCategory> GetBookCategoryById(int categoryId);
     Task<ValueOrResult<int>> AddBookCategoryAsync(BookCategoryDto categoryDto);
     Task<ValueOrResult> DeleteBookCategoryAsync(int categoryId);
     Task<ValueOrResult> UpdateBookCategoryAsync(int categoryId, BookCategoryDto categoryDto);

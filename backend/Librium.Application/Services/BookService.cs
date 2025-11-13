@@ -61,6 +61,11 @@ public class BookService : IBookService
         return await _repository.GetAllBooks();
     }
 
+    public async Task<Book> GetBookById(int bookId)
+    {
+        return await _repository.GetBookById(bookId);
+    }
+
     public async Task<ValueOrResult> UpdateBookAsync(int bookId, BookDto bookDto)
     {
         var existingBook = await _repository.GetBookById(bookId);
