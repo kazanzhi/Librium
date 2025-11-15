@@ -1,5 +1,7 @@
 ﻿using Librium.Domain.Books.DTOs;
 using Librium.Domain.Interfaces;
+using Librium.Domain.Users.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Librium.Presentation.Controllers;
@@ -15,6 +17,7 @@ public class BookController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAll()
     {
         var result = await _service.GetAllBooksAsync();
@@ -22,6 +25,7 @@ public class BookController : ControllerBase
     }
 
     [HttpGet("{bookId}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetById(int bookId)
     {
         var result = await _service.GetBookById(bookId);
@@ -31,7 +35,8 @@ public class BookController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(BookDto bookDto)
+    [Authorize(Roles = Roles.Admin)]
+    public async Task<IActionResult> Create([FromBody] BookDto bookDto)
     {
         var result = await _service.AddBookAsync(bookDto);
         return result.isSuccess
@@ -40,6 +45,7 @@ public class BookController : ControllerBase
     }
 
     [HttpDelete("{bookId}")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> Delete(int bookId)
     {
         var result = await _service.DeleteBookAsync(bookId);
@@ -49,7 +55,8 @@ public class BookController : ControllerBase
     }
 
     [HttpPut("{bookId}")]
-    public async Task<IActionResult> Update(int bookId, BookDto bookDto)
+    [Authorize(Roles = Roles.Admin)]
+    public async Task<IActionResult> Update(int bookId, [FromBody] BookDto bookDto)
     {
         var result = await _service.UpdateBookAsync(bookId, bookDto);
         return result.isSuccess
