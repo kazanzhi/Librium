@@ -1,5 +1,5 @@
-﻿using Librium.Domain.Common;
-using Librium.Domain.Users.DTOs;
+﻿using Librium.Application.DTOs.Users;
+using Librium.Domain.Common;
 
 namespace Librium.Application.Interfaces;
 
