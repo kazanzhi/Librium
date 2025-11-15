@@ -15,23 +15,7 @@ public class LibriumDbContext : IdentityDbContext<AppUser>
     {
         base.OnModelCreating(builder);
 
-        builder.Entity<UserBook>()
-            .HasOne(ub => ub.AppUser)
-            .WithMany(u => u.UserBooks)
-            .HasForeignKey(ub => ub.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder.Entity<UserBook>()
-            .HasOne(ub => ub.Book)
-            .WithMany(b => b.UserBooks)
-            .HasForeignKey(ub => ub.BookId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-        builder.Entity<Book>()
-            .HasOne(b => b.BookCategory)
-            .WithMany(c => c.Books)
-            .HasForeignKey(b => b.CategoryId)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.ApplyConfigurationsFromAssembly(typeof(LibriumDbContext).Assembly);
     }
 
     public DbSet<Book> Books { get; set; }
