@@ -1,4 +1,4 @@
-﻿namespace Librium.Domain.Books.DTOs;
+﻿namespace Librium.Application.Books.DTOs;
 public class BookCategoryDto
 {
     public string Name { get; set; }

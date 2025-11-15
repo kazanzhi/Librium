@@ -13,8 +13,6 @@ public class Book
     public BookCategory BookCategory { get; set; }
     public string Content { get; set; }
     public int PublishedYear { get; set; }
-
-    [JsonIgnore]
     public ICollection<UserBook> UserBooks { get; set; } = new List<UserBook>();
 
     public static ValueOrResult<Book> Create(string title, string author, string category, string content, int publishedYear)

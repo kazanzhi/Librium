@@ -1,7 +1,8 @@
-﻿using Librium.Domain.Books.DTOs;
+﻿using Librium.Application.Books.DTOs;
+using Librium.Application.DTOs.Books;
+using Librium.Application.Interfaces;
 using Librium.Domain.Books.Models;
 using Librium.Domain.Common;
-using Librium.Domain.Interfaces;
 using Librium.Domain.Repositories;
 
 namespace Librium.Application.Services;
@@ -56,14 +57,34 @@ public class BookService : IBookService
         return ValueOrResult.Success();
     }
 
-    public async Task<List<Book>> GetAllBooksAsync()
+    public async Task<List<BookResponseDto>> GetAllBooksAsync()
     {
-        return await _repository.GetAllBooks();
+        var books = await _repository.GetAllBooks();
+
+        return books.Select(book => new BookResponseDto
+        {
+            Id = book.Id,
+            Title = book.Title,
+            Author = book.Author,
+            BookCategory = book.BookCategory.Name,
+            Content = book.Content,
+            PublishedYear = book.PublishedYear
+        }).ToList();
     }
 
-    public async Task<Book> GetBookById(int bookId)
+    public async Task<BookResponseDto> GetBookById(int bookId)
     {
-        return await _repository.GetBookById(bookId);
+        var book = await _repository.GetBookById(bookId);
+
+        return new BookResponseDto
+        {
+            Id = book.Id,
+            Title = book.Title,
+            Author = book.Author,
+            BookCategory = book.BookCategory.Name,
+            Content = book.Content,
+            PublishedYear = book.PublishedYear
+        };
     }
 
     public async Task<ValueOrResult> UpdateBookAsync(int bookId, BookDto bookDto)

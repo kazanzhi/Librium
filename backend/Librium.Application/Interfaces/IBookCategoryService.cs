@@ -1,12 +1,12 @@
-﻿using Librium.Domain.Books.DTOs;
+﻿using Librium.Application.Books.DTOs;
+using Librium.Application.DTOs.BookCategories;
 using Librium.Domain.Common;
-using Librium.Domain.Entities.Books;
 
-namespace Librium.Domain.Interfaces;
+namespace Librium.Application.Interfaces;
 public interface IBookCategoryService
 {
-    Task<List<BookCategory>> GetAllBookCategoriesAsync();
-    Task<BookCategory> GetBookCategoryById(int categoryId);
+    Task<List<BookCategoryResponseDto>> GetAllBookCategoriesAsync();
+    Task<BookCategoryResponseDto> GetBookCategoryById(int categoryId);
     Task<ValueOrResult<int>> AddBookCategoryAsync(BookCategoryDto categoryDto);
     Task<ValueOrResult> DeleteBookCategoryAsync(int categoryId);
     Task<ValueOrResult> UpdateBookCategoryAsync(int categoryId, BookCategoryDto categoryDto);

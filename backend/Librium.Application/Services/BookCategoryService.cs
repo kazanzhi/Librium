@@ -1,7 +1,9 @@
-﻿using Librium.Domain.Books.DTOs;
+﻿using Librium.Application.Books.DTOs;
+using Librium.Application.DTOs.BookCategories;
+using Librium.Application.DTOs.Books;
+using Librium.Application.Interfaces;
 using Librium.Domain.Common;
 using Librium.Domain.Entities.Books;
-using Librium.Domain.Interfaces;
 using Librium.Domain.Repositories;
 
 namespace Librium.Application.Services;
@@ -40,15 +42,26 @@ public class BookCategoryService : IBookCategoryService
         return ValueOrResult.Success();
     }
 
-    public async Task<List<BookCategory>> GetAllBookCategoriesAsync()
+    public async Task<List<BookCategoryResponseDto>> GetAllBookCategoriesAsync()
     {
-        return await _repository.GetAllBookCategories();
+        var categories = await _repository.GetAllBookCategories();
 
+        return categories.Select(category => new BookCategoryResponseDto
+        {
+            Id = category.Id,
+            Name = category.Name
+        }).ToList();
     }
 
-    public async Task<BookCategory> GetBookCategoryById(int categoryId)
+    public async Task<BookCategoryResponseDto> GetBookCategoryById(int categoryId)
     {
-        return await _repository.GetBookCategoryById(categoryId);
+        var category =  await _repository.GetBookCategoryById(categoryId);
+
+        return new BookCategoryResponseDto
+        {
+            Id = category.Id,
+            Name = category.Name
+        };
     }
 
     public async Task<ValueOrResult> UpdateBookCategoryAsync(int categoryId, BookCategoryDto categoryDto)
