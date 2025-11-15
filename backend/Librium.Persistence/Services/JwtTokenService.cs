@@ -1,0 +1,51 @@
+﻿using Librium.Application.Interfaces;
+using Librium.Domain.Users.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+
+namespace Librium.Persistence.Services;
+
+public class JwtTokenService : IJwtTokenService
+{
+    private readonly IConfiguration _configuration;
+    public JwtTokenService(IConfiguration configuration, UserManager<AppUser> userManager)
+    {
+        _configuration = configuration;
+    }
+
+    public async Task<string> CreateToken(AppUser user, IList<string> roles)
+    {
+        var jwtSection = _configuration.GetSection("JwtOptions");
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSection["Key"]));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
+            new Claim(ClaimTypes.Email, user.Email),
+            new Claim(ClaimTypes.Name, user.UserName),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+
+        foreach (var role in roles)
+        {
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
+
+        var expires = DateTime.UtcNow.AddMinutes(10);
+
+        var token = new JwtSecurityToken(
+            issuer: jwtSection["Issuer"],
+            audience: jwtSection["Audience"],
+            claims: claims,
+            expires: expires,
+            signingCredentials: creds
+        );
+
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+}

@@ -1,5 +1,7 @@
 ﻿using Librium.Domain.Books.DTOs;
 using Librium.Domain.Interfaces;
+using Librium.Domain.Users.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Librium.Presentation.Controllers;
@@ -15,7 +17,8 @@ public class BookCategoryController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(BookCategoryDto categoryDto)
+    [Authorize(Roles = Roles.Admin)]
+    public async Task<IActionResult> Create([FromBody] BookCategoryDto categoryDto)
     {
         var result = await _service.AddBookCategoryAsync(categoryDto);
         return result.isSuccess
@@ -24,6 +27,7 @@ public class BookCategoryController : ControllerBase
     }
 
     [HttpGet("{categoryId}")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> GetById(int categoryId)
     {
         var category = await _service.GetBookCategoryById(categoryId);
@@ -31,6 +35,7 @@ public class BookCategoryController : ControllerBase
     }
 
     [HttpDelete("{categoryId}")]
+    [Authorize(Roles = Roles.Admin)]
     public async Task<IActionResult> Delete(int categoryId)
     {
         var result = await _service.DeleteBookCategoryAsync(categoryId);
@@ -40,6 +45,7 @@ public class BookCategoryController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAll()
     {
         var result = await _service.GetAllBookCategoriesAsync();
@@ -47,7 +53,8 @@ public class BookCategoryController : ControllerBase
     }
 
     [HttpPut("{categoryId}")]
-    public async Task<IActionResult> Update(int categoryId, BookCategoryDto categoryDto)
+    [Authorize(Roles = Roles.Admin)]
+    public async Task<IActionResult> Update(int categoryId, [FromBody] BookCategoryDto categoryDto)
     {
         var result = await _service.UpdateBookCategoryAsync(categoryId, categoryDto);
         return result.isSuccess

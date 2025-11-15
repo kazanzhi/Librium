@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Librium.Domain.Users.Models;
-public class UserRoles
+public class Roles
 {
     public const string Admin = "Admin";
     public const string User = "User";
