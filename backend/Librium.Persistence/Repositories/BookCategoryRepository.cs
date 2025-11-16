@@ -29,7 +29,7 @@ public class BookCategoryRepository : IBookCategoryRepository
         return result;
     }
 
-    public async Task<BookCategory?> GetBookCategoryById(int categoryId)
+    public async Task<BookCategory?> GetBookCategoryById(Guid categoryId)
     {
         var result = await _context.BookCategories.FindAsync(categoryId);
         return result;

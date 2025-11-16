@@ -14,23 +14,23 @@ public class BookCategoryService : IBookCategoryService
     {
         _repository = repository;
     }
-    public async Task<ValueOrResult<int>> AddBookCategoryAsync(BookCategoryDto categoryDto)
+    public async Task<ValueOrResult<Guid>> AddBookCategoryAsync(BookCategoryDto categoryDto)
     {
         var categoryResult = BookCategory.Create(categoryDto.Name);
         if (!categoryResult.isSuccess)
-            return ValueOrResult<int>.Failure(categoryResult.ErrorMessage!);
+            return ValueOrResult<Guid>.Failure(categoryResult.ErrorMessage!);
 
         BookCategory? category = categoryResult.Value;
         if (category is null)
-            return ValueOrResult<int>.Failure("Something went wrong.");
+            return ValueOrResult<Guid>.Failure("Something went wrong.");
 
         await _repository.AddBookCategory(category);
         await _repository.SaveChanges();
 
-        return ValueOrResult<int>.Success(category.Id);
+        return ValueOrResult<Guid>.Success(category.Id);
     }
 
-    public async Task<ValueOrResult> DeleteBookCategoryAsync(int categoryId)
+    public async Task<ValueOrResult> DeleteBookCategoryAsync(Guid categoryId)
     {
         var book = await _repository.GetBookCategoryById(categoryId);
         if (book is null)
@@ -53,7 +53,7 @@ public class BookCategoryService : IBookCategoryService
         }).ToList();
     }
 
-    public async Task<BookCategoryResponseDto> GetBookCategoryById(int categoryId)
+    public async Task<BookCategoryResponseDto> GetBookCategoryById(Guid categoryId)
     {
         var category =  await _repository.GetBookCategoryById(categoryId);
 
@@ -64,7 +64,7 @@ public class BookCategoryService : IBookCategoryService
         };
     }
 
-    public async Task<ValueOrResult> UpdateBookCategoryAsync(int categoryId, BookCategoryDto categoryDto)
+    public async Task<ValueOrResult> UpdateBookCategoryAsync(Guid categoryId, BookCategoryDto categoryDto)
     {
         var category = await _repository.GetBookCategoryById(categoryId);
         if (category is null)

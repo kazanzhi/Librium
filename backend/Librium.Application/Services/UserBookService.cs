@@ -14,7 +14,7 @@ public class UserBookService : IUserBookService
         _bookRepository = bookRepository;
     }
 
-    public async Task<ValueOrResult> AddUserBookAsync(string userId, int bookId)    
+    public async Task<ValueOrResult> AddUserBookAsync(string userId, Guid bookId)    
     {
         var book = await _bookRepository.GetBookById(bookId);
         if (book is null)
@@ -40,7 +40,7 @@ public class UserBookService : IUserBookService
         return await _userBookRepository.GetAllUserBooks(userId);
     }
 
-    public async Task<ValueOrResult> RemoveUserBookAsync(string userId, int bookId)
+    public async Task<ValueOrResult> RemoveUserBookAsync(string userId, Guid bookId)
     {
         var userBookExists = await _userBookRepository.GetUserBookById(userId, bookId);
         if (userBookExists is null)
