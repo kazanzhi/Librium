@@ -1,5 +1,4 @@
-﻿using Librium.Application.Interfaces;
-using Librium.Domain.Interfaces;
+﻿using Librium.Domain.Interfaces;
 using Librium.Domain.Users.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,14 +17,14 @@ public class UserBookController : ControllerBase
         _userBookService = userBookService;
     }
 
-    [HttpPost("{bookId}")]
-    public async Task<IActionResult> AddBook(int bookId)
+    [HttpPost("{Id}")]
+    public async Task<IActionResult> AddBook(Guid Id)
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (userId is null)
             return Unauthorized();
 
-        var result = await _userBookService.AddUserBookAsync(userId, bookId);
+        var result = await _userBookService.AddUserBookAsync(userId, Id);
 
         return result.isSuccess
             ? Ok()
@@ -43,14 +42,14 @@ public class UserBookController : ControllerBase
         return Ok(books);
     }
 
-    [HttpDelete("{bookId}")]
-    public async Task<IActionResult> DeleteBook(int bookId)
+    [HttpDelete("{Id}")]
+    public async Task<IActionResult> DeleteBook(Guid Id)
     {
         var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         if (userId is null)
             return Unauthorized();
 
-        var result = await _userBookService.RemoveUserBookAsync(userId, bookId);
+        var result = await _userBookService.RemoveUserBookAsync(userId, Id);
         return result.isSuccess
             ? Ok()
             : BadRequest(result.ErrorMessage);

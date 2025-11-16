@@ -16,36 +16,36 @@ public class BookService : IBookService
         _category = category;
     }
 
-    public async Task<ValueOrResult<int>> AddBookAsync(BookDto bookDto)
+    public async Task<ValueOrResult<Guid>> AddBookAsync(BookDto bookDto)
     {
         var existingBok = await _repository.GetAllBooks();
         bool bookExists = existingBok.Any(b => b.Author == bookDto.Author.Trim() && b.Title == bookDto.Title.Trim());
         if (bookExists)
-            return ValueOrResult<int>.Failure("A book with the same author and title already exsits.");
+            return ValueOrResult<Guid>.Failure("A book with the same author and title already exsits.");
 
         var existingCategory = await _category.GetAllBookCategories();
         var categoryExists = existingCategory.FirstOrDefault(c => c.Name.Trim() == bookDto.Category.Trim());
         if (categoryExists is null)
-            return ValueOrResult<int>.Failure($"Category {bookDto.Category} does not exists.");
+            return ValueOrResult<Guid>.Failure($"Category {bookDto.Category} does not exists.");
 
         var bookResult = Book.Create(bookDto.Title, bookDto.Author, bookDto.Category, bookDto.Content, bookDto.PublishedYear);
 
         if (!bookResult.isSuccess)
-            return ValueOrResult<int>.Failure(bookResult.ErrorMessage!);
+            return ValueOrResult<Guid>.Failure(bookResult.ErrorMessage!);
 
         Book book = bookResult.Value;
         if (book is null)
-            return ValueOrResult<int>.Failure("Something went wrong.");
+            return ValueOrResult<Guid>.Failure("Something went wrong.");
 
         bookResult.Value.BookCategory = categoryExists;
         
         await _repository.AddBook(book);
         await _repository.SaveChanges();
 
-        return ValueOrResult<int>.Success(book.Id);
+        return ValueOrResult<Guid>.Success(book.Id);
     }
 
-    public async Task<ValueOrResult> DeleteBookAsync(int bookId)
+    public async Task<ValueOrResult> DeleteBookAsync(Guid bookId)
     {
         var book = await _repository.GetBookById(bookId);
         if (book is null)
@@ -72,7 +72,7 @@ public class BookService : IBookService
         }).ToList();
     }
 
-    public async Task<BookResponseDto> GetBookById(int bookId)
+    public async Task<BookResponseDto> GetBookById(Guid bookId)
     {
         var book = await _repository.GetBookById(bookId);
 
@@ -87,7 +87,7 @@ public class BookService : IBookService
         };
     }
 
-    public async Task<ValueOrResult> UpdateBookAsync(int bookId, BookDto bookDto)
+    public async Task<ValueOrResult> UpdateBookAsync(Guid bookId, BookDto bookDto)
     {
         var existingBook = await _repository.GetBookById(bookId);
         if (existingBook is null)

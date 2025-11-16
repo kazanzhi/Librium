@@ -24,11 +24,11 @@ public class BookController : ControllerBase
         return Ok(result);
     }
 
-    [HttpGet("{bookId}")]
+    [HttpGet("{Id}")]
     [AllowAnonymous]
-    public async Task<IActionResult> GetById(int bookId)
+    public async Task<IActionResult> GetById(Guid Id)
     {
-        var result = await _service.GetBookById(bookId);
+        var result = await _service.GetBookById(Id);
         return result == null
             ? NotFound()
             : Ok(result);
@@ -40,25 +40,25 @@ public class BookController : ControllerBase
     {
         var result = await _service.AddBookAsync(bookDto);
         return result.isSuccess
-            ? CreatedAtAction(nameof(GetById), new { bookId = result.Value }, result.Value)
+            ? CreatedAtAction(nameof(GetById), new { Id = result.Value }, result.Value)
             : BadRequest(result.ErrorMessage);
     }
 
-    [HttpDelete("{bookId}")]
+    [HttpDelete("{Id}")]
     [Authorize(Roles = Roles.Admin)]
-    public async Task<IActionResult> Delete(int bookId)
+    public async Task<IActionResult> Delete(Guid Id)
     {
-        var result = await _service.DeleteBookAsync(bookId);
+        var result = await _service.DeleteBookAsync(Id);
         return result.isSuccess
             ? Ok()
             : BadRequest(result.ErrorMessage);
     }
 
-    [HttpPut("{bookId}")]
+    [HttpPut("{Id}")]
     [Authorize(Roles = Roles.Admin)]
-    public async Task<IActionResult> Update(int bookId, [FromBody] BookDto bookDto)
+    public async Task<IActionResult> Update(Guid Id, [FromBody] BookDto bookDto)
     {
-        var result = await _service.UpdateBookAsync(bookId, bookDto);
+        var result = await _service.UpdateBookAsync(Id, bookDto);
         return result.isSuccess
             ? Ok()
             : BadRequest(result.ErrorMessage);

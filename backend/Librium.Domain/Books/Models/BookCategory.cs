@@ -1,15 +1,13 @@
 ﻿using Librium.Domain.Books.Models;
 using Librium.Domain.Common;
-using System.Text.Json.Serialization;
 
 namespace Librium.Domain.Entities.Books;
+
 public class BookCategory
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; }
     public ICollection<Book> Books { get; set; } = new List<Book>();
-
-    private BookCategory(string name) => Name = name.Trim();
 
     public static ValueOrResult<BookCategory> Create(string? name)
     {
@@ -19,7 +17,12 @@ public class BookCategory
         if (name.Length > 100)
             return ValueOrResult<BookCategory>.Failure("Category name cannot exceed 100 characters.");
 
+        var category = new BookCategory
+        {
+            Id = Guid.NewGuid(),
+            Name = name
+        };
 
-        return ValueOrResult<BookCategory>.Success(new BookCategory(name));
+        return ValueOrResult<BookCategory>.Success(category);
     }
 }

@@ -4,16 +4,16 @@ using Librium.Domain.Common;
 namespace Librium.Domain.Users.Models;
 public class UserBook
 {
-    public int Id { get; set; }
-    public int BookId { get; set; }
+    public Guid Id { get; set; }
+    public Guid BookId { get; set; }
     public Book Book { get; set; }
     public string UserId { get; set; }
     public AppUser AppUser { get; set; }
     public DateTime AddedAt { get; set; }
 
-    public static ValueOrResult<UserBook> Create(string userId, int bookId)
+    public static ValueOrResult<UserBook> Create(string userId, Guid bookId)
     {
-        if (bookId <= 0)
+        if (bookId == Guid.Empty)
             return ValueOrResult<UserBook>.Failure("BookId must be valid.");
 
         if (string.IsNullOrWhiteSpace(userId))
@@ -21,6 +21,7 @@ public class UserBook
 
         var userBook = new UserBook
         {
+            Id = Guid.NewGuid(),
             BookId = bookId,
             UserId = userId,
             AddedAt = DateTime.UtcNow

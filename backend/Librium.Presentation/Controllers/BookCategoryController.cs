@@ -22,23 +22,23 @@ public class BookCategoryController : ControllerBase
     {
         var result = await _service.AddBookCategoryAsync(categoryDto);
         return result.isSuccess
-            ? CreatedAtAction(nameof(GetById), new { categoryId = result.Value }, result.Value)
+            ? CreatedAtAction(nameof(GetById), new { Id = result.Value }, result.Value)
             : BadRequest(result.ErrorMessage);
     }
 
-    [HttpGet("{categoryId}")]
+    [HttpGet("{Id}")]
     [Authorize(Roles = Roles.Admin)]
-    public async Task<IActionResult> GetById(int categoryId)
+    public async Task<IActionResult> GetById(Guid Id)
     {
-        var category = await _service.GetBookCategoryById(categoryId);
+        var category = await _service.GetBookCategoryById(Id);
         return category == null ? NotFound() : Ok(category);
     }
 
-    [HttpDelete("{categoryId}")]
+    [HttpDelete("{Id}")]
     [Authorize(Roles = Roles.Admin)]
-    public async Task<IActionResult> Delete(int categoryId)
+    public async Task<IActionResult> Delete(Guid Id)
     {
-        var result = await _service.DeleteBookCategoryAsync(categoryId);
+        var result = await _service.DeleteBookCategoryAsync(Id);
         return result.isSuccess
             ? Ok()
             : BadRequest(result.ErrorMessage);
@@ -52,11 +52,11 @@ public class BookCategoryController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut("{categoryId}")]
+    [HttpPut("{Id}")]
     [Authorize(Roles = Roles.Admin)]
-    public async Task<IActionResult> Update(int categoryId, [FromBody] BookCategoryDto categoryDto)
+    public async Task<IActionResult> Update(Guid Id, [FromBody] BookCategoryDto categoryDto)
     {
-        var result = await _service.UpdateBookCategoryAsync(categoryId, categoryDto);
+        var result = await _service.UpdateBookCategoryAsync(Id, categoryDto);
         return result.isSuccess
             ? Ok()
             : BadRequest(result.ErrorMessage);

@@ -1,15 +1,15 @@
 ﻿using Librium.Domain.Common;
 using Librium.Domain.Entities.Books;
 using Librium.Domain.Users.Models;
-using System.Text.Json.Serialization;
 
 namespace Librium.Domain.Books.Models;
+
 public class Book
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Title { get; set; }
     public string Author { get; set; }
-    public int CategoryId { get; set; }
+    public Guid CategoryId { get; set; }
     public BookCategory BookCategory { get; set; }
     public string Content { get; set; }
     public int PublishedYear { get; set; }
@@ -34,6 +34,7 @@ public class Book
 
         var book = new Book
         {
+            Id = Guid.NewGuid(),
             Title = title.Trim(),
             Author = author.Trim(),
             Content = content.Trim(),

@@ -30,7 +30,7 @@ public class UserBookRepository : IUserBookRepository
             .ToListAsync();
     }
 
-    public async Task<UserBook?> GetUserBookById(string userId, int bookId)
+    public async Task<UserBook?> GetUserBookById(string userId, Guid bookId)
     {
         return await _context.UserBooks
             .FirstOrDefaultAsync(x => x.UserId == userId && x.BookId == bookId);
