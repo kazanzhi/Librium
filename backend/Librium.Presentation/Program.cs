@@ -1,4 +1,5 @@
 using Librium.Application;
+using Librium.Identity;
 using Librium.Persistence;
 using Librium.Persistence.Identity;
 
@@ -17,7 +18,8 @@ public class Program
         builder.Services.AddOpenApi();
 
         builder.Services.AddApplication();
-        builder.Services.AddPersistence(builder.Configuration);
+        builder.Services.AddIdentityInfrastructure();
+        builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 
         var app = builder.Build();
 

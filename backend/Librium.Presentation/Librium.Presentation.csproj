@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Librium.Application\Librium.Application.csproj" />
+    <ProjectReference Include="..\Librium.Identity\Librium.Identity.csproj" />
     <ProjectReference Include="..\Librium.Persistence\Librium.Persistence.csproj" />
   </ItemGroup>
 

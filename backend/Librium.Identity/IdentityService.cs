@@ -3,7 +3,7 @@ using Librium.Domain.Interfaces;
 using Librium.Domain.Users.Models;
 using Microsoft.AspNetCore.Identity;
 
-namespace Librium.Persistence.Services;
+namespace Librium.Identity;
 
 public class IdentityService : IIdentityService
 {
