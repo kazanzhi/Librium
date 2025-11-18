@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Librium.Persistence", "Libr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Librium.Presentation", "Librium.Presentation\Librium.Presentation.csproj", "{1AE2E369-17C6-42DE-871B-511788B5539F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Librium.Identity", "Librium.Identity\Librium.Identity.csproj", "{75C1627B-7A67-41FB-8CE3-D7C5FDC411E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{1AE2E369-17C6-42DE-871B-511788B5539F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AE2E369-17C6-42DE-871B-511788B5539F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AE2E369-17C6-42DE-871B-511788B5539F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75C1627B-7A67-41FB-8CE3-D7C5FDC411E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75C1627B-7A67-41FB-8CE3-D7C5FDC411E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75C1627B-7A67-41FB-8CE3-D7C5FDC411E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75C1627B-7A67-41FB-8CE3-D7C5FDC411E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

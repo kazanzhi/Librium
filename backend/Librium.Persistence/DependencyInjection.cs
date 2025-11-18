@@ -1,8 +1,6 @@
-﻿using Librium.Domain.Interfaces;
-using Librium.Domain.Repositories;
+﻿using Librium.Domain.Repositories;
 using Librium.Domain.Users.Models;
 using Librium.Persistence.Repositories;
-using Librium.Persistence.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +14,7 @@ namespace Librium.Persistence;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddPersistenceInfrastructure(this IServiceCollection services, IConfiguration config)
     {
         services.AddDbContext<LibriumDbContext>(options =>
             options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
@@ -32,10 +30,7 @@ public static class DependencyInjection
         })
             .AddEntityFrameworkStores<LibriumDbContext>()
             .AddDefaultTokenProviders();
-
-        services.AddScoped<IIdentityService, IdentityService>();
-
-
+        
         services.AddAuthentication(options =>
         {
 
@@ -55,8 +50,7 @@ public static class DependencyInjection
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtOptions:Key"]))
             };
         });
-        services.AddScoped<IJwtTokenService, JwtTokenService>();
-
+        
         return services;
     }
 }
