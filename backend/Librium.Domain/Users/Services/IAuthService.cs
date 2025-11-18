@@ -1,7 +1,7 @@
-﻿using Librium.Application.DTOs.Users;
-using Librium.Domain.Common;
+﻿using Librium.Domain.Common;
+using Librium.Domain.DTOs.Users;
 
-namespace Librium.Application.Interfaces;
+namespace Librium.Domain.Interfaces;
 
 public interface IAuthService
 {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Librium.Application.DTOs.Users;
+namespace Librium.Domain.DTOs.Users;
 public class LoginDto
 {
     [Required(ErrorMessage = "Email is required")]

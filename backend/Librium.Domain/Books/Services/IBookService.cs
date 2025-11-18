@@ -1,8 +1,8 @@
-﻿using Librium.Application.Books.DTOs;
-using Librium.Application.DTOs.Books;
+﻿using Librium.Domain.Books.DTOs;
 using Librium.Domain.Common;
+using Librium.Domain.DTOs.Books;
 
-namespace Librium.Application.Interfaces;
+namespace Librium.Domain.Interfaces;
 public interface IBookService
 {
     Task<List<BookResponseDto>> GetAllBooksAsync();
