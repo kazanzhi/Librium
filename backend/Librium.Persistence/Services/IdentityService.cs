@@ -1,5 +1,5 @@
-﻿using Librium.Application.Interfaces;
-using Librium.Domain.Common;
+﻿using Librium.Domain.Common;
+using Librium.Domain.Interfaces;
 using Librium.Domain.Users.Models;
 using Microsoft.AspNetCore.Identity;
 

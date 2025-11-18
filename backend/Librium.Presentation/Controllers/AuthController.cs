@@ -1,5 +1,5 @@
-﻿using Librium.Application.DTOs.Users;
-using Librium.Application.Interfaces;
+﻿using Librium.Domain.DTOs.Users;
+using Librium.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Librium.Presentation.Controllers;

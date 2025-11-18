@@ -1,6 +1,6 @@
-﻿using Librium.Application.DTOs.Users;
-using Librium.Application.Interfaces;
-using Librium.Domain.Common;
+﻿using Librium.Domain.Common;
+using Librium.Domain.DTOs.Users;
+using Librium.Domain.Interfaces;
 using Librium.Domain.Users.Models;
 
 namespace Librium.Application.Services;

@@ -1,4 +1,4 @@
-﻿using Librium.Application.Interfaces;
+﻿using Librium.Domain.Interfaces;
 using Librium.Domain.Repositories;
 using Librium.Domain.Users.Models;
 using Librium.Persistence.Repositories;

@@ -1,4 +1,4 @@
-﻿using Librium.Application.Interfaces;
+﻿using Librium.Domain.Interfaces;
 using Librium.Domain.Users.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
