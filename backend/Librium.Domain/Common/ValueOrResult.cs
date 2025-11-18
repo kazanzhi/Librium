@@ -9,12 +9,12 @@ namespace Librium.Domain.Common;
 
 public class ValueOrResult
 {
-    public bool isSuccess { get; }
+    public bool IsSuccess { get; }
     public string? ErrorMessage { get; set; }
 
     protected ValueOrResult(bool isSuccess, string? errorMessage)
     {
-        this.isSuccess = isSuccess;
+        IsSuccess = isSuccess;
         ErrorMessage = errorMessage;
     }
 
