@@ -30,7 +30,7 @@ public class BookService : IBookService
 
         var bookResult = Book.Create(bookDto.Title, bookDto.Author, bookDto.Category, bookDto.Content, bookDto.PublishedYear);
 
-        if (!bookResult.isSuccess)
+        if (!bookResult.IsSuccess)
             return ValueOrResult<Guid>.Failure(bookResult.ErrorMessage!);
 
         Book book = bookResult.Value;

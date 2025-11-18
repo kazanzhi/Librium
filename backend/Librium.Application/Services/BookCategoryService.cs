@@ -16,7 +16,7 @@ public class BookCategoryService : IBookCategoryService
     public async Task<ValueOrResult<Guid>> AddBookCategoryAsync(BookCategoryDto categoryDto)
     {
         var categoryResult = BookCategory.Create(categoryDto.Name);
-        if (!categoryResult.isSuccess)
+        if (!categoryResult.IsSuccess)
             return ValueOrResult<Guid>.Failure(categoryResult.ErrorMessage!);
 
         BookCategory? category = categoryResult.Value;

@@ -26,7 +26,7 @@ public class UserBookService : IUserBookService
             return ValueOrResult.Failure("Book already added to user library.");
 
         var userBookResult = UserBook.Create(userId, bookId);
-        if (!userBookResult.isSuccess)
+        if (!userBookResult.IsSuccess)
             return ValueOrResult.Failure(userBookResult.ErrorMessage!);
 
         await _userBookRepository.AddUserBook(userBookResult.Value!);

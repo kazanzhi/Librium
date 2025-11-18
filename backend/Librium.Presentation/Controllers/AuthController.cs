@@ -20,18 +20,18 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> RegisterUser([FromBody] RegisterDto registerDto)
     {
         var result = await _authService.RegisterUserAsync(registerDto);
-        if (!result.isSuccess)
+        if (!result.IsSuccess)
             return BadRequest(result.ErrorMessage);
 
         return Ok();
     }
 
     [HttpPost("register-admin")]
-    [Authorize(Roles = Roles.Admin)]
+    [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> RegisterAdmin([FromBody] RegisterDto registerDto)
     {
         var result = await _authService.RegisterAdminAsync(registerDto);
-        if (!result.isSuccess)
+        if (!result.IsSuccess)
             return BadRequest(result.ErrorMessage);
 
         return Ok();
@@ -41,7 +41,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
     {
         var result = await _authService.Login(loginDto);
-        if (!result.isSuccess)
+        if (!result.IsSuccess)
             return BadRequest(result.ErrorMessage);
 
         return Ok(result.Value);

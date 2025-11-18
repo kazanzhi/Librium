@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace Librium.Presentation.Controllers;
 
-[Authorize(Roles = Roles.User)]
+[Authorize(Roles = UserRoles.User)]
 [Route("api/[controller]")]
 [ApiController]
 public class UserBookController : ControllerBase
@@ -26,7 +26,7 @@ public class UserBookController : ControllerBase
 
         var result = await _userBookService.AddUserBookAsync(userId, Id);
 
-        return result.isSuccess
+        return result.IsSuccess
             ? Ok()
             : BadRequest(result.ErrorMessage);
     }
@@ -50,7 +50,7 @@ public class UserBookController : ControllerBase
             return Unauthorized();
 
         var result = await _userBookService.RemoveUserBookAsync(userId, Id);
-        return result.isSuccess
+        return result.IsSuccess
             ? Ok()
             : BadRequest(result.ErrorMessage);
     }

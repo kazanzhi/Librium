@@ -35,31 +35,31 @@ public class BookController : ControllerBase
     }
 
     [HttpPost]
-    [Authorize(Roles = Roles.Admin)]
+    [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> Create([FromBody] BookDto bookDto)
     {
         var result = await _service.AddBookAsync(bookDto);
-        return result.isSuccess
+        return result.IsSuccess
             ? CreatedAtAction(nameof(GetById), new { Id = result.Value }, result.Value)
             : BadRequest(result.ErrorMessage);
     }
 
     [HttpDelete("{Id}")]
-    [Authorize(Roles = Roles.Admin)]
+    [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> Delete(Guid Id)
     {
         var result = await _service.DeleteBookAsync(Id);
-        return result.isSuccess
+        return result.IsSuccess
             ? Ok()
             : BadRequest(result.ErrorMessage);
     }
 
     [HttpPut("{Id}")]
-    [Authorize(Roles = Roles.Admin)]
+    [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> Update(Guid Id, [FromBody] BookDto bookDto)
     {
         var result = await _service.UpdateBookAsync(Id, bookDto);
-        return result.isSuccess
+        return result.IsSuccess
             ? Ok()
             : BadRequest(result.ErrorMessage);
     }

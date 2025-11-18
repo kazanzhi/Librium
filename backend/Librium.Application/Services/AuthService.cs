@@ -46,8 +46,8 @@ public class AuthService : IAuthService
             UserName = registerDto.Username
         };
 
-        var createResult = await _identityService.CreateUserAsync(newUser, registerDto.Password, Roles.Admin);
-        if (!createResult.isSuccess)
+        var createResult = await _identityService.CreateUserAsync(newUser, registerDto.Password, UserRoles.Admin);
+        if (!createResult.IsSuccess)
             return ValueOrResult.Failure(createResult.ErrorMessage!);
 
         return ValueOrResult.Success();
@@ -69,8 +69,8 @@ public class AuthService : IAuthService
             UserName = registerDto.Username
         };
 
-        var createResult = await _identityService.CreateUserAsync(newUser, registerDto.Password, Roles.User);
-        if (!createResult.isSuccess)
+        var createResult = await _identityService.CreateUserAsync(newUser, registerDto.Password, UserRoles.User);
+        if (!createResult.IsSuccess)
             return ValueOrResult.Failure(createResult.ErrorMessage!);
 
         return ValueOrResult.Success();
