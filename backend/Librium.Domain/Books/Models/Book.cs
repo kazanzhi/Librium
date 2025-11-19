@@ -43,4 +43,27 @@ public class Book
 
         return ValueOrResult<Book>.Success(book);
     }
+
+    public ValueOrResult Update(string title, string author, string content, int publishedYear, BookCategory category)
+    {
+        if (string.IsNullOrEmpty(title))
+            return ValueOrResult.Failure("Title is required.");
+
+        if (string.IsNullOrEmpty(author))
+            return ValueOrResult<Book>.Failure("Author is required.");
+
+        if (string.IsNullOrEmpty(content))
+            return ValueOrResult<Book>.Failure("Content is required.");
+
+        if (publishedYear < 0)
+            return ValueOrResult<Book>.Failure("Invalid published year.");
+
+        Title = title.Trim();
+        Author = author.Trim();
+        PublishedYear = publishedYear;
+        Content = content.Trim();
+        BookCategory = category;
+
+        return ValueOrResult.Success();
+    }
 }

@@ -72,7 +72,9 @@ public class BookCategoryService : IBookCategoryService
         if (category is null)
             return ValueOrResult.Failure("Category not found.");
 
-        category.Name = categoryDto.Name.Trim();
+        var updateResult = category.Update(categoryDto.Name);
+        if (!updateResult.IsSuccess)
+            return ValueOrResult.Failure(updateResult.ErrorMessage!);
 
         await _repository.SaveChanges();
 
