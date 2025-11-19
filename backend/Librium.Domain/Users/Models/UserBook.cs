@@ -2,6 +2,7 @@
 using Librium.Domain.Common;
 
 namespace Librium.Domain.Users.Models;
+
 public class UserBook
 {
     public Guid Id { get; set; }

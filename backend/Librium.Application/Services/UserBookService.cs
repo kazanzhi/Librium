@@ -4,17 +4,19 @@ using Librium.Domain.Repositories;
 using Librium.Domain.Users.Models;
 
 namespace Librium.Application.Services;
+
 public class UserBookService : IUserBookService
 {
     private readonly IUserBookRepository _userBookRepository;
     private readonly IBookRepository _bookRepository;
+
     public UserBookService(IUserBookRepository userBookRepository, IBookRepository bookRepository)
     {
         _userBookRepository = userBookRepository;
         _bookRepository = bookRepository;
     }
 
-    public async Task<ValueOrResult> AddUserBookAsync(string userId, Guid bookId)    
+    public async Task<ValueOrResult> AddUserBookAsync(string userId, Guid bookId)
     {
         var book = await _bookRepository.GetBookById(bookId);
         if (book is null)

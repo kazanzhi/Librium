@@ -11,6 +11,7 @@ namespace Librium.Presentation.Controllers;
 public class BookController : ControllerBase
 {
     private readonly IBookService _service;
+
     public BookController(IBookService service)
     {
         _service = service;

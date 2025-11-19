@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Librium.Domain.Common;
+﻿namespace Librium.Domain.Common;
 
 public class ValueOrResult
 {
@@ -25,6 +18,7 @@ public class ValueOrResult
 public class ValueOrResult<T> : ValueOrResult
 {
     public T? Value { get; }
+
     public ValueOrResult(T? value, bool isSuccess, string? errorMessage) : base(isSuccess, errorMessage)
     {
         Value = value;

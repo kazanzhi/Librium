@@ -7,10 +7,12 @@ namespace Librium.Persistence.Repositories;
 public class BookCategoryRepository : IBookCategoryRepository
 {
     private readonly LibriumDbContext _context;
+
     public BookCategoryRepository(LibriumDbContext context)
     {
         _context = context;
     }
+
     public async Task<BookCategory> AddBookCategory(BookCategory category)
     {
         var result = await _context.BookCategories.AddAsync(category);

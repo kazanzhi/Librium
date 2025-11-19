@@ -30,7 +30,7 @@ public static class DependencyInjection
         })
             .AddEntityFrameworkStores<LibriumDbContext>()
             .AddDefaultTokenProviders();
-        
+
         services.AddAuthentication(options =>
         {
 
@@ -50,7 +50,7 @@ public static class DependencyInjection
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtOptions:Key"]))
             };
         });
-        
+
         return services;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace Librium.Domain.DTOs.Users;
+
 public class RegisterDto
 {
     [Required(ErrorMessage = "Username is required")]

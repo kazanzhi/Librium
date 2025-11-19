@@ -3,6 +3,7 @@ using Librium.Domain.Common;
 using Librium.Domain.DTOs.Books;
 
 namespace Librium.Domain.Interfaces;
+
 public interface IBookService
 {
     Task<List<BookResponseDto>> GetAllBooksAsync();
