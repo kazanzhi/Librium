@@ -100,10 +100,15 @@ public class BookService : IBookService
         if (categoryExists is null)
             return ValueOrResult.Failure("Category does not exist.");
 
-        existingBook.Title = bookDto.Title.Trim();
-        existingBook.Author = bookDto.Author.Trim();
-        existingBook.PublishedYear = bookDto.PublishedYear;
-        existingBook.BookCategory = categoryExists;
+        var updatedResult = existingBook.Update(
+            bookDto.Title,
+            bookDto.Author,
+            bookDto.Content,
+            bookDto.PublishedYear,
+            categoryExists
+        );
+        if (!updatedResult.IsSuccess)
+            return ValueOrResult.Failure(updatedResult.ErrorMessage!);
 
         await _repository.SaveChanges();
 

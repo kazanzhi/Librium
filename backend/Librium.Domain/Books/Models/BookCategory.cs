@@ -25,4 +25,17 @@ public class BookCategory
 
         return ValueOrResult<BookCategory>.Success(category);
     }
+
+    public ValueOrResult Update(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            return ValueOrResult.Failure("Category name is required.");
+
+        if (name.Length > 100)
+            return ValueOrResult<BookCategory>.Failure("Category name cannot exceed 100 characters.");
+
+        Name = name.Trim();
+
+        return ValueOrResult.Success();
+    }
 }
