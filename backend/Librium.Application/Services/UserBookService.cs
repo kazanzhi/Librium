@@ -2,54 +2,60 @@
 using Librium.Domain.Interfaces;
 using Librium.Domain.Repositories;
 using Librium.Domain.Users.Models;
+using Librium.Domain.Users.Repositories;
 
 namespace Librium.Application.Services;
 
 public class UserBookService : IUserBookService
 {
-    private readonly IUserBookRepository _userBookRepository;
+    private readonly IAppUserRepository _appUserRepository;
     private readonly IBookRepository _bookRepository;
 
-    public UserBookService(IUserBookRepository userBookRepository, IBookRepository bookRepository)
+    public UserBookService(IAppUserRepository appUserRepository, IBookRepository bookRepository)
     {
-        _userBookRepository = userBookRepository;
+        _appUserRepository = appUserRepository;
         _bookRepository = bookRepository;
     }
 
     public async Task<ValueOrResult> AddUserBookAsync(string userId, Guid bookId)
     {
+        var user = await _appUserRepository.GetUserWithBooks(userId);
+        if (user is null)
+            return ValueOrResult.Failure("User not found.");
+
         var book = await _bookRepository.GetBookById(bookId);
         if (book is null)
             return ValueOrResult.Failure("Book not found");
 
-        var existing = await _userBookRepository.GetUserBookById(userId, bookId);
+        var result = user.AddBook(book);
+        if (!result.IsSuccess)
+            return ValueOrResult.Failure(result.ErrorMessage!);
 
-        if (existing is not null)
-            return ValueOrResult.Failure("Book already added to user library.");
-
-        var userBookResult = UserBook.Create(userId, bookId);
-        if (!userBookResult.IsSuccess)
-            return ValueOrResult.Failure(userBookResult.ErrorMessage!);
-
-        await _userBookRepository.AddUserBook(userBookResult.Value!);
-        await _userBookRepository.SaveChanges();
+        await _appUserRepository.SaveChangesAsync();
 
         return ValueOrResult.Success();
     }
 
     public async Task<List<UserBook>> GetUserBooksAsync(string userId)
     {
-        return await _userBookRepository.GetAllUserBooks(userId);
+        var user = await _appUserRepository.GetUserWithBooks(userId);
+        if (user is null)
+            return new List<UserBook>();
+
+        return user.UserBooks.ToList();
     }
 
     public async Task<ValueOrResult> RemoveUserBookAsync(string userId, Guid bookId)
     {
-        var userBookExists = await _userBookRepository.GetUserBookById(userId, bookId);
-        if (userBookExists is null)
-            return ValueOrResult.Failure("The user does not have such a book.");
+        var user = await _appUserRepository.GetUserWithBooks(userId);
+        if (user is null)
+            return ValueOrResult.Failure("User not found");
 
-        await _userBookRepository.Delete(userBookExists);
-        await _userBookRepository.SaveChanges();
+        var result = user.RemoveBook(bookId);
+        if (!result.IsSuccess)
+            return ValueOrResult.Failure(result.ErrorMessage!);
+        
+        await _appUserRepository.SaveChangesAsync();
 
         return ValueOrResult.Success();
     }
