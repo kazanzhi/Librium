@@ -9,11 +9,13 @@ public class AuthService : IAuthService
 {
     private readonly IJwtTokenService _tokenService;
     private readonly IIdentityService _identityService;
+
     public AuthService(IJwtTokenService tokenService, IIdentityService identityService)
     {
         _tokenService = tokenService;
         _identityService = identityService;
     }
+
     public async Task<ValueOrResult<string>> Login(LoginDto loginDto)
     {
         var user = await _identityService.FindByEmailAsync(loginDto.Email);

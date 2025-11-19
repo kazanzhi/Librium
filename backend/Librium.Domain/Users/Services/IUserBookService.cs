@@ -2,6 +2,7 @@
 using Librium.Domain.Users.Models;
 
 namespace Librium.Domain.Interfaces;
+
 public interface IUserBookService
 {
     Task<List<UserBook>> GetUserBooksAsync(string userId);

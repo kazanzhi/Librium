@@ -7,10 +7,12 @@ namespace Librium.Persistence.Repositories;
 public class UserBookRepository : IUserBookRepository
 {
     private readonly LibriumDbContext _context;
+
     public UserBookRepository(LibriumDbContext context)
     {
         _context = context;
     }
+
     public async Task<UserBook> AddUserBook(UserBook userBook)
     {
         var result = await _context.UserBooks.AddAsync(userBook);

@@ -2,6 +2,7 @@
 using Librium.Domain.Users.Models;
 
 namespace Librium.Domain.Interfaces;
+
 public interface IIdentityService
 {
     Task<bool> CheckPasswordAsync(AppUser user, string password);

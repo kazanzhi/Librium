@@ -8,7 +8,7 @@ namespace Librium.Persistence;
 
 public class LibriumDbContext : IdentityDbContext<AppUser>
 {
-    public LibriumDbContext(DbContextOptions<LibriumDbContext> options) 
+    public LibriumDbContext(DbContextOptions<LibriumDbContext> options)
         : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder builder)

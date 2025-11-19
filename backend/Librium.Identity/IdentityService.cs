@@ -8,14 +8,17 @@ namespace Librium.Identity;
 public class IdentityService : IIdentityService
 {
     private readonly UserManager<AppUser> _userManager;
+
     public IdentityService(UserManager<AppUser> userManager)
     {
         _userManager = userManager;
     }
+
     public async Task<bool> CheckPasswordAsync(AppUser user, string password)
     {
         return await _userManager.CheckPasswordAsync(user, password);
     }
+
     public async Task<ValueOrResult> CreateUserAsync(AppUser user, string password, string role)
     {
         var result = await _userManager.CreateAsync(user, password);

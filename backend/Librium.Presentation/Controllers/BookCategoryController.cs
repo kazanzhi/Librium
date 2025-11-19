@@ -11,6 +11,7 @@ namespace Librium.Presentation.Controllers;
 public class BookCategoryController : ControllerBase
 {
     private readonly IBookCategoryService _service;
+
     public BookCategoryController(IBookCategoryService service)
     {
         _service = service;
@@ -61,5 +62,4 @@ public class BookCategoryController : ControllerBase
             ? Ok()
             : BadRequest(result.ErrorMessage);
     }
-
 }

@@ -1,4 +1,5 @@
 ﻿namespace Librium.Domain.Users.Models;
+
 public class UserRoles
 {
     public const string Admin = "Admin";

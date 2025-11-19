@@ -1,6 +1,6 @@
 ﻿using Librium.Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
-using System;
+
 namespace Librium.Identity;
 
 public static class DependencyInjection

@@ -6,13 +6,16 @@ using Librium.Domain.Interfaces;
 using Librium.Domain.Repositories;
 
 namespace Librium.Application.Services;
+
 public class BookCategoryService : IBookCategoryService
 {
     private readonly IBookCategoryRepository _repository;
+
     public BookCategoryService(IBookCategoryRepository repository)
     {
         _repository = repository;
     }
+
     public async Task<ValueOrResult<Guid>> AddBookCategoryAsync(BookCategoryDto categoryDto)
     {
         var categoryResult = BookCategory.Create(categoryDto.Name);
@@ -54,7 +57,7 @@ public class BookCategoryService : IBookCategoryService
 
     public async Task<BookCategoryResponseDto> GetBookCategoryById(Guid categoryId)
     {
-        var category =  await _repository.GetBookCategoryById(categoryId);
+        var category = await _repository.GetBookCategoryById(categoryId);
 
         return new BookCategoryResponseDto
         {

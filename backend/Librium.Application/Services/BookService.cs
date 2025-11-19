@@ -6,10 +6,12 @@ using Librium.Domain.Interfaces;
 using Librium.Domain.Repositories;
 
 namespace Librium.Application.Services;
+
 public class BookService : IBookService
 {
     private readonly IBookRepository _repository;
     private readonly IBookCategoryRepository _category;
+
     public BookService(IBookRepository repository, IBookCategoryRepository category)
     {
         _repository = repository;
@@ -38,7 +40,7 @@ public class BookService : IBookService
             return ValueOrResult<Guid>.Failure("Something went wrong.");
 
         bookResult.Value.BookCategory = categoryExists;
-        
+
         await _repository.AddBook(book);
         await _repository.SaveChanges();
 

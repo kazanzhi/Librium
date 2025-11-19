@@ -2,6 +2,7 @@
 using Librium.Domain.Entities.Books;
 
 namespace Librium.Domain.Repositories;
+
 public interface IBookCategoryRepository : IBaseRepository<BookCategory>
 {
     Task<BookCategory?> GetBookCategoryById(Guid categoryId);
