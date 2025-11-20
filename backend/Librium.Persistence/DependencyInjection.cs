@@ -22,7 +22,6 @@ public static class DependencyInjection
 
         services.AddScoped<IBookCategoryRepository, BookCategoryRepository>();
         services.AddScoped<IBookRepository, BookRepository>();
-        services.AddScoped<IUserBookRepository, UserBookRepository>();
         services.AddScoped<IAppUserRepository, AppUserRepository>();
 
         services.AddIdentity<AppUser, IdentityRole>(options =>
