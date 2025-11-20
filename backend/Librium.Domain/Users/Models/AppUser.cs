@@ -8,15 +8,12 @@ public class AppUser : IdentityUser
 {
     public ICollection<UserBook> UserBooks { get; set; } = new List<UserBook>();
 
-    public ValueOrResult AddBook(Book book)
+    public ValueOrResult AddBook(Guid bookId)
     {
-        if (book is null)
-            return ValueOrResult.Failure("Book not found.");
-
-        if (UserBooks.Any(x => x.BookId == book.Id))
+        if (UserBooks.Any(x => x.BookId == bookId))
             return ValueOrResult.Failure("Book already in the library.");
 
-        var result = UserBook.Create(Id, book.Id);
+        var result = UserBook.Create(Id, bookId);
         if (!result.IsSuccess)
             return ValueOrResult.Failure(result.ErrorMessage!);
 

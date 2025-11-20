@@ -27,7 +27,7 @@ public class UserBookService : IUserBookService
         if (book is null)
             return ValueOrResult.Failure("Book not found");
 
-        var result = user.AddBook(book);
+        var result = user.AddBook(bookId);
         if (!result.IsSuccess)
             return ValueOrResult.Failure(result.ErrorMessage!);
 
