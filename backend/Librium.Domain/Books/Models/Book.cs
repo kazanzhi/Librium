@@ -15,7 +15,7 @@ public class Book
     public int PublishedYear { get; set; }
     public ICollection<UserBook> UserBooks { get; set; } = new List<UserBook>();
 
-    public static ValueOrResult<Book> Create(string title, string author, string category, string content, int publishedYear)
+    public static ValueOrResult<Book> Create(string title, string author, Guid categoryId, string content, int publishedYear)
     {
         if (title is null)
             return ValueOrResult<Book>.Failure("Title is required.");
@@ -23,7 +23,7 @@ public class Book
         if (author is null)
             return ValueOrResult<Book>.Failure("Author is required.");
 
-        if (category is null)
+        if (categoryId == Guid.Empty)
             return ValueOrResult<Book>.Failure("Category is required.");
 
         if (content is null)
@@ -38,7 +38,8 @@ public class Book
             Title = title.Trim(),
             Author = author.Trim(),
             Content = content.Trim(),
-            PublishedYear = publishedYear
+            PublishedYear = publishedYear,
+            CategoryId = categoryId
         };
 
         return ValueOrResult<Book>.Success(book);
