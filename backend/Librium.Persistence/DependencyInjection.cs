@@ -23,7 +23,6 @@ public static class DependencyInjection
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<IUserBookRepository, UserBookRepository>();
 
-
         services.AddIdentity<AppUser, IdentityRole>(options =>
         {
             options.User.RequireUniqueEmail = true;
