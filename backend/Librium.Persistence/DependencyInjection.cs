@@ -1,5 +1,6 @@
 ﻿using Librium.Domain.Repositories;
 using Librium.Domain.Users.Models;
+using Librium.Domain.Users.Repositories;
 using Librium.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -22,6 +23,7 @@ public static class DependencyInjection
         services.AddScoped<IBookCategoryRepository, BookCategoryRepository>();
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<IUserBookRepository, UserBookRepository>();
+        services.AddScoped<IAppUserRepository, AppUserRepository>();
 
         services.AddIdentity<AppUser, IdentityRole>(options =>
         {
