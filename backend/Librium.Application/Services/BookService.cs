@@ -30,21 +30,17 @@ public class BookService : IBookService
         if (categoryExists is null)
             return ValueOrResult<Guid>.Failure($"Category {bookDto.Category} does not exists.");
 
-        var bookResult = Book.Create(bookDto.Title, bookDto.Author, bookDto.Category, bookDto.Content, bookDto.PublishedYear);
+        var bookResult = Book.Create(bookDto.Title, bookDto.Author, categoryExists.Id, bookDto.Content, bookDto.PublishedYear);
 
         if (!bookResult.IsSuccess)
             return ValueOrResult<Guid>.Failure(bookResult.ErrorMessage!);
 
-        Book book = bookResult.Value;
-        if (book is null)
-            return ValueOrResult<Guid>.Failure("Something went wrong.");
+        var book = bookResult.Value;
 
-        bookResult.Value.BookCategory = categoryExists;
-
-        await _repository.AddBook(book);
+        await _repository.AddBook(book!);
         await _repository.SaveChanges();
 
-        return ValueOrResult<Guid>.Success(book.Id);
+        return ValueOrResult<Guid>.Success(book!.Id);
     }
 
     public async Task<ValueOrResult> DeleteBookAsync(Guid bookId)
