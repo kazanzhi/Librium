@@ -3,7 +3,7 @@ using Librium.Domain.Users.Models;
 
 namespace Librium.Domain.Interfaces;
 
-public interface IUserBookService
+public interface IAppUserService
 {
     Task<List<UserBook>> GetUserBooksAsync(string userId);
     Task<ValueOrResult> AddUserBookAsync(string userId, Guid bookId);

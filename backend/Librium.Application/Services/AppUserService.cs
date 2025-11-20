@@ -6,12 +6,12 @@ using Librium.Domain.Users.Repositories;
 
 namespace Librium.Application.Services;
 
-public class UserBookService : IUserBookService
+public class AppUserService : IAppUserService
 {
     private readonly IAppUserRepository _appUserRepository;
     private readonly IBookRepository _bookRepository;
 
-    public UserBookService(IAppUserRepository appUserRepository, IBookRepository bookRepository)
+    public AppUserService(IAppUserRepository appUserRepository, IBookRepository bookRepository)
     {
         _appUserRepository = appUserRepository;
         _bookRepository = bookRepository;

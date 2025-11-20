@@ -11,11 +11,11 @@ namespace Librium.Presentation.Controllers;
 [ApiController]
 public class UserBookController : ControllerBase
 {
-    private readonly IUserBookService _userBookService;
+    private readonly IAppUserService _appUserService;
 
-    public UserBookController(IUserBookService userBookService)
+    public UserBookController(IAppUserService appUserService)
     {
-        _userBookService = userBookService;
+        _appUserService = appUserService;
     }
 
     [HttpPost("{Id}")]
@@ -25,7 +25,7 @@ public class UserBookController : ControllerBase
         if (userId is null)
             return Unauthorized();
 
-        var result = await _userBookService.AddUserBookAsync(userId, Id);
+        var result = await _appUserService.AddUserBookAsync(userId, Id);
 
         return result.IsSuccess
             ? Ok()
@@ -39,7 +39,7 @@ public class UserBookController : ControllerBase
         if (userId is null)
             return Unauthorized();
 
-        var books = await _userBookService.GetUserBooksAsync(userId);
+        var books = await _appUserService.GetUserBooksAsync(userId);
         return Ok(books);
     }
 
@@ -50,7 +50,7 @@ public class UserBookController : ControllerBase
         if (userId is null)
             return Unauthorized();
 
-        var result = await _userBookService.RemoveUserBookAsync(userId, Id);
+        var result = await _appUserService.RemoveUserBookAsync(userId, Id);
         return result.IsSuccess
             ? Ok()
             : BadRequest(result.ErrorMessage);
