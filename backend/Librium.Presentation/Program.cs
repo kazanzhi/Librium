@@ -2,6 +2,7 @@ using Librium.Application;
 using Librium.Identity;
 using Librium.Persistence;
 using Librium.Persistence.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Librium.Presentation;
 
@@ -25,7 +26,12 @@ public class Program
 
         using (var scope = app.Services.CreateScope())
         {
-            await IdentitySeed.SeedRolesAsync(scope.ServiceProvider);
+            var services = scope.ServiceProvider;
+
+            var db = services.GetRequiredService<LibriumDbContext>();
+            db.Database.Migrate();
+
+            await IdentitySeed.SeedRolesAsync(services);
         }
 
         // Configure the HTTP request pipeline.

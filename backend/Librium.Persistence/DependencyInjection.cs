@@ -14,7 +14,7 @@ public static class DependencyInjection
     public static IServiceCollection AddPersistenceInfrastructure(this IServiceCollection services, IConfiguration config)
     {
         services.AddDbContext<LibriumDbContext>(options =>
-            options.UseSqlServer(config.GetConnectionString("Default")));
+            options.UseSqlServer(config.GetConnectionString("Default"), sqlOptions => sqlOptions.EnableRetryOnFailure()));
 
         services.AddScoped<IBookCategoryRepository, BookCategoryRepository>();
         services.AddScoped<IBookRepository, BookRepository>();
