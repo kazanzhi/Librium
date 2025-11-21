@@ -12,15 +12,15 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
-
         builder.Services.AddControllers();
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
         builder.Services.AddOpenApi();
 
         builder.Services.AddApplication();
         builder.Services.AddIdentityInfrastructure(builder.Configuration);
         builder.Services.AddPersistenceInfrastructure(builder.Configuration);
+
+        builder.Services.AddSwaggerGen();
 
         var app = builder.Build();
 
@@ -34,17 +34,18 @@ public class Program
             await IdentitySeed.SeedRolesAsync(services);
         }
 
-        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
+
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();
         app.UseRouting();
         app.UseAuthentication();
         app.UseAuthorization();
-
 
         app.MapControllers();
 
