@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.13.35818.85
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11217.181 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Librium.Domain", "Librium.Domain\Librium.Domain.csproj", "{6D1F8D18-B0F3-4040-ACA7-98BB46FE706A}"
 EndProject
@@ -12,6 +12,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Librium.Presentation", "Librium.Presentation\Librium.Presentation.csproj", "{1AE2E369-17C6-42DE-871B-511788B5539F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Librium.Identity", "Librium.Identity\Librium.Identity.csproj", "{75C1627B-7A67-41FB-8CE3-D7C5FDC411E1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E199EDE7-235A-4F22-A3DD-4DFC697C9539}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "env", "env", "{F2D348E0-2281-4A19-8309-061B6F98295C}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81DDED9D-158B-E303-5F62-77A2896D2A5A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +45,21 @@ Global
 		{75C1627B-7A67-41FB-8CE3-D7C5FDC411E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75C1627B-7A67-41FB-8CE3-D7C5FDC411E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75C1627B-7A67-41FB-8CE3-D7C5FDC411E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6D1F8D18-B0F3-4040-ACA7-98BB46FE706A} = {E199EDE7-235A-4F22-A3DD-4DFC697C9539}
+		{550CEA9E-03FA-410E-9FDB-3FBCA4EAE3B0} = {E199EDE7-235A-4F22-A3DD-4DFC697C9539}
+		{DA02C98D-AC50-4584-9665-97F664216A8D} = {E199EDE7-235A-4F22-A3DD-4DFC697C9539}
+		{1AE2E369-17C6-42DE-871B-511788B5539F} = {E199EDE7-235A-4F22-A3DD-4DFC697C9539}
+		{75C1627B-7A67-41FB-8CE3-D7C5FDC411E1} = {E199EDE7-235A-4F22-A3DD-4DFC697C9539}
+		{81DDED9D-158B-E303-5F62-77A2896D2A5A} = {F2D348E0-2281-4A19-8309-061B6F98295C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {171ECA6D-77B2-406A-9A5A-A4565FD011CB}
