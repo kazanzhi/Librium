@@ -3,8 +3,9 @@ using Librium.Domain.Users.Models;
 
 namespace Librium.Domain.Users.Repositories;
 
-public interface IAppUserRepository
+public interface IAppUserRepository : IBaseRepository<UserBook>
 {
-    Task<AppUser?> GetUserWithBooks(string userId);
-    Task SaveChangesAsync();
+    Task<List<UserBook>> GetAppUserBooks(string userId);
+    Task<AppUser?> GetAppUserById(string userId);
+    Task Add(UserBook userBook);
 }

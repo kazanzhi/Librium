@@ -11,16 +11,35 @@ public class AppUserRepository : IAppUserRepository
     {
         _context = context;
     }
-    public async Task<AppUser?> GetUserWithBooks(string userId)
+
+    public async Task Add(UserBook userBook)
     {
-        return await _context.Users
-            .Include(x => x.UserBooks)
-            .ThenInclude(x => x.Book)
-            .FirstOrDefaultAsync(x => x.Id == userId);
+        await _context.UserBooks.AddAsync(userBook);
     }
 
-    public async Task SaveChangesAsync()
+    public async Task Delete(UserBook userBook)
     {
-        await _context.SaveChangesAsync();
+        _context.UserBooks.Remove(userBook);
+    }
+
+    public async Task<List<UserBook>> GetAppUserBooks(string userId)
+    {
+        return await _context.UserBooks
+            .Where(x => x.UserId == userId)
+            .Include(x => x.Book)
+            .ToListAsync();
+    }
+
+    public async Task<AppUser?> GetAppUserById(string userId)
+    {
+        return await _context.Users
+        .Include(u => u.UserBooks)
+            .ThenInclude(ub => ub.Book)
+        .FirstOrDefaultAsync(u => u.Id == userId);
+    }
+
+    public async Task<bool> SaveChanges()
+    {
+        return await _context.SaveChangesAsync() > 0;
     }
 }
