@@ -29,7 +29,6 @@ public class AppUserService : IAppUserService
         if (!result.IsSuccess)
             return ValueOrResult.Failure(result.ErrorMessage!);
 
-        await _appUserRepository.Add(result.Value!);
         await _appUserRepository.SaveChanges();
 
         return ValueOrResult.Success();
@@ -55,7 +54,6 @@ public class AppUserService : IAppUserService
         if (!result.IsSuccess)
             return ValueOrResult.Failure(result.ErrorMessage!);
 
-        await _appUserRepository.Delete(result.Value!);
         await _appUserRepository.SaveChanges();
 
         return ValueOrResult.Success();

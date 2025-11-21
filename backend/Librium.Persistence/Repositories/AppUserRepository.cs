@@ -12,16 +12,6 @@ public class AppUserRepository : IAppUserRepository
         _context = context;
     }
 
-    public async Task Add(UserBook userBook)
-    {
-        await _context.UserBooks.AddAsync(userBook);
-    }
-
-    public async Task Delete(UserBook userBook)
-    {
-        _context.UserBooks.Remove(userBook);
-    }
-
     public async Task<List<UserBook>> GetAppUserBooks(string userId)
     {
         return await _context.UserBooks

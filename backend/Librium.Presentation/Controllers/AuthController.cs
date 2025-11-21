@@ -28,7 +28,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register-admin")]
-    [Authorize(Roles = UserRoles.Admin)]
+    //[Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> RegisterAdmin([FromBody] RegisterDto registerDto)
     {
         var result = await _authService.RegisterAdminAsync(registerDto);

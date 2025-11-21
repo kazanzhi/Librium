@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Librium.Persistence.Migrations
 {
     [DbContext(typeof(LibriumDbContext))]
-    [Migration("20251116002941_InitialCreate")]
+    [Migration("20251121174212_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
