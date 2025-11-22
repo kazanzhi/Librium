@@ -137,7 +137,6 @@ namespace Librium.Persistence.Migrations
             modelBuilder.Entity("Librium.Domain.Users.Models.UserBook", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("AddedAt")

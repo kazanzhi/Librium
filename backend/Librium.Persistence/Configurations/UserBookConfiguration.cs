@@ -8,6 +8,9 @@ public class UserBookConfiguration : IEntityTypeConfiguration<UserBook>
 {
     public void Configure(EntityTypeBuilder<UserBook> builder)
     {
+        builder.Property(x => x.Id)
+            .ValueGeneratedNever();
+
         builder.HasOne(ub => ub.AppUser)
             .WithMany(u => u.UserBooks)
             .HasForeignKey(ub => ub.UserId)

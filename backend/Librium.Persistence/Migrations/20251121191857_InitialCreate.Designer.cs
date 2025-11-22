@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Librium.Persistence.Migrations
 {
     [DbContext(typeof(LibriumDbContext))]
-    [Migration("20251121174212_InitialCreate")]
+    [Migration("20251121191857_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -140,7 +140,6 @@ namespace Librium.Persistence.Migrations
             modelBuilder.Entity("Librium.Domain.Users.Models.UserBook", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("AddedAt")
