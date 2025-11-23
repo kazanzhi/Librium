@@ -19,7 +19,7 @@ public class Program
         builder.Services.AddOpenApi();
 
         builder.Services.AddApplication();
-        builder.Services.AddIdentityInfrastructure();
+        builder.Services.AddIdentityInfrastructure(builder.Configuration);
         builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 
         builder.Services.AddSwaggerGen();
