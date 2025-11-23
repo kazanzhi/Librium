@@ -16,8 +16,13 @@ public class BookCategoryService : IBookCategoryService
         _repository = repository;
     }
 
-    public async Task<ValueOrResult<Guid>> AddBookCategoryAsync(BookCategoryDto categoryDto)
+    public async Task<ValueOrResult<Guid>> CreateBookCategoryAsync(BookCategoryDto categoryDto)
     {
+        var existingCategory = await _repository.GetAllBookCategories();
+        bool categoryExist = existingCategory.Any(c => c.Name == categoryDto.Name.Trim());
+        if (categoryExist)
+            return ValueOrResult<Guid>.Failure("This category already exists.");
+       
         var categoryResult = BookCategory.Create(categoryDto.Name);
         if (!categoryResult.IsSuccess)
             return ValueOrResult<Guid>.Failure(categoryResult.ErrorMessage!);

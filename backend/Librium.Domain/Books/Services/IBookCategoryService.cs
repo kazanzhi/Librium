@@ -8,7 +8,7 @@ public interface IBookCategoryService
 {
     Task<List<BookCategoryResponseDto>> GetAllBookCategoriesAsync();
     Task<BookCategoryResponseDto> GetBookCategoryById(Guid categoryId);
-    Task<ValueOrResult<Guid>> AddBookCategoryAsync(BookCategoryDto categoryDto);
+    Task<ValueOrResult<Guid>> CreateBookCategoryAsync(BookCategoryDto categoryDto);
     Task<ValueOrResult> DeleteBookCategoryAsync(Guid categoryId);
     Task<ValueOrResult> UpdateBookCategoryAsync(Guid categoryId, BookCategoryDto categoryDto);
 }
