@@ -31,26 +31,6 @@ public static class DependencyInjection
             .AddEntityFrameworkStores<LibriumDbContext>()
             .AddDefaultTokenProviders();
 
-        services.AddAuthentication(options =>
-        {
-
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                ValidIssuer = config["JwtOptions:Issuer"],
-                ValidAudience = config["JwtOptions:Audience"],
-                RoleClaimType = ClaimTypes.Role,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtOptions:Key"]))
-            };
-        });
-
         return services;
     }
 }
