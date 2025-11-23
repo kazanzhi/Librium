@@ -2,6 +2,7 @@ using Librium.Application;
 using Librium.Identity;
 using Librium.Persistence;
 using Librium.Persistence.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Librium.Presentation;
 
@@ -21,10 +22,17 @@ public class Program
         builder.Services.AddIdentityInfrastructure();
         builder.Services.AddPersistenceInfrastructure(builder.Configuration);
 
+        builder.Services.AddSwaggerGen();
+
         var app = builder.Build();
 
         using (var scope = app.Services.CreateScope())
         {
+            var services = scope.ServiceProvider;
+
+            var db = services.GetRequiredService<LibriumDbContext>();
+            db.Database.Migrate();
+
             await IdentitySeed.SeedRolesAsync(scope.ServiceProvider);
         }
 
@@ -32,6 +40,8 @@ public class Program
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();

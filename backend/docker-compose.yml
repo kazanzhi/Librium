@@ -1,0 +1,25 @@
+services:
+  librium.presentation:
+    image: ${DOCKER_REGISTRY-}libriumpresentation
+    build:
+      context: .
+      dockerfile: Librium.Presentation/Dockerfile
+    depends_on:
+       - msql
+    environment:
+       ConnectionStrings__DefaultConnection: "Server=msql,1433;Database=${DB_NAME};User Id=sa;Password=${SA_PASSWORD};TrustServerCertificate=true;"
+    ports:
+       - "8080:8080"
+       - "8081:8081"
+   
+
+  msql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "${SA_PASSWORD}"
+    ports:
+      - "1433:1433"
+
+volumes:
+  mssql_data:
