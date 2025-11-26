@@ -39,11 +39,11 @@ public class BookCategoryService : IBookCategoryService
 
     public async Task<ValueOrResult> DeleteBookCategoryAsync(Guid categoryId)
     {
-        var book = await _repository.GetBookCategoryById(categoryId);
-        if (book is null)
+        var category = await _repository.GetBookCategoryById(categoryId);
+        if (category is null)
             return ValueOrResult.Failure("Category not found.");
 
-        await _repository.Delete(book);
+        await _repository.Delete(category);
         await _repository.SaveChanges();
 
         return ValueOrResult.Success();

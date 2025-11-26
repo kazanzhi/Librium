@@ -20,7 +20,7 @@ public class BookCategory
         var category = new BookCategory
         {
             Id = Guid.NewGuid(),
-            Name = name
+            Name = name.Trim()
         };
 
         return ValueOrResult<BookCategory>.Success(category);
