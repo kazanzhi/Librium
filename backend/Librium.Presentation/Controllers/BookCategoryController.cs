@@ -21,7 +21,7 @@ public class BookCategoryController : ControllerBase
     [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> Create([FromBody] BookCategoryDto categoryDto)
     {
-        var result = await _service.AddBookCategoryAsync(categoryDto);
+        var result = await _service.CreateBookCategoryAsync(categoryDto);
         return result.IsSuccess
             ? CreatedAtAction(nameof(GetById), new { Id = result.Value }, result.Value)
             : BadRequest(result.ErrorMessage);
