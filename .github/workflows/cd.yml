@@ -20,5 +20,5 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: librium-app-service
+          app-name: libriumpresentation-web
           images: ${{ secrets.ACR_LOGIN_SERVER }}/librium-api:latest
