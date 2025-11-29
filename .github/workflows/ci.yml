@@ -18,13 +18,13 @@ jobs:
           dotnet-version: '9.x'
       
       - name: Restore
-        run: dotnet restore
+        run: dotnet restore ./backend/Librium.sln
 
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build ./backend/Librium.sln --configuration Release --no-restore
 
       - name: Test
-        run: dotnet test backend/Librium.Tests/Librium.Tests.csproj --configuration Release --no-build
+        run: dotnet test ./backend/Librium.Tests/Librium.Tests.csproj --configuration Release --no-build
 
   build-and-push-docker-image:
     needs: test
