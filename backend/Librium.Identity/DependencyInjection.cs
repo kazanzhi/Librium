@@ -31,7 +31,7 @@ public static class DependencyInjection
                 ValidIssuer = config["JwtOptions:Issuer"],
                 ValidAudience = config["JwtOptions:Audience"],
                 RoleClaimType = ClaimTypes.Role,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtOptions:Key"]))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtOptions:Key"]!))
             };
         });
 

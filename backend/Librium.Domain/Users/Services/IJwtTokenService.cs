@@ -4,5 +4,5 @@ namespace Librium.Domain.Interfaces;
 
 public interface IJwtTokenService
 {
-    Task<string> CreateToken(AppUser user, IList<string> roles);
+    string CreateToken(AppUser user, IList<string> roles);
 }

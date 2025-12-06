@@ -18,27 +18,27 @@ public class AuthService : IAuthService
 
     public async Task<ValueOrResult<string>> Login(LoginDto loginDto)
     {
-        var user = await _identityService.FindByEmailAsync(loginDto.Email);
+        var user = await _identityService.FindByEmailAsync(loginDto.Email!);
         if (user is null)
             return ValueOrResult<string>.Failure("Invalid email or password.");
 
-        var validPassword = await _identityService.CheckPasswordAsync(user, loginDto.Password);
+        var validPassword = await _identityService.CheckPasswordAsync(user, loginDto.Password!);
         if (!validPassword)
             return ValueOrResult<string>.Failure("Invalid email or password.");
 
         var roles = await _identityService.GetRolesAsync(user);
-        var token = await _tokenService.CreateToken(user, roles);
+        var token = _tokenService.CreateToken(user, roles);
 
         return ValueOrResult<string>.Success(token);
     }
 
     public async Task<ValueOrResult> RegisterAdminAsync(RegisterDto registerDto)
     {
-        var emailExists = await _identityService.FindByEmailAsync(registerDto.Email);
+        var emailExists = await _identityService.FindByEmailAsync(registerDto.Email!);
         if (emailExists is not null)
             return ValueOrResult.Failure("User with this email already exists.");
 
-        var nameExists = await _identityService.FindByNameAsync(registerDto.Username);
+        var nameExists = await _identityService.FindByNameAsync(registerDto.Username!);
         if (nameExists is not null)
             return ValueOrResult.Failure("User with this username already exists.");
 
@@ -48,7 +48,7 @@ public class AuthService : IAuthService
             UserName = registerDto.Username
         };
 
-        var createResult = await _identityService.CreateUserAsync(newUser, registerDto.Password, UserRoles.Admin);
+        var createResult = await _identityService.CreateUserAsync(newUser, registerDto.Password!, UserRoles.Admin);
         if (!createResult.IsSuccess)
             return ValueOrResult.Failure(createResult.ErrorMessage!);
 
@@ -57,11 +57,11 @@ public class AuthService : IAuthService
 
     public async Task<ValueOrResult> RegisterUserAsync(RegisterDto registerDto)
     {
-        var emailExists = await _identityService.FindByEmailAsync(registerDto.Email);
+        var emailExists = await _identityService.FindByEmailAsync(registerDto.Email!);
         if (emailExists is not null)
             return ValueOrResult.Failure("User with this email already exists.");
 
-        var nameExists = await _identityService.FindByNameAsync(registerDto.Username);
+        var nameExists = await _identityService.FindByNameAsync(registerDto.Username!);
         if (nameExists is not null)
             return ValueOrResult.Failure("User with this username already exists.");
 
@@ -71,7 +71,7 @@ public class AuthService : IAuthService
             UserName = registerDto.Username
         };
 
-        var createResult = await _identityService.CreateUserAsync(newUser, registerDto.Password, UserRoles.User);
+        var createResult = await _identityService.CreateUserAsync(newUser, registerDto.Password!, UserRoles.User);
         if (!createResult.IsSuccess)
             return ValueOrResult.Failure(createResult.ErrorMessage!);
 

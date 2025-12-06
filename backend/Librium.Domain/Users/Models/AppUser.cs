@@ -5,7 +5,7 @@ namespace Librium.Domain.Users.Models;
 
 public class AppUser : IdentityUser
 {
-    public ICollection<UserBook> UserBooks { get; set; } = new List<UserBook>();
+    public ICollection<UserBook> UserBooks { get; private set; } = new List<UserBook>();
 
     public ValueOrResult AddBook(Guid bookId)
     {

@@ -19,7 +19,7 @@ public class BookRepository : IBookRepository
         return result.Entity;
     }
 
-    public async Task Delete(Book entity)
+    public void Delete(Book entity)
     {
         _context.Books.Remove(entity);
     }

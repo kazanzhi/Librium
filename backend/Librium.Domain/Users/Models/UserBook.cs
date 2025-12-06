@@ -5,12 +5,13 @@ namespace Librium.Domain.Users.Models;
 
 public class UserBook
 {
-    public Guid Id { get; set; }
-    public Guid BookId { get; set; }
-    public Book Book { get; set; }
-    public string UserId { get; set; }
-    public AppUser AppUser { get; set; }
-    public DateTime AddedAt { get; set; }
+    private UserBook() { }
+    public Guid Id { get; private set; }
+    public Guid BookId { get; private set; }
+    public Book Book { get; private set; } = null!;
+    public string UserId { get; private set; } = string.Empty;
+    public AppUser AppUser { get; private set; } = null!;
+    public DateTime AddedAt { get; private set; }
 
     public static ValueOrResult<UserBook> Create(string userId, Guid bookId)
     {

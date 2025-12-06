@@ -29,7 +29,7 @@ public class BookCategoryTests
         var result = BookCategory.Create("    Science   ");
 
         //assert
-        result.Value.Name.Should().Be("Science");
+        result.Value!.Name.Should().Be("Science");
     }
 
     [Fact]
@@ -65,7 +65,7 @@ public class BookCategoryTests
         var category = BookCategory.Create("Science").Value;
 
         //act
-        var result = category.Update("Education");
+        var result = category!.Update("Education");
 
         //assert
         result.IsSuccess.Should().BeTrue();
@@ -79,7 +79,7 @@ public class BookCategoryTests
         var category = BookCategory.Create("Science").Value;
 
         //act
-        var result = category.Update("   Education   ");
+        var result = category!.Update("   Education   ");
 
         //arrange
         category.Name.Should().Be("Education");
@@ -90,7 +90,7 @@ public class BookCategoryTests
     {
         //arrange
         var category = BookCategory.Create("Science").Value;
-        var categoryId = category.Id;
+        var categoryId = category!.Id;
 
         //act
         var result = category.Update("Education");
@@ -106,7 +106,7 @@ public class BookCategoryTests
         var category = BookCategory.Create("Science").Value;
 
         //act
-        var result = category.Update("");
+        var result = category!.Update("");
 
         //assert
         result.IsSuccess.Should().BeFalse();
@@ -120,7 +120,7 @@ public class BookCategoryTests
         var category = BookCategory.Create("Science").Value;
 
         //act
-        var result = category.Update(new string('A', 101));
+        var result = category!.Update(new string('A', 101));
 
         //assert
         result.IsSuccess.Should().BeFalse();
