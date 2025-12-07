@@ -2,7 +2,7 @@
 using Librium.Domain.Common;
 using Librium.Domain.DTOs.BookCategories;
 
-namespace Librium.Domain.Interfaces;
+namespace Librium.Domain.Books.Services;
 
 public interface IBookCategoryService
 {

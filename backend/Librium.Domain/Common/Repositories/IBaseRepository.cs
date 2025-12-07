@@ -3,5 +3,5 @@
 public interface IBaseRepository<T> where T : class
 {
     Task<bool> SaveChanges();
-    Task Delete(T entity);
+    void Delete(T entity);
 }

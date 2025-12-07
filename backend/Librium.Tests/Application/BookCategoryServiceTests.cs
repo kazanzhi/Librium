@@ -2,9 +2,8 @@
 using Librium.Application.Services;
 using Librium.Domain.Books.DTOs;
 using Librium.Domain.Books.Models;
+using Librium.Domain.Books.Repositories;
 using Librium.Domain.DTOs.BookCategories;
-using Librium.Domain.Entities.Books;
-using Librium.Domain.Repositories;
 using Moq;
 
 namespace Librium.Tests.Application;
@@ -61,7 +60,11 @@ public class BookCategoryServiceTests
     {
         //arrange
         var dto = new BookCategoryDto { Name = "Science" };
-        _repo.Setup(r => r.GetAllBookCategories()).ReturnsAsync(new List<BookCategory> { new BookCategory { Name = "Science" } });
+        var existingCategoryResult = BookCategory.Create("Science");
+        existingCategoryResult.IsSuccess.Should().BeTrue();
+        var existingCategory = existingCategoryResult.Value!;
+
+        _repo.Setup(r => r.GetAllBookCategories()).ReturnsAsync(new List<BookCategory> { existingCategory });
 
         //act
         var result = await _service.CreateBookCategoryAsync(dto);
@@ -79,7 +82,11 @@ public class BookCategoryServiceTests
     {
         //arrange
         var dto = new BookCategoryDto { Name = "   Science   " };
-        _repo.Setup(r => r.GetAllBookCategories()).ReturnsAsync(new List<BookCategory> { new BookCategory { Name = "Science" } });
+        var existingCategoryResult = BookCategory.Create("Science");
+        existingCategoryResult.IsSuccess.Should().BeTrue();
+        var existingCategory = existingCategoryResult.Value!;
+
+        _repo.Setup(r => r.GetAllBookCategories()).ReturnsAsync(new List<BookCategory> { existingCategory });
 
         //act
         var result = await _service.CreateBookCategoryAsync(dto);
@@ -124,7 +131,11 @@ public class BookCategoryServiceTests
     public async Task DeleteBookCategoryAsync_ShouldReturnSuccess_WhenCategoryDeleted()
     {
         //arrange 
-        var category = new BookCategory { Name = "Science" };
+        var created = BookCategory.Create("Science");
+        created.IsSuccess.Should().BeTrue();
+
+        var category = created.Value!;
+
         _repo.Setup(r => r.GetBookCategoryById(category.Id)).ReturnsAsync(category);
 
         //act
@@ -159,19 +170,20 @@ public class BookCategoryServiceTests
     public async Task GetAllBookCategoriesAsync_ShouldReturnMapperList()
     {
         //arrange
-        var categories = new List<BookCategory>
-        {
-            new BookCategory { Id = Guid.NewGuid(), Name = "A" },
-            new BookCategory { Id = Guid.NewGuid(), Name = "B" }
-        };
-        _repo.Setup(r => r.GetAllBookCategories()).ReturnsAsync(categories);
+        var a = BookCategory.Create("A");
+        var b = BookCategory.Create("B");
+
+        a.IsSuccess.Should().BeTrue();
+        b.IsSuccess.Should().BeTrue();
+
+        _repo.Setup(r => r.GetAllBookCategories()).ReturnsAsync(new List<BookCategory> { a.Value!, b.Value! });
 
         //act
         var result = await _service.GetAllBookCategoriesAsync();
 
         //assert
         result.Should().HaveCount(2);
-        result[0].Name.Should().Be("A");
+        result[0].Name.Should().Be(expected: "A");
         result[1].Name.Should().Be("B");
         result.Should().BeOfType<List<BookCategoryResponseDto>>();
     }
@@ -196,7 +208,11 @@ public class BookCategoryServiceTests
     public async Task GetBookCategoryById_ShouldReturnMappedDto()
     {
         //arrange 
-        var category = new BookCategory { Id = Guid.NewGuid(), Name = "A" };
+        var created = BookCategory.Create("A");
+        created.IsSuccess.Should().BeTrue();
+
+        var category = created.Value!;
+
         _repo.Setup(r => r.GetBookCategoryById(category.Id)).ReturnsAsync(category);
 
         //act
@@ -226,7 +242,11 @@ public class BookCategoryServiceTests
     public async Task UpdateBookCategoryAsync_ShouldReturnSucces_WhenCategoryUpdated()
     {
         //arrange
-        var category = new BookCategory { Id = Guid.NewGuid(), Name = "A" };
+        var created = BookCategory.Create("A");
+        created.IsSuccess.Should().BeTrue();
+
+        var category = created.Value!;
+
         _repo.Setup(r => r.GetBookCategoryById(category.Id)).ReturnsAsync(category);
 
         //act
@@ -259,7 +279,11 @@ public class BookCategoryServiceTests
     public async Task UpdateBookCategoryAsync_ShouldReturnFailure_WhenNameIsEmpty()
     {
         //arrange
-        var category = new BookCategory { Id = Guid.NewGuid(), Name = "A" };
+        var created = BookCategory.Create("A");
+        created.IsSuccess.Should().BeTrue();
+
+        var category = created.Value!;
+
         _repo.Setup(r => r.GetBookCategoryById(category.Id)).ReturnsAsync(category);
 
         //act
@@ -276,7 +300,11 @@ public class BookCategoryServiceTests
     public async Task UpdateBookCategoryAsync_ShouldReturnFailure_WhenNameTooLong()
     {
         //arrange
-        var category = new BookCategory { Id = Guid.NewGuid(), Name = "A" };
+        var created = BookCategory.Create("A");
+        created.IsSuccess.Should().BeTrue();
+
+        var category = created.Value!;
+
         _repo.Setup(r => r.GetBookCategoryById(category.Id)).ReturnsAsync(category);
 
         //act

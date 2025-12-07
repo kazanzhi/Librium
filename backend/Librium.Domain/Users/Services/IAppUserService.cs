@@ -1,7 +1,7 @@
 ﻿using Librium.Domain.Common;
 using Librium.Domain.Users.DTOs;
 
-namespace Librium.Domain.Interfaces;
+namespace Librium.Domain.Users.Services;
 
 public interface IAppUserService
 {

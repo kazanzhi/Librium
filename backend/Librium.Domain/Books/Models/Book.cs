@@ -1,19 +1,19 @@
 ﻿using Librium.Domain.Common;
-using Librium.Domain.Entities.Books;
 using Librium.Domain.Users.Models;
 
 namespace Librium.Domain.Books.Models;
 
 public class Book
 {
-    public Guid Id { get; set; }
-    public string Title { get; set; }
-    public string Author { get; set; }
-    public Guid CategoryId { get; set; }
-    public BookCategory BookCategory { get; set; }
-    public string Content { get; set; }
-    public int PublishedYear { get; set; }
-    public ICollection<UserBook> UserBooks { get; set; } = new List<UserBook>();
+    private Book() { }
+    public Guid Id { get; private set; }
+    public string Title { get; private set; } = string.Empty;
+    public string Author { get; private set; } = string.Empty;
+    public Guid CategoryId { get; private set; }
+    public BookCategory BookCategory { get; private set; } = null!;
+    public string Content { get; private set; } = string.Empty;
+    public int PublishedYear { get; private set; }
+    public ICollection<UserBook> UserBooks { get; private set; } = new List<UserBook>();
 
     public static ValueOrResult<Book> Create(string title, string author, Guid categoryId, string content, int publishedYear)
     {

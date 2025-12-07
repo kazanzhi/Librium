@@ -1,15 +1,11 @@
-﻿using Librium.Domain.Repositories;
+﻿using Librium.Domain.Books.Repositories;
 using Librium.Domain.Users.Models;
 using Librium.Domain.Users.Repositories;
 using Librium.Persistence.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System.Text;
 
 namespace Librium.Persistence;
 

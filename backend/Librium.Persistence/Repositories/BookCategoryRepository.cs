@@ -1,5 +1,5 @@
-﻿using Librium.Domain.Entities.Books;
-using Librium.Domain.Repositories;
+﻿using Librium.Domain.Books.Models;
+using Librium.Domain.Books.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Librium.Persistence.Repositories;
@@ -20,7 +20,7 @@ public class BookCategoryRepository : IBookCategoryRepository
         return result.Entity;
     }
 
-    public async Task Delete(BookCategory entity)
+    public void Delete(BookCategory entity)
     {
         _context.BookCategories.Remove(entity);
     }

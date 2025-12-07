@@ -1,15 +1,15 @@
-﻿using Librium.Domain.Books.Models;
-using Librium.Domain.Common;
+﻿using Librium.Domain.Common;
 
-namespace Librium.Domain.Entities.Books;
+namespace Librium.Domain.Books.Models;
 
 public class BookCategory
 {
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public ICollection<Book> Books { get; set; } = new List<Book>();
+    private BookCategory() { }
+    public Guid Id { get; private set; }
+    public string Name { get; private set; } = string.Empty;
+    public ICollection<Book> Books { get; private set; } = new List<Book>();
 
-    public static ValueOrResult<BookCategory> Create(string? name)
+    public static ValueOrResult<BookCategory> Create(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
             return ValueOrResult<BookCategory>.Failure("Category name is required.");

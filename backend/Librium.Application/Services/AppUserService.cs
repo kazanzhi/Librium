@@ -1,8 +1,8 @@
-﻿using Librium.Domain.Common;
-using Librium.Domain.Interfaces;
-using Librium.Domain.Repositories;
+﻿using Librium.Domain.Books.Repositories;
+using Librium.Domain.Common;
 using Librium.Domain.Users.DTOs;
 using Librium.Domain.Users.Repositories;
+using Librium.Domain.Users.Services;
 
 namespace Librium.Application.Services;
 
@@ -25,7 +25,7 @@ public class AppUserService : IAppUserService
 
         var user = await _appUserRepository.GetAppUserById(userId);
 
-        var result = user.AddBook(bookId);
+        var result = user!.AddBook(bookId);
         if (!result.IsSuccess)
             return ValueOrResult.Failure(result.ErrorMessage!);
 
@@ -50,7 +50,7 @@ public class AppUserService : IAppUserService
     public async Task<ValueOrResult> RemoveUserBookAsync(string userId, Guid bookId)
     {
         var user = await _appUserRepository.GetAppUserById(userId);
-        var result = user.RemoveBook(bookId);
+        var result = user!.RemoveBook(bookId);
         if (!result.IsSuccess)
             return ValueOrResult.Failure(result.ErrorMessage!);
 

@@ -1,9 +1,9 @@
 ﻿using Librium.Domain.Books.DTOs;
 using Librium.Domain.Common;
 using Librium.Domain.DTOs.BookCategories;
-using Librium.Domain.Entities.Books;
-using Librium.Domain.Interfaces;
-using Librium.Domain.Repositories;
+using Librium.Domain.Books.Models;
+using Librium.Domain.Books.Repositories;
+using Librium.Domain.Books.Services;
 
 namespace Librium.Application.Services;
 
@@ -19,11 +19,11 @@ public class BookCategoryService : IBookCategoryService
     public async Task<ValueOrResult<Guid>> CreateBookCategoryAsync(BookCategoryDto categoryDto)
     {
         var existingCategory = await _repository.GetAllBookCategories();
-        bool categoryExist = existingCategory.Any(c => c.Name == categoryDto.Name.Trim());
+        bool categoryExist = existingCategory.Any(c => c.Name == categoryDto.Name!.Trim());
         if (categoryExist)
             return ValueOrResult<Guid>.Failure("This category already exists.");
        
-        var categoryResult = BookCategory.Create(categoryDto.Name);
+        var categoryResult = BookCategory.Create(categoryDto.Name!);
         if (!categoryResult.IsSuccess)
             return ValueOrResult<Guid>.Failure(categoryResult.ErrorMessage!);
 
@@ -43,7 +43,7 @@ public class BookCategoryService : IBookCategoryService
         if (category is null)
             return ValueOrResult.Failure("Category not found.");
 
-        await _repository.Delete(category);
+        _repository.Delete(category);
         await _repository.SaveChanges();
 
         return ValueOrResult.Success();
@@ -66,7 +66,7 @@ public class BookCategoryService : IBookCategoryService
 
         return new BookCategoryResponseDto
         {
-            Id = category.Id,
+            Id = category!.Id,
             Name = category.Name
         };
     }
@@ -77,7 +77,7 @@ public class BookCategoryService : IBookCategoryService
         if (category is null)
             return ValueOrResult.Failure("Category not found.");
 
-        var updateResult = category.Update(categoryDto.Name);
+        var updateResult = category.Update(categoryDto.Name!);
         if (!updateResult.IsSuccess)
             return ValueOrResult.Failure(updateResult.ErrorMessage!);
 
