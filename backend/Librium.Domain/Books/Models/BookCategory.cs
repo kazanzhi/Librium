@@ -9,7 +9,7 @@ public class BookCategory
     public string Name { get; private set; } = string.Empty;
     public ICollection<Book> Books { get; private set; } = new List<Book>();
 
-    public static ValueOrResult<BookCategory> Create(string? name)
+    public static ValueOrResult<BookCategory> Create(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
             return ValueOrResult<BookCategory>.Failure("Category name is required.");

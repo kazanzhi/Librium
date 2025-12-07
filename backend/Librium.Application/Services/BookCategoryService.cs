@@ -1,9 +1,9 @@
 ﻿using Librium.Domain.Books.DTOs;
 using Librium.Domain.Common;
 using Librium.Domain.DTOs.BookCategories;
-using Librium.Domain.Entities.Books;
-using Librium.Domain.Interfaces;
-using Librium.Domain.Repositories;
+using Librium.Domain.Books.Models;
+using Librium.Domain.Books.Repositories;
+using Librium.Domain.Books.Services;
 
 namespace Librium.Application.Services;
 
@@ -23,7 +23,7 @@ public class BookCategoryService : IBookCategoryService
         if (categoryExist)
             return ValueOrResult<Guid>.Failure("This category already exists.");
        
-        var categoryResult = BookCategory.Create(categoryDto.Name);
+        var categoryResult = BookCategory.Create(categoryDto.Name!);
         if (!categoryResult.IsSuccess)
             return ValueOrResult<Guid>.Failure(categoryResult.ErrorMessage!);
 

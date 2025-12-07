@@ -1,9 +1,9 @@
 ﻿using Librium.Domain.Books.DTOs;
 using Librium.Domain.Books.Models;
+using Librium.Domain.Books.Repositories;
+using Librium.Domain.Books.Services;
 using Librium.Domain.Common;
 using Librium.Domain.DTOs.Books;
-using Librium.Domain.Interfaces;
-using Librium.Domain.Repositories;
 
 namespace Librium.Application.Services;
 

@@ -1,6 +1,6 @@
-﻿using Librium.Domain.DTOs.Users;
-using Librium.Domain.Interfaces;
+﻿using Librium.Domain.Users.DTOs;
 using Librium.Domain.Users.Models;
+using Librium.Domain.Users.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

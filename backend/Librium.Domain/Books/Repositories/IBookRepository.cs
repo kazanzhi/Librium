@@ -1,7 +1,7 @@
 ﻿using Librium.Domain.Books.Models;
 using Librium.Domain.Common.Repositories;
 
-namespace Librium.Domain.Repositories;
+namespace Librium.Domain.Books.Repositories;
 
 public interface IBookRepository : IBaseRepository<Book>
 {

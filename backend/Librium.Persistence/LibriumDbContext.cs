@@ -1,5 +1,4 @@
 ﻿using Librium.Domain.Books.Models;
-using Librium.Domain.Entities.Books;
 using Librium.Domain.Users.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

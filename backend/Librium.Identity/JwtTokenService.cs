@@ -1,5 +1,5 @@
-﻿using Librium.Domain.Interfaces;
-using Librium.Domain.Users.Models;
+﻿using Librium.Domain.Users.Models;
+using Librium.Domain.Users.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

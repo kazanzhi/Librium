@@ -1,6 +1,6 @@
 ﻿using Librium.Domain.Users.Models;
 
-namespace Librium.Domain.Interfaces;
+namespace Librium.Domain.Users.Services;
 
 public interface IJwtTokenService
 {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Librium.Domain.DTOs.Users;
+namespace Librium.Domain.Users.DTOs;
 
 public class LoginDto
 {

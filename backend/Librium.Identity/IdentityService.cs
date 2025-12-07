@@ -1,6 +1,6 @@
 ﻿using Librium.Domain.Common;
-using Librium.Domain.Interfaces;
 using Librium.Domain.Users.Models;
+using Librium.Domain.Users.Services;
 using Microsoft.AspNetCore.Identity;
 
 namespace Librium.Identity;

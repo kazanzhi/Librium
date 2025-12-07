@@ -2,7 +2,7 @@
 using Librium.Domain.Common;
 using Librium.Domain.DTOs.Books;
 
-namespace Librium.Domain.Interfaces;
+namespace Librium.Domain.Books.Services;
 
 public interface IBookService
 {

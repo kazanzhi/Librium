@@ -1,4 +1,4 @@
-﻿using Librium.Domain.Interfaces;
+﻿using Librium.Domain.Users.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
