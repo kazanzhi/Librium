@@ -39,7 +39,7 @@ public class BookController : ControllerBase
     [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> Create([FromBody] BookDto bookDto)
     {
-        var result = await _service.AddBookAsync(bookDto);
+        var result = await _service.CreateBookAsync(bookDto);
         return result.IsSuccess
             ? CreatedAtAction(nameof(GetById), new { Id = result.Value }, result.Value)
             : BadRequest(result.ErrorMessage);

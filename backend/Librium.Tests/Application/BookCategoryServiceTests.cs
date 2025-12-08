@@ -19,7 +19,6 @@ public class BookCategoryServiceTests
         _service = new BookCategoryService(_repo.Object);
     }
 
-
     //create
     [Fact]
     public async Task CreateBookCategoryAsync_ShouldCreateCategory_WhenNotExists()
@@ -167,7 +166,7 @@ public class BookCategoryServiceTests
 
     //getAll
     [Fact]
-    public async Task GetAllBookCategoriesAsync_ShouldReturnMapperList()
+    public async Task GetAllBookCategoriesAsync_ShouldReturnMappedList()
     {
         //arrange
         var a = BookCategory.Create("A");
@@ -225,7 +224,7 @@ public class BookCategoryServiceTests
     }
 
     [Fact]
-    public async Task GetBookCategoryById_ShouldReturnNull_WhenCategoryNotFound()
+    public async Task GetBookCategoryById_ShouldThrow_WhenCategoryNotFound()
     {
         //arrange
         _repo.Setup(r => r.GetBookCategoryById(It.IsAny<Guid>())).ReturnsAsync((BookCategory?)null);
