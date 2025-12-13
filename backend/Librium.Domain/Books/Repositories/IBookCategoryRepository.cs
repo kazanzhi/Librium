@@ -5,7 +5,8 @@ namespace Librium.Domain.Books.Repositories;
 
 public interface IBookCategoryRepository : IBaseRepository<BookCategory>
 {
-    Task<BookCategory?> GetBookCategoryById(Guid categoryId);
-    Task<List<BookCategory>> GetAllBookCategories();
+    Task<BookCategory?> GetBookCategoryByIdAsync(Guid categoryId);
+    Task<List<BookCategory>> GetAllBookCategoriesAsync();
     Task<BookCategory> AddBookCategory(BookCategory category);
-}
+    Task<bool> ExistByNameAsync(string category);
+ }

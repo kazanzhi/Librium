@@ -25,13 +25,19 @@ public class BookCategoryRepository : IBookCategoryRepository
         _context.BookCategories.Remove(entity);
     }
 
-    public async Task<List<BookCategory>> GetAllBookCategories()
+    public async Task<bool> ExistByNameAsync(string name)
+    {
+        return await _context.BookCategories
+            .AnyAsync(c => c.Name == name);
+    }
+
+    public async Task<List<BookCategory>> GetAllBookCategoriesAsync()
     {
         var result = await _context.BookCategories.ToListAsync();
         return result;
     }
 
-    public async Task<BookCategory?> GetBookCategoryById(Guid categoryId)
+    public async Task<BookCategory?> GetBookCategoryByIdAsync(Guid categoryId)
     {
         var result = await _context.BookCategories.FindAsync(categoryId);
         return result;

@@ -18,12 +18,11 @@ public class BookCategoryService : IBookCategoryService
 
     public async Task<ValueOrResult<Guid>> CreateBookCategoryAsync(BookCategoryDto categoryDto)
     {
-        var existingCategory = await _repository.GetAllBookCategories();
-        bool categoryExist = existingCategory.Any(c => c.Name == categoryDto.Name!.Trim());
-        if (categoryExist)
+        var name = categoryDto.Name!.Trim();
+        if (await _repository.ExistByNameAsync(name))
             return ValueOrResult<Guid>.Failure("This category already exists.");
        
-        var categoryResult = BookCategory.Create(categoryDto.Name!);
+        var categoryResult = BookCategory.Create(name);
         if (!categoryResult.IsSuccess)
             return ValueOrResult<Guid>.Failure(categoryResult.ErrorMessage!);
 
@@ -39,7 +38,7 @@ public class BookCategoryService : IBookCategoryService
 
     public async Task<ValueOrResult> DeleteBookCategoryAsync(Guid categoryId)
     {
-        var category = await _repository.GetBookCategoryById(categoryId);
+        var category = await _repository.GetBookCategoryByIdAsync(categoryId);
         if (category is null)
             return ValueOrResult.Failure("Category not found.");
 
@@ -51,7 +50,7 @@ public class BookCategoryService : IBookCategoryService
 
     public async Task<List<BookCategoryResponseDto>> GetAllBookCategoriesAsync()
     {
-        var categories = await _repository.GetAllBookCategories();
+        var categories = await _repository.GetAllBookCategoriesAsync();
 
         return categories.Select(category => new BookCategoryResponseDto
         {
@@ -62,7 +61,7 @@ public class BookCategoryService : IBookCategoryService
 
     public async Task<BookCategoryResponseDto> GetBookCategoryById(Guid categoryId)
     {
-        var category = await _repository.GetBookCategoryById(categoryId);
+        var category = await _repository.GetBookCategoryByIdAsync(categoryId);
 
         return new BookCategoryResponseDto
         {
@@ -73,7 +72,7 @@ public class BookCategoryService : IBookCategoryService
 
     public async Task<ValueOrResult> UpdateBookCategoryAsync(Guid categoryId, BookCategoryDto categoryDto)
     {
-        var category = await _repository.GetBookCategoryById(categoryId);
+        var category = await _repository.GetBookCategoryByIdAsync(categoryId);
         if (category is null)
             return ValueOrResult.Failure("Category not found.");
 
