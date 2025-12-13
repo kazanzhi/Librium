@@ -8,9 +8,22 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
 {
     public void Configure(EntityTypeBuilder<Book> builder)
     {
-        builder.HasOne(b => b.BookCategory)
-            .WithMany(c => c.Books)
-            .HasForeignKey(b => b.CategoryId)
+        builder.HasKey(b => b.Id);
+
+        builder.Property(b => b.Title)
+            .IsRequired();
+
+        builder.Property(b => b.Author)
+            .IsRequired();
+
+        builder.Property(b => b.Content)
+            .IsRequired();
+
+        builder.Property(b => b.PublishedYear)
+            .IsRequired();
+
+        builder.HasOne(b => b.Categories)
+            .WithMany()
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

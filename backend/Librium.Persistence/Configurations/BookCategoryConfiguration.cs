@@ -8,6 +8,8 @@ public class BookCategoryConfiguration : IEntityTypeConfiguration<BookCategory>
 {
     public void Configure(EntityTypeBuilder<BookCategory> builder)
     {
+        builder.HasKey(c => c.Id);
+
         builder.Property(c => c.Name)
             .IsRequired()
             .HasMaxLength(20);
