@@ -18,19 +18,36 @@ public class BookService : IBookService
         _categoryRepo = category;
     }
 
+    public async Task<ValueOrResult> AddCategoryToBook(Guid bookId, string categoryName)
+    {
+        var book = await _bookRepo.GetBookById(bookId);
+        if (book is null)
+            return ValueOrResult.Failure("Book not found.");
+
+        var category = await _categoryRepo.GetByNameAsync(categoryName);
+        if (category is null)
+            return ValueOrResult.Failure($"Category {categoryName} does not exists.");
+
+        var addResult = book.AddCategory(category);
+        if (!addResult.IsSuccess)
+            return ValueOrResult.Failure(addResult.ErrorMessage!);
+
+        await _bookRepo.SaveChanges();
+
+        return ValueOrResult.Success();
+    }
+
     public async Task<ValueOrResult<Guid>> CreateBookAsync(BookDto bookDto)
     {
-        var existingBook = await _bookRepo.GetAllBooks();
-        bool bookExists = existingBook.Any(b => b.Author == bookDto.Author!.Trim() && b.Title == bookDto.Title!.Trim());
+        var bookExists = await _bookRepo.ExistBookAsync(bookDto.Author!, bookDto.Title!);
         if (bookExists)
             return ValueOrResult<Guid>.Failure("A book with the same author and title already exsits.");
 
-        var existingCategory = await _categoryRepo.GetAllBookCategories();
-        var categoryExists = existingCategory.FirstOrDefault(c => c.Name.Trim() == bookDto.Category!.Trim());
-        if (categoryExists is null)
+        var category = await _categoryRepo.GetByNameAsync(bookDto.Category!);
+        if (category is null)
             return ValueOrResult<Guid>.Failure($"Category {bookDto.Category} does not exists.");
-
-        var bookResult = Book.Create(bookDto.Title!, bookDto.Author!, categoryExists.Id, bookDto.Content!, bookDto.PublishedYear);
+        
+        var bookResult = Book.Create(bookDto.Title!, bookDto.Author!, bookDto.Content!, bookDto.PublishedYear);
 
         if (!bookResult.IsSuccess)
             return ValueOrResult<Guid>.Failure(bookResult.ErrorMessage!);
@@ -64,7 +81,9 @@ public class BookService : IBookService
             Id = book.Id,
             Title = book.Title,
             Author = book.Author,
-            BookCategory = book.BookCategory.Name,
+            BookCategories = book.BookCategories
+                .Select(c => c.Name)
+                .ToList(),
             Content = book.Content,
             PublishedYear = book.PublishedYear
         }).ToList();
@@ -79,10 +98,31 @@ public class BookService : IBookService
             Id = book!.Id,
             Title = book.Title,
             Author = book.Author,
-            BookCategory = book.BookCategory.Name,
+            BookCategories = book.BookCategories
+                .Select(c => c.Name)
+                .ToList(),
             Content = book.Content,
             PublishedYear = book.PublishedYear
         };
+    }
+
+    public async Task<ValueOrResult> RemoveCategoryFromBook(Guid bookId, string categoryName)
+    {
+        var book = await _bookRepo.GetBookById(bookId);
+        if (book is null)
+            return ValueOrResult.Failure("Book not found.");
+
+        var category = await _categoryRepo.GetByNameAsync(categoryName);
+        if (category is null)
+            return ValueOrResult.Failure($"Category {categoryName} does not exists.");
+
+        var addResult = book.RemoveCategory(category);
+        if (!addResult.IsSuccess)
+            return ValueOrResult.Failure(addResult.ErrorMessage!);
+
+        await _bookRepo.SaveChanges();
+
+        return ValueOrResult.Success();
     }
 
     public async Task<ValueOrResult> UpdateBookAsync(Guid bookId, BookDto bookDto)
@@ -91,18 +131,17 @@ public class BookService : IBookService
         if (existingBook is null)
             return ValueOrResult.Failure("Book not found.");
 
-        var existingCategory = await _categoryRepo.GetAllBookCategories();
-        var categoryExists = existingCategory.FirstOrDefault(c => c.Name == bookDto.Category);
-        if (categoryExists is null)
+        var category = await _categoryRepo.GetByNameAsync(bookDto.Category!.Trim());
+        if (category is null)
             return ValueOrResult.Failure("Category does not exist.");
 
         var updatedResult = existingBook.Update(
             bookDto.Title!,
             bookDto.Author!,
             bookDto.Content!,
-            bookDto.PublishedYear,
-            categoryExists
+            bookDto.PublishedYear
         );
+
         if (!updatedResult.IsSuccess)
             return ValueOrResult.Failure(updatedResult.ErrorMessage!);
 

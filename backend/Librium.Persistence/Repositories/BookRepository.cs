@@ -24,17 +24,23 @@ public class BookRepository : IBookRepository
         _context.Books.Remove(entity);
     }
 
+    public async Task<bool> ExistBookAsync(string author, string title)
+    {
+        return await _context.Books
+            .AnyAsync(b => b.Author == author && b.Title == title);
+    }
+
     public async Task<List<Book>> GetAllBooks()
     {
         return await _context.Books
-            .Include(c => c.BookCategory)
+            .Include(c => c.BookCategories)
             .ToListAsync();
     }
 
     public async Task<Book?> GetBookById(Guid bookId)
     {
         return await _context.Books
-            .Include(c => c.BookCategory)
+            .Include(c => c.BookCategories)
             .FirstOrDefaultAsync(b => b.Id == bookId);
     }
 

@@ -4,6 +4,7 @@ using Librium.Domain.DTOs.BookCategories;
 using Librium.Domain.Books.Models;
 using Librium.Domain.Books.Repositories;
 using Librium.Domain.Books.Services;
+using System.Net.Http.Headers;
 
 namespace Librium.Application.Services;
 
@@ -19,14 +20,15 @@ public class BookCategoryService : IBookCategoryService
     public async Task<ValueOrResult<Guid>> CreateBookCategoryAsync(BookCategoryDto categoryDto)
     {
         var name = categoryDto.Name!.Trim();
-        if (await _repository.ExistByNameAsync(name))
+        var categoryExists = await _repository.GetByNameAsync(name);
+        if (categoryExists is not null)
             return ValueOrResult<Guid>.Failure("This category already exists.");
        
         var categoryResult = BookCategory.Create(name);
         if (!categoryResult.IsSuccess)
             return ValueOrResult<Guid>.Failure(categoryResult.ErrorMessage!);
 
-        BookCategory? category = categoryResult.Value;
+        var category = categoryResult.Value;
         if (category is null)
             return ValueOrResult<Guid>.Failure("Something went wrong.");
 

@@ -14,7 +14,7 @@ public class Book
     public string Content { get; private set; } = string.Empty;
     public int PublishedYear { get; private set; }
     public IReadOnlyCollection<UserBook> UserBooks => _userBooks.AsReadOnly();
-    public IReadOnlyCollection<BookCategory> Categories => _categories.AsReadOnly();
+    public IReadOnlyCollection<BookCategory> BookCategories => _categories.AsReadOnly();
 
     public static ValueOrResult<Book> Create(string title, string author, string content, int publishedYear)
     {

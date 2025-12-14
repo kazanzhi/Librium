@@ -8,5 +8,5 @@ public interface IBookCategoryRepository : IBaseRepository<BookCategory>
     Task<BookCategory?> GetBookCategoryByIdAsync(Guid categoryId);
     Task<List<BookCategory>> GetAllBookCategoriesAsync();
     Task<BookCategory> AddBookCategory(BookCategory category);
-    Task<bool> ExistByNameAsync(string category);
+    Task<BookCategory?> GetByNameAsync(string category);
  }

@@ -22,7 +22,7 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
         builder.Property(b => b.PublishedYear)
             .IsRequired();
 
-        builder.HasOne(b => b.Categories)
+        builder.HasOne(b => b.BookCategories)
             .WithMany()
             .OnDelete(DeleteBehavior.Restrict);
     }
