@@ -64,4 +64,24 @@ public class BookController : ControllerBase
             ? Ok()
             : BadRequest(result.ErrorMessage);
     }
+
+    [HttpPost("{bookId}/categories")]
+    [Authorize(Roles = UserRoles.Admin)]
+    public async Task<IActionResult> AddCategory(Guid bookId, [FromBody] BookCategoryDto categoryDto)
+    {
+        var result = await _service.AddCategoryToBook(bookId, categoryDto.Name!);
+        return result.IsSuccess
+            ? Ok()
+            : BadRequest(result.ErrorMessage);
+    }
+
+    [HttpDelete("{bookId}/categories/{categoryName}")]
+    [Authorize(Roles = UserRoles.Admin)]
+    public async Task<IActionResult> RemoveCategory(Guid bookId, string categoryName)
+    {
+        var result = await _service.RemoveCategoryFromBook(bookId, categoryName);
+        return result.IsSuccess
+            ? Ok()
+            : BadRequest(result.ErrorMessage);
+    }
 }
