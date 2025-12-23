@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Librium.Persistence.Migrations
 {
     [DbContext(typeof(LibriumDbContext))]
-    [Migration("20251121191857_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251218114801_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,21 @@ namespace Librium.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("BookBookCategory", b =>
+                {
+                    b.Property<Guid>("BookCategoriesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("BookCategoriesId", "BookId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("BookBookCategory");
+                });
+
             modelBuilder.Entity("Librium.Domain.Books.Models.Book", b =>
                 {
                     b.Property<Guid>("Id")
@@ -34,9 +49,6 @@ namespace Librium.Persistence.Migrations
                     b.Property<string>("Author")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -51,12 +63,10 @@ namespace Librium.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("Librium.Domain.Entities.Books.BookCategory", b =>
+            modelBuilder.Entity("Librium.Domain.Books.Models.BookCategory", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -294,15 +304,19 @@ namespace Librium.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Librium.Domain.Books.Models.Book", b =>
+            modelBuilder.Entity("BookBookCategory", b =>
                 {
-                    b.HasOne("Librium.Domain.Entities.Books.BookCategory", "BookCategory")
-                        .WithMany("Books")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("Librium.Domain.Books.Models.BookCategory", null)
+                        .WithMany()
+                        .HasForeignKey("BookCategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("BookCategory");
+                    b.HasOne("Librium.Domain.Books.Models.Book", null)
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Librium.Domain.Users.Models.UserBook", b =>
@@ -378,11 +392,6 @@ namespace Librium.Persistence.Migrations
             modelBuilder.Entity("Librium.Domain.Books.Models.Book", b =>
                 {
                     b.Navigation("UserBooks");
-                });
-
-            modelBuilder.Entity("Librium.Domain.Entities.Books.BookCategory", b =>
-                {
-                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("Librium.Domain.Users.Models.AppUser", b =>

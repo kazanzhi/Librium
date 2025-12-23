@@ -42,10 +42,6 @@ public class BookService : IBookService
         var bookExists = await _bookRepo.ExistBookAsync(bookDto.Author!, bookDto.Title!);
         if (bookExists)
             return ValueOrResult<Guid>.Failure("A book with the same author and title already exsits.");
-
-        var category = await _categoryRepo.GetByNameAsync(bookDto.Category!);
-        if (category is null)
-            return ValueOrResult<Guid>.Failure($"Category {bookDto.Category} does not exists.");
         
         var bookResult = Book.Create(bookDto.Title!, bookDto.Author!, bookDto.Content!, bookDto.PublishedYear);
 
@@ -130,10 +126,6 @@ public class BookService : IBookService
         var existingBook = await _bookRepo.GetBookById(bookId);
         if (existingBook is null)
             return ValueOrResult.Failure("Book not found.");
-
-        var category = await _categoryRepo.GetByNameAsync(bookDto.Category!.Trim());
-        if (category is null)
-            return ValueOrResult.Failure("Category does not exist.");
 
         var updatedResult = existingBook.Update(
             bookDto.Title!,

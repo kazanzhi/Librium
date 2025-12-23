@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using Librium.Domain.Books.Models;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 
 namespace Librium.Tests.Domain;
 
