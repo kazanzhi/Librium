@@ -20,12 +20,13 @@ public static class DependencyInjection
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<IAppUserRepository, AppUserRepository>();
 
-        services.AddIdentity<AppUser, IdentityRole>(options =>
+        services.AddIdentityCore<AppUser>(options =>
         {
             options.User.RequireUniqueEmail = true;
         })
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<LibriumDbContext>()
-            .AddDefaultTokenProviders();
+            .AddSignInManager();
 
         return services;
     }
