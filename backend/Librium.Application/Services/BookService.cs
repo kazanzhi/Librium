@@ -39,7 +39,7 @@ public class BookService : IBookService
 
     public async Task<ValueOrResult<Guid>> CreateBookAsync(BookDto bookDto)
     {
-        var bookExists = await _bookRepo.ExistBookAsync(bookDto.Author!, bookDto.Title!);
+        var bookExists = await _bookRepo.ExistBookAsync(bookDto.Author, bookDto.Title);
         if (bookExists)
             return ValueOrResult<Guid>.Failure("A book with the same author and title already exsits.");
         

@@ -67,7 +67,7 @@ public class Book
     public ValueOrResult AddCategory(BookCategory category)
     {
         if (category is null)
-            return ValueOrResult.Failure("Category is required");
+            return ValueOrResult.Failure("Category is required.");
 
         if (_categories.Any(c => c.Id == category.Id))
             return ValueOrResult.Failure("Category already assigned.");

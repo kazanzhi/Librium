@@ -5,6 +5,7 @@ namespace Librium.Tests.Domain;
 
 public class BookCategoryTests
 {
+    //create
     [Fact]
     public void Create_ShouldReturnSuccess_WhenNameIsValid()
     {
@@ -29,6 +30,7 @@ public class BookCategoryTests
         var result = BookCategory.Create("    Science   ");
 
         //assert
+        result.IsSuccess.Should().BeTrue();
         result.Value!.Name.Should().Be("Science");
     }
 
@@ -58,6 +60,7 @@ public class BookCategoryTests
         result.ErrorMessage.Should().Be("Category name cannot exceed 100 characters.");
     }
 
+    //update
     [Fact]
     public void Update_ShouldReturnSuccess_WhenNameIsValid()
     {
@@ -81,7 +84,8 @@ public class BookCategoryTests
         //act
         var result = category!.Update("   Education   ");
 
-        //arrange
+        //assert
+        result.IsSuccess.Should().BeTrue();
         category.Name.Should().Be("Education");
     }
 

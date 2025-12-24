@@ -4,7 +4,6 @@ using Librium.Domain.DTOs.BookCategories;
 using Librium.Domain.Books.Models;
 using Librium.Domain.Books.Repositories;
 using Librium.Domain.Books.Services;
-using System.Net.Http.Headers;
 
 namespace Librium.Application.Services;
 
@@ -29,8 +28,6 @@ public class BookCategoryService : IBookCategoryService
             return ValueOrResult<Guid>.Failure(categoryResult.ErrorMessage!);
 
         var category = categoryResult.Value;
-        if (category is null)
-            return ValueOrResult<Guid>.Failure("Something went wrong.");
 
         await _repository.AddBookCategory(category);
         await _repository.SaveChanges();
