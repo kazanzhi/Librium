@@ -7,7 +7,7 @@ namespace Librium.Domain.Books.Services;
 public interface IBookService
 {
     Task<List<BookResponseDto>> GetAllBooksAsync();
-    Task<BookResponseDto> GetBookById(Guid bookId);
+    Task<ValueOrResult<BookResponseDto>> GetBookById(Guid bookId);
     Task<ValueOrResult<Guid>> CreateBookAsync(BookDto bookDto);
     Task<ValueOrResult> DeleteBookAsync(Guid bookId);
     Task<ValueOrResult> UpdateBookAsync(Guid bookId, BookDto bookDto);

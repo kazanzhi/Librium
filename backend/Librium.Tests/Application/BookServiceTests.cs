@@ -11,12 +11,12 @@ namespace Librium.Tests.Application;
 public class BookServiceTests
 {
     private readonly Mock<IBookRepository> _bookRepo;
-    private readonly Mock<IBookCategoryRepository> _categoryRepo;
+    private readonly Mock<ICategoryRepository> _categoryRepo;
     private readonly BookService _service;
     public BookServiceTests()
     {
         _bookRepo = new Mock<IBookRepository>();
-        _categoryRepo = new Mock<IBookCategoryRepository>();
+        _categoryRepo = new Mock<ICategoryRepository>();
         _service = new BookService(_bookRepo.Object, _categoryRepo.Object);
     }
 
@@ -180,35 +180,39 @@ public class BookServiceTests
     [Fact]
     public async Task GetBookById_ShouldReturnMappedDto()
     {
-        //arrange
+        // arrange
         var book = Book.Create("TestTitle", "TestAuthor", "OldContent", 1999).Value!;
 
-        _bookRepo.Setup(r => r.GetBookById(book.Id)).ReturnsAsync(book);
+        _bookRepo
+            .Setup(r => r.GetBookById(book.Id))
+            .ReturnsAsync(book);
 
-        //act
+        // act
         var result = await _service.GetBookById(book.Id);
 
-        //assert
-        result.Should().BeOfType<BookResponseDto>();
+        // assert
+        result.IsSuccess.Should().BeTrue();
 
-        result.Id.Should().Be(book.Id);
-        result.Title.Should().Be(book.Title);
-        result.Author.Should().Be(book.Author);
-        result.Content.Should().Be(book.Content);
-        result.PublishedYear.Should().Be(book.PublishedYear);
+        var dto = result.Value!;
+
+        dto.Id.Should().Be(book.Id);
+        dto.Title.Should().Be(book.Title);
+        dto.Author.Should().Be(book.Author);
+        dto.Content.Should().Be(book.Content);
+        dto.PublishedYear.Should().Be(book.PublishedYear);
     }
 
+
     [Fact]
-    public async Task GetBookById_ShouldThrow_WhenBookNotFound()
+    public async Task GetBookById_ShouldReturnFailure_WhenBookNotFound()
     {
-        //arrange
-        _bookRepo.Setup(r => r.GetBookById(It.IsAny<Guid>())).ReturnsAsync((Book?)null);
+        _bookRepo.Setup(r => r.GetBookById(It.IsAny<Guid>()))
+            .ReturnsAsync((Book?)null);
 
-        //act
-        var result = async () => await _service.GetBookById(Guid.NewGuid());
+        var result = await _service.GetBookById(Guid.NewGuid());
 
-        //assert
-        await result.Should().ThrowAsync<NullReferenceException>();
+        result.IsSuccess.Should().BeFalse();
+        result.ErrorMessage.Should().Be("Book not found.");
     }
 
     //update
@@ -298,7 +302,7 @@ public class BookServiceTests
     {
         //arrange
         var book = Book.Create("OldTitle", "OldAuthor", "OldContent", 1999).Value;
-        var category = BookCategory.Create("Education").Value;
+        var category = Category.Create("Education").Value;
 
         _bookRepo.Setup(r => r.GetBookById(book.Id)).ReturnsAsync(book);
         _categoryRepo.Setup(r => r.GetByNameAsync("Education")).ReturnsAsync(category);
@@ -338,7 +342,7 @@ public class BookServiceTests
         var book = Book.Create("OldTitle", "OldAuthor", "OldContent", 1999).Value;
 
         _bookRepo.Setup(r => r.GetBookById(book.Id)).ReturnsAsync(book);
-        _categoryRepo.Setup(r => r.GetByNameAsync("Education")).ReturnsAsync((BookCategory)null);
+        _categoryRepo.Setup(r => r.GetByNameAsync("Education")).ReturnsAsync((Category)null);
 
         //act
         var result = await _service.AddCategoryToBook(book.Id, "Education");
@@ -356,7 +360,7 @@ public class BookServiceTests
     {
         //arrange
         var book = Book.Create("OldTitle", "OldAuthor", "OldContent", 1999).Value;
-        var category = BookCategory.Create("Education").Value;
+        var category = Category.Create("Education").Value;
         book.AddCategory(category);
 
         _bookRepo.Setup(r => r.GetBookById(book.Id)).ReturnsAsync(book);
@@ -397,7 +401,7 @@ public class BookServiceTests
         var book = Book.Create("OldTitle", "OldAuthor", "OldContent", 1999).Value;
 
         _bookRepo.Setup(r => r.GetBookById(book.Id)).ReturnsAsync(book);
-        _categoryRepo.Setup(r => r.GetByNameAsync("Education")).ReturnsAsync((BookCategory)null);
+        _categoryRepo.Setup(r => r.GetByNameAsync("Education")).ReturnsAsync((Category)null);
 
         //act
         var result = await _service.RemoveCategoryFromBook(book.Id, "Education");

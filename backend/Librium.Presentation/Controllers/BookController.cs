@@ -30,9 +30,10 @@ public class BookController : ControllerBase
     public async Task<IActionResult> GetById(Guid Id)
     {
         var result = await _service.GetBookById(Id);
-        return result == null
-            ? NotFound()
-            : Ok(result);
+
+        return result.IsSuccess
+            ? Ok(result.Value)
+            : NotFound(result.ErrorMessage);
     }
 
     [HttpPost]
@@ -67,7 +68,7 @@ public class BookController : ControllerBase
 
     [HttpPost("{bookId}/categories")]
     [Authorize(Roles = UserRoles.Admin)]
-    public async Task<IActionResult> AddCategory(Guid bookId, [FromBody] BookCategoryDto categoryDto)
+    public async Task<IActionResult> AddCategory(Guid bookId, [FromBody] CategoryDto categoryDto)
     {
         var result = await _service.AddCategoryToBook(bookId, categoryDto.Name!);
         return result.IsSuccess

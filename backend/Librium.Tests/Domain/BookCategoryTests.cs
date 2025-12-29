@@ -12,7 +12,7 @@ public class BookCategoryTests
         //arrange
 
         //act
-        var result = BookCategory.Create("Science");
+        var result = Category.Create("Science");
 
         //assert
         result.IsSuccess.Should().BeTrue();
@@ -27,7 +27,7 @@ public class BookCategoryTests
         //arrange
 
         //act
-        var result = BookCategory.Create("    Science   ");
+        var result = Category.Create("    Science   ");
 
         //assert
         result.IsSuccess.Should().BeTrue();
@@ -40,7 +40,7 @@ public class BookCategoryTests
         //arrange
 
         //act
-        var result = BookCategory.Create("");
+        var result = Category.Create("");
 
         //asserts
         result.IsSuccess.Should().BeFalse();
@@ -53,7 +53,7 @@ public class BookCategoryTests
         //arrange 
 
         //act
-        var result = BookCategory.Create(new string('A', 101));
+        var result = Category.Create(new string('A', 101));
 
         //assert
         result.IsSuccess.Should().BeFalse();
@@ -65,7 +65,7 @@ public class BookCategoryTests
     public void Update_ShouldReturnSuccess_WhenNameIsValid()
     {
         //arrange
-        var category = BookCategory.Create("Science").Value;
+        var category = Category.Create("Science").Value;
 
         //act
         var result = category!.Update("Education");
@@ -79,7 +79,7 @@ public class BookCategoryTests
     public void Update_ShouldReturnTrimName_WhenNameHasWhiteSpaces()
     {
         //arrange
-        var category = BookCategory.Create("Science").Value;
+        var category = Category.Create("Science").Value;
 
         //act
         var result = category!.Update("   Education   ");
@@ -93,7 +93,7 @@ public class BookCategoryTests
     public void Update_ShouldNotChangeId_WhenUpdatingCategory()
     {
         //arrange
-        var category = BookCategory.Create("Science").Value;
+        var category = Category.Create("Science").Value;
         var categoryId = category!.Id;
 
         //act
@@ -107,7 +107,7 @@ public class BookCategoryTests
     public void Update_ShouldReturnFailure_WhenNameIsEmpty()
     {
         //arrange
-        var category = BookCategory.Create("Science").Value;
+        var category = Category.Create("Science").Value;
 
         //act
         var result = category!.Update("");
@@ -121,7 +121,7 @@ public class BookCategoryTests
     public void Update_ShouldReturnFailure_WhenNameTooLong()
     {
         //arrange
-        var category = BookCategory.Create("Science").Value;
+        var category = Category.Create("Science").Value;
 
         //act
         var result = category!.Update(new string('A', 101));

@@ -10,13 +10,13 @@ namespace Librium.Tests.Application;
 
 public class BookCategoryServiceTests
 {
-    private readonly Mock<IBookCategoryRepository> _repo;
-    private readonly BookCategoryService _service;
+    private readonly Mock<ICategoryRepository> _repo;
+    private readonly CategoryService _service;
 
     public BookCategoryServiceTests()
     {
-        _repo = new Mock<IBookCategoryRepository>();
-        _service = new BookCategoryService(_repo.Object);
+        _repo = new Mock<ICategoryRepository>();
+        _service = new CategoryService(_repo.Object);
     }
 
     //create
@@ -24,8 +24,8 @@ public class BookCategoryServiceTests
     public async Task CreateBookCategoryAsync_ShouldCreateCategory_WhenNotExists()
     {
         //arrange
-        var dto = new BookCategoryDto { Name = "Science" };
-        _repo.Setup(r => r.GetByNameAsync(It.IsAny<string>())).ReturnsAsync((BookCategory?)null);
+        var dto = new CategoryDto { Name = "Science" };
+        _repo.Setup(r => r.GetByNameAsync(It.IsAny<string>())).ReturnsAsync((Category?)null);
 
         //act
         var result = await _service.CreateBookCategoryAsync(dto);
@@ -34,7 +34,7 @@ public class BookCategoryServiceTests
         result.IsSuccess.Should().BeTrue();
         result.Value.Should().NotBe(Guid.Empty);
 
-        _repo.Verify(r => r.AddBookCategory(It.IsAny<BookCategory>()), Times.Once());
+        _repo.Verify(r => r.AddBookCategory(It.IsAny<Category>()), Times.Once());
         _repo.Verify(r => r.SaveChanges(), Times.Once());
     }
 
@@ -42,8 +42,8 @@ public class BookCategoryServiceTests
     public async Task CreateBookCategoryAsync_ShouldTrimName()
     {
         //arrange
-        var dto = new BookCategoryDto { Name = "   Science   " };
-        _repo.Setup(r => r.GetByNameAsync(It.IsAny<string>())).ReturnsAsync((BookCategory?)null);
+        var dto = new CategoryDto { Name = "   Science   " };
+        _repo.Setup(r => r.GetByNameAsync(It.IsAny<string>())).ReturnsAsync((Category?)null);
 
         //act
         var result = await _service.CreateBookCategoryAsync(dto);
@@ -51,7 +51,7 @@ public class BookCategoryServiceTests
         //assert
         result.IsSuccess.Should().BeTrue();
 
-        _repo.Verify(r => r.AddBookCategory(It.Is<BookCategory>(c => c.Name == "Science")), Times.Once());
+        _repo.Verify(r => r.AddBookCategory(It.Is<Category>(c => c.Name == "Science")), Times.Once());
         _repo.Verify(r => r.SaveChanges(), Times.Once());
     }
 
@@ -59,8 +59,8 @@ public class BookCategoryServiceTests
     public async Task CreateBookCategoryAsync_ShouldReturnFailure_WhenCategoryExists()
     {
         //arrange
-        var dto = new BookCategoryDto { Name = "Science" };
-        var existingCategoryResult = BookCategory.Create("Science");
+        var dto = new CategoryDto { Name = "Science" };
+        var existingCategoryResult = Category.Create("Science");
         existingCategoryResult.IsSuccess.Should().BeTrue();
         var existingCategory = existingCategoryResult.Value!;
 
@@ -73,7 +73,7 @@ public class BookCategoryServiceTests
         result.IsSuccess.Should().BeFalse();
         result.ErrorMessage.Should().Be("This category already exists.");
 
-        _repo.Verify(r => r.AddBookCategory(It.IsAny<BookCategory>()), Times.Never());
+        _repo.Verify(r => r.AddBookCategory(It.IsAny<Category>()), Times.Never());
         _repo.Verify(r => r.SaveChanges(), Times.Never());
     }
 
@@ -81,8 +81,8 @@ public class BookCategoryServiceTests
     public async Task CreateBookCategoryAsync_ShouldReturnFailure_WhenCategoryExistsWithTrim()
     {
         //arrange
-        var dto = new BookCategoryDto { Name = "   Science   " };
-        var existingCategoryResult = BookCategory.Create("Science");
+        var dto = new CategoryDto { Name = "   Science   " };
+        var existingCategoryResult = Category.Create("Science");
         existingCategoryResult.IsSuccess.Should().BeTrue();
         var existingCategory = existingCategoryResult.Value!;
 
@@ -100,8 +100,8 @@ public class BookCategoryServiceTests
     public async Task CreateBookCategoryAsync_ShouldReturnFailure_WhenNameIsEmpty()
     {
         //arrange
-        var dto = new BookCategoryDto { Name = "" };
-        _repo.Setup(r => r.GetByNameAsync(It.IsAny<string>())).ReturnsAsync((BookCategory?)null);
+        var dto = new CategoryDto { Name = "" };
+        _repo.Setup(r => r.GetByNameAsync(It.IsAny<string>())).ReturnsAsync((Category?)null);
 
         //act
         var result = await _service.CreateBookCategoryAsync(dto);
@@ -115,8 +115,8 @@ public class BookCategoryServiceTests
     public async Task CreateBookCategoryAsync_ShouldReturnFailure_WhenNameIsTooLong()
     {
         //arrange
-        var dto = new BookCategoryDto { Name = new string('A', 101) };
-        _repo.Setup(r => r.GetByNameAsync(It.IsAny<string>())).ReturnsAsync((BookCategory?)null);
+        var dto = new CategoryDto { Name = new string('A', 101) };
+        _repo.Setup(r => r.GetByNameAsync(It.IsAny<string>())).ReturnsAsync((Category?)null);
 
         //act
         var result = await _service.CreateBookCategoryAsync(dto);
@@ -131,7 +131,7 @@ public class BookCategoryServiceTests
     public async Task DeleteBookCategoryAsync_ShouldReturnSuccess_WhenCategoryDeleted()
     {
         //arrange 
-        var created = BookCategory.Create("Science");
+        var created = Category.Create("Science");
         created.IsSuccess.Should().BeTrue();
 
         var category = created.Value!;
@@ -144,7 +144,7 @@ public class BookCategoryServiceTests
         //assert
         result.IsSuccess.Should().BeTrue();
 
-        _repo.Verify(r => r.Delete(It.Is<BookCategory>(c => c.Name == "Science")), Times.Once());
+        _repo.Verify(r => r.Delete(It.Is<Category>(c => c.Name == "Science")), Times.Once());
         _repo.Verify(r => r.SaveChanges(), Times.Once());
     }
 
@@ -152,7 +152,7 @@ public class BookCategoryServiceTests
     public async Task DeleteBookCategoryAsync_ShouldReturnFailure_WhenNoCategory()
     {
         //arrange
-        _repo.Setup(r => r.GetBookCategoryByIdAsync(It.IsAny<Guid>())).ReturnsAsync((BookCategory?)null);
+        _repo.Setup(r => r.GetBookCategoryByIdAsync(It.IsAny<Guid>())).ReturnsAsync((Category?)null);
 
         //act
         var result = await _service.DeleteBookCategoryAsync(Guid.NewGuid());
@@ -161,7 +161,7 @@ public class BookCategoryServiceTests
         result.IsSuccess.Should().BeFalse();
         result.ErrorMessage.Should().Be("Category not found.");
 
-        _repo.Verify(r => r.Delete(It.IsAny<BookCategory>()), Times.Never());
+        _repo.Verify(r => r.Delete(It.IsAny<Category>()), Times.Never());
         _repo.Verify(r => r.SaveChanges(), Times.Never());
     }
 
@@ -170,13 +170,13 @@ public class BookCategoryServiceTests
     public async Task GetAllBookCategoriesAsync_ShouldReturnMappedList()
     {
         //arrange
-        var a = BookCategory.Create("A");
-        var b = BookCategory.Create("B");
+        var a = Category.Create("A");
+        var b = Category.Create("B");
 
         a.IsSuccess.Should().BeTrue();
         b.IsSuccess.Should().BeTrue();
 
-        _repo.Setup(r => r.GetAllBookCategoriesAsync()).ReturnsAsync(new List<BookCategory> { a.Value!, b.Value! });
+        _repo.Setup(r => r.GetAllBookCategoriesAsync()).ReturnsAsync(new List<Category> { a.Value!, b.Value! });
 
         //act
         var result = await _service.GetAllBookCategoriesAsync();
@@ -185,14 +185,14 @@ public class BookCategoryServiceTests
         result.Should().HaveCount(2);
         result[0].Name.Should().Be(expected: "A");
         result[1].Name.Should().Be("B");
-        result.Should().BeOfType<List<BookCategoryResponseDto>>();
+        result.Should().BeOfType<List<CategoryResponseDto>>();
     }
 
     [Fact]
     public async Task GetAllBookCategoriesAsync_ShouldReturnEmptyList_WhenNoCategories()
     {
         //arrange
-        _repo.Setup(r => r.GetAllBookCategoriesAsync()).ReturnsAsync(new List<BookCategory>());
+        _repo.Setup(r => r.GetAllBookCategoriesAsync()).ReturnsAsync(new List<Category>());
 
         //act
         var result = await _service.GetAllBookCategoriesAsync();
@@ -208,7 +208,7 @@ public class BookCategoryServiceTests
     public async Task GetBookCategoryById_ShouldReturnMappedDto()
     {
         //arrange 
-        var created = BookCategory.Create("A");
+        var created = Category.Create("A");
         created.IsSuccess.Should().BeTrue();
 
         var category = created.Value!;
@@ -219,7 +219,7 @@ public class BookCategoryServiceTests
         var result = await _service.GetBookCategoryById(category.Id);
 
         //assert
-        result.Should().BeOfType<BookCategoryResponseDto>();
+        result.Should().BeOfType<CategoryResponseDto>();
         result.Id.Should().Be(category.Id);
         result.Name.Should().Be("A");
     }
@@ -228,7 +228,7 @@ public class BookCategoryServiceTests
     public async Task GetBookCategoryById_ShouldThrow_WhenCategoryNotFound()
     {
         //arrange
-        _repo.Setup(r => r.GetBookCategoryByIdAsync(It.IsAny<Guid>())).ReturnsAsync((BookCategory?)null);
+        _repo.Setup(r => r.GetBookCategoryByIdAsync(It.IsAny<Guid>())).ReturnsAsync((Category?)null);
 
         //act
         var result = async () => await _service.GetBookCategoryById(Guid.NewGuid());
@@ -242,7 +242,7 @@ public class BookCategoryServiceTests
     public async Task UpdateBookCategoryAsync_ShouldReturnSucces_WhenCategoryUpdated()
     {
         //arrange
-        var created = BookCategory.Create("A");
+        var created = Category.Create("A");
         created.IsSuccess.Should().BeTrue();
 
         var category = created.Value!;
@@ -250,7 +250,7 @@ public class BookCategoryServiceTests
         _repo.Setup(r => r.GetBookCategoryByIdAsync(category.Id)).ReturnsAsync(category);
 
         //act
-        var result = await _service.UpdateBookCategoryAsync(category.Id, new BookCategoryDto { Name = "B" });
+        var result = await _service.UpdateBookCategoryAsync(category.Id, new CategoryDto { Name = "B" });
 
         //assert
         result.IsSuccess.Should().BeTrue();
@@ -263,10 +263,10 @@ public class BookCategoryServiceTests
     public async Task UpdateBookCategoryAsync_ShouldReturnFailure_WhenCategoryNotFound()
     {
         //arrange
-        _repo.Setup(r => r.GetBookCategoryByIdAsync(It.IsAny<Guid>())).ReturnsAsync((BookCategory?)null);
+        _repo.Setup(r => r.GetBookCategoryByIdAsync(It.IsAny<Guid>())).ReturnsAsync((Category?)null);
 
         //act
-        var result = await _service.UpdateBookCategoryAsync(Guid.NewGuid(), new BookCategoryDto { Name = "B" });
+        var result = await _service.UpdateBookCategoryAsync(Guid.NewGuid(), new CategoryDto { Name = "B" });
 
         //assert
         result.IsSuccess.Should().BeFalse();
@@ -279,7 +279,7 @@ public class BookCategoryServiceTests
     public async Task UpdateBookCategoryAsync_ShouldReturnFailure_WhenNameIsEmpty()
     {
         //arrange
-        var created = BookCategory.Create("A");
+        var created = Category.Create("A");
         created.IsSuccess.Should().BeTrue();
 
         var category = created.Value!;
@@ -287,7 +287,7 @@ public class BookCategoryServiceTests
         _repo.Setup(r => r.GetBookCategoryByIdAsync(category.Id)).ReturnsAsync(category);
 
         //act
-        var result = await _service.UpdateBookCategoryAsync(category.Id, new BookCategoryDto { Name = ""});
+        var result = await _service.UpdateBookCategoryAsync(category.Id, new CategoryDto { Name = ""});
 
         //assert
         result.IsSuccess.Should().BeFalse();
@@ -300,7 +300,7 @@ public class BookCategoryServiceTests
     public async Task UpdateBookCategoryAsync_ShouldReturnFailure_WhenNameTooLong()
     {
         //arrange
-        var created = BookCategory.Create("A");
+        var created = Category.Create("A");
         created.IsSuccess.Should().BeTrue();
 
         var category = created.Value!;
@@ -308,7 +308,7 @@ public class BookCategoryServiceTests
         _repo.Setup(r => r.GetBookCategoryByIdAsync(category.Id)).ReturnsAsync(category);
 
         //act
-        var result = await _service.UpdateBookCategoryAsync(category.Id, new BookCategoryDto { Name = new string('A', 101) });
+        var result = await _service.UpdateBookCategoryAsync(category.Id, new CategoryDto { Name = new string('A', 101) });
 
         //assert
         result.IsSuccess.Should().BeFalse();

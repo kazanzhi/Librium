@@ -1,5 +1,4 @@
-﻿using Librium.Domain.Users.Models;
-using Librium.Domain.Users.Services;
+﻿using Librium.Application.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -17,7 +16,7 @@ public class JwtTokenService : IJwtTokenService
         _configuration = configuration;
     }
 
-    public string CreateToken(AppUser user, IList<string> roles)
+    public string CreateToken(Guid userId, string email, IList<string> roles)
     {
         var jwtSection = _configuration.GetSection("JwtOptions");
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSection["Key"]!));
@@ -25,9 +24,8 @@ public class JwtTokenService : IJwtTokenService
 
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Email, user.Email!),
-            new Claim(ClaimTypes.Name, user.UserName!),
+            new Claim(ClaimTypes.NameIdentifier, userId.ToString()),
+            new Claim(ClaimTypes.Email, email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 

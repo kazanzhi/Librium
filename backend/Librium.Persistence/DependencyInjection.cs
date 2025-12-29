@@ -1,8 +1,6 @@
 ﻿using Librium.Domain.Books.Repositories;
-using Librium.Domain.Users.Models;
 using Librium.Domain.Users.Repositories;
 using Librium.Persistence.Repositories;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,17 +14,9 @@ public static class DependencyInjection
         services.AddDbContext<LibriumDbContext>(options =>
             options.UseSqlServer(config.GetConnectionString("DefaultConnection")));
 
-        services.AddScoped<IBookCategoryRepository, BookCategoryRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IBookRepository, BookRepository>();
-        services.AddScoped<IAppUserRepository, AppUserRepository>();
-
-        services.AddIdentityCore<AppUser>(options =>
-        {
-            options.User.RequireUniqueEmail = true;
-        })
-            .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<LibriumDbContext>()
-            .AddSignInManager();
+        services.AddScoped<IUserLibraryRepository, UserLibraryRepository>();
 
         return services;
     }

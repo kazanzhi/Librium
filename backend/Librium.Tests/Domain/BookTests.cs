@@ -241,7 +241,7 @@ public class BookTests
         var bookResult = Book.Create("TestTitle", "TestAuthor", "TestContent", 2000);
         bookResult.IsSuccess.Should().BeTrue();
         var book = bookResult.Value;
-        var categoryResult = BookCategory.Create("TestCategory");
+        var categoryResult = Category.Create("TestCategory");
         categoryResult.IsSuccess.Should().BeTrue();
         var category = categoryResult.Value;
 
@@ -250,8 +250,8 @@ public class BookTests
 
         //assert
         result.IsSuccess.Should().BeTrue();
-        book.BookCategories.Should().ContainSingle();
-        book.BookCategories.First().Id.Should().Be(category.Id);
+        book.Categories.Should().ContainSingle();
+        book.Categories.First().Id.Should().Be(category.Id);
     }
 
     [Fact]
@@ -277,7 +277,7 @@ public class BookTests
         var bookResult = Book.Create("TestTitle", "TestAuthor", "TestContent", 2000);
         bookResult.IsSuccess.Should().BeTrue();
         var book = bookResult.Value;
-        var categoryResult = BookCategory.Create("TestCategory");
+        var categoryResult = Category.Create("TestCategory");
         categoryResult.IsSuccess.Should().BeTrue();
         var category = categoryResult.Value;
         book.AddCategory(category);
@@ -288,7 +288,7 @@ public class BookTests
         //assert
         result.IsSuccess.Should().BeFalse();
         result.ErrorMessage.Should().Be("Category already assigned.");
-        book.BookCategories.Should().HaveCount(1);
+        book.Categories.Should().HaveCount(1);
     }
 
     //removeCategory
@@ -299,7 +299,7 @@ public class BookTests
         var bookResult = Book.Create("TestTitle", "TestAuthor", "TestContent", 2000);
         bookResult.IsSuccess.Should().BeTrue();
         var book = bookResult.Value;
-        var categoryResult = BookCategory.Create("TestCategory");
+        var categoryResult = Category.Create("TestCategory");
         categoryResult.IsSuccess.Should().BeTrue();
         var category = categoryResult.Value;
         book.AddCategory(category);
@@ -309,7 +309,7 @@ public class BookTests
 
         //assert
         result.IsSuccess.Should().BeTrue();
-        book.BookCategories.Should().BeEmpty();
+        book.Categories.Should().BeEmpty();
     }
 
     [Fact]
@@ -335,7 +335,7 @@ public class BookTests
         var bookResult = Book.Create("TestTitle", "TestAuthor", "TestContent", 2000);
         bookResult.IsSuccess.Should().BeTrue();
         var book = bookResult.Value;
-        var categoryResult = BookCategory.Create("TestCategory");
+        var categoryResult = Category.Create("TestCategory");
         categoryResult.IsSuccess.Should().BeTrue();
         var category = categoryResult.Value;
 

@@ -22,7 +22,7 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
         builder.Property(b => b.PublishedYear)
             .IsRequired();
 
-        builder.HasMany(c => c.BookCategories)
+        builder.HasMany(c => c.Categories)
             .WithMany();
     }
 }

@@ -2,27 +2,27 @@
 
 namespace Librium.Domain.Books.Models;
 
-public class BookCategory
+public class Category
 {
-    private BookCategory() { }
+    private Category() { }
     public Guid Id { get; private set; }
     public string Name { get; private set; } = string.Empty;
 
-    public static ValueOrResult<BookCategory> Create(string name)
+    public static ValueOrResult<Category> Create(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
-            return ValueOrResult<BookCategory>.Failure("Category name is required.");
+            return ValueOrResult<Category>.Failure("Category name is required.");
 
         if (name.Length > 100)
-            return ValueOrResult<BookCategory>.Failure("Category name cannot exceed 100 characters.");
+            return ValueOrResult<Category>.Failure("Category name cannot exceed 100 characters.");
 
-        var category = new BookCategory
+        var category = new Category
         {
             Id = Guid.NewGuid(),
             Name = name.Trim()
         };
 
-        return ValueOrResult<BookCategory>.Success(category);
+        return ValueOrResult<Category>.Success(category);
     }
 
     public ValueOrResult Update(string name)
@@ -31,7 +31,7 @@ public class BookCategory
             return ValueOrResult.Failure("Category name is required.");
 
         if (name.Length > 100)
-            return ValueOrResult<BookCategory>.Failure("Category name cannot exceed 100 characters.");
+            return ValueOrResult<Category>.Failure("Category name cannot exceed 100 characters.");
 
         Name = name.Trim();
 

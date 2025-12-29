@@ -10,9 +10,9 @@ namespace Librium.Application.Services;
 public class BookService : IBookService
 {
     private readonly IBookRepository _bookRepo;
-    private readonly IBookCategoryRepository _categoryRepo;
+    private readonly ICategoryRepository _categoryRepo;
 
-    public BookService(IBookRepository repository, IBookCategoryRepository category)
+    public BookService(IBookRepository repository, ICategoryRepository category)
     {
         _bookRepo = repository;
         _categoryRepo = category;
@@ -77,7 +77,7 @@ public class BookService : IBookService
             Id = book.Id,
             Title = book.Title,
             Author = book.Author,
-            BookCategories = book.BookCategories
+            Categories = book.Categories
                 .Select(c => c.Name)
                 .ToList(),
             Content = book.Content,
@@ -85,21 +85,25 @@ public class BookService : IBookService
         }).ToList();
     }
 
-    public async Task<BookResponseDto> GetBookById(Guid bookId)
+    public async Task<ValueOrResult<BookResponseDto>> GetBookById(Guid bookId)
     {
         var book = await _bookRepo.GetBookById(bookId);
+        if (book is null)
+            return ValueOrResult<BookResponseDto>.Failure("Book not found.");
 
-        return new BookResponseDto
+        var dto = new BookResponseDto
         {
-            Id = book!.Id,
+            Id = book.Id,
             Title = book.Title,
             Author = book.Author,
-            BookCategories = book.BookCategories
+            Categories = book.Categories
                 .Select(c => c.Name)
                 .ToList(),
             Content = book.Content,
             PublishedYear = book.PublishedYear
         };
+
+        return ValueOrResult<BookResponseDto>.Success(dto);
     }
 
     public async Task<ValueOrResult> RemoveCategoryFromBook(Guid bookId, string categoryName)
