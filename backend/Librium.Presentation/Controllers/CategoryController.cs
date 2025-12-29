@@ -8,18 +8,18 @@ namespace Librium.Presentation.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class BookCategoryController : ControllerBase
+public class CategoryController : ControllerBase
 {
-    private readonly IBookCategoryService _service;
+    private readonly ICategoryService _service;
 
-    public BookCategoryController(IBookCategoryService service)
+    public CategoryController(ICategoryService service)
     {
         _service = service;
     }
 
     [HttpPost]
     [Authorize(Roles = UserRoles.Admin)]
-    public async Task<IActionResult> Create([FromBody] BookCategoryDto categoryDto)
+    public async Task<IActionResult> Create([FromBody] CategoryDto categoryDto)
     {
         var result = await _service.CreateBookCategoryAsync(categoryDto);
         return result.IsSuccess
@@ -55,7 +55,7 @@ public class BookCategoryController : ControllerBase
 
     [HttpPut("{Id}")]
     [Authorize(Roles = UserRoles.Admin)]
-    public async Task<IActionResult> Update(Guid Id, [FromBody] BookCategoryDto categoryDto)
+    public async Task<IActionResult> Update(Guid Id, [FromBody] CategoryDto categoryDto)
     {
         var result = await _service.UpdateBookCategoryAsync(Id, categoryDto);
         return result.IsSuccess

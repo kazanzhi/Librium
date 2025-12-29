@@ -1,11 +1,13 @@
 ﻿using Librium.Domain.Books.Models;
 using Librium.Domain.Users.Models;
+using Librium.Identity.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Librium.Persistence;
 
-public class LibriumDbContext : IdentityDbContext<AppUser>
+public class LibriumDbContext : IdentityDbContext<AppIdentityUser, IdentityRole<Guid>, Guid>
 {
     public LibriumDbContext(DbContextOptions<LibriumDbContext> options)
         : base(options) { }
@@ -18,6 +20,7 @@ public class LibriumDbContext : IdentityDbContext<AppUser>
     }
 
     public DbSet<Book> Books { get; set; }
-    public DbSet<UserBook> UserBooks { get; set; }
-    public DbSet<BookCategory> BookCategories { get; set; }
+    public DbSet<UserLibrary> UserLibraries { get; set; }
+    public DbSet<LibraryBook> LibraryBooks { get; set; }
+    public DbSet<Category> Categories { get; set; }
 }

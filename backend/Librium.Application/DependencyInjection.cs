@@ -9,9 +9,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        services.AddScoped<IBookCategoryService, BookCategoryService>();
+        services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IBookService, BookService>();
-        services.AddScoped<IAppUserService, AppUserService>();
+        services.AddScoped<IUserLibraryService, UserLibraryService>();
         services.AddScoped<IAuthService, AuthService>();
 
         return services;

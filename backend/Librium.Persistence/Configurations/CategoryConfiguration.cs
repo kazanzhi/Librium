@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Librium.Persistence.Configurations;
 
-public class BookCategoryConfiguration : IEntityTypeConfiguration<BookCategory>
+public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 {
-    public void Configure(EntityTypeBuilder<BookCategory> builder)
+    public void Configure(EntityTypeBuilder<Category> builder)
     {
         builder.HasKey(c => c.Id);
 

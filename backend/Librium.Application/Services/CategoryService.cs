@@ -7,23 +7,23 @@ using Librium.Domain.Books.Services;
 
 namespace Librium.Application.Services;
 
-public class BookCategoryService : IBookCategoryService
+public class CategoryService : ICategoryService
 {
-    private readonly IBookCategoryRepository _repository;
+    private readonly ICategoryRepository _repository;
 
-    public BookCategoryService(IBookCategoryRepository repository)
+    public CategoryService(ICategoryRepository repository)
     {
         _repository = repository;
     }
 
-    public async Task<ValueOrResult<Guid>> CreateBookCategoryAsync(BookCategoryDto categoryDto)
+    public async Task<ValueOrResult<Guid>> CreateBookCategoryAsync(CategoryDto categoryDto)
     {
         var name = categoryDto.Name!.Trim();
         var categoryExists = await _repository.GetByNameAsync(name);
         if (categoryExists is not null)
             return ValueOrResult<Guid>.Failure("This category already exists.");
        
-        var categoryResult = BookCategory.Create(name);
+        var categoryResult = Category.Create(name);
         if (!categoryResult.IsSuccess)
             return ValueOrResult<Guid>.Failure(categoryResult.ErrorMessage!);
 
@@ -47,29 +47,29 @@ public class BookCategoryService : IBookCategoryService
         return ValueOrResult.Success();
     }
 
-    public async Task<List<BookCategoryResponseDto>> GetAllBookCategoriesAsync()
+    public async Task<List<CategoryResponseDto>> GetAllBookCategoriesAsync()
     {
         var categories = await _repository.GetAllBookCategoriesAsync();
 
-        return categories.Select(category => new BookCategoryResponseDto
+        return categories.Select(category => new CategoryResponseDto
         {
             Id = category.Id,
             Name = category.Name
         }).ToList();
     }
 
-    public async Task<BookCategoryResponseDto> GetBookCategoryById(Guid categoryId)
+    public async Task<CategoryResponseDto> GetBookCategoryById(Guid categoryId)
     {
         var category = await _repository.GetBookCategoryByIdAsync(categoryId);
 
-        return new BookCategoryResponseDto
+        return new CategoryResponseDto
         {
             Id = category!.Id,
             Name = category.Name
         };
     }
 
-    public async Task<ValueOrResult> UpdateBookCategoryAsync(Guid categoryId, BookCategoryDto categoryDto)
+    public async Task<ValueOrResult> UpdateBookCategoryAsync(Guid categoryId, CategoryDto categoryDto)
     {
         var category = await _repository.GetBookCategoryByIdAsync(categoryId);
         if (category is null)

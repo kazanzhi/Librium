@@ -33,15 +33,23 @@ public class BookRepository : IBookRepository
     public async Task<List<Book>> GetAllBooks()
     {
         return await _context.Books
-            .Include(c => c.BookCategories)
+            .Include(c => c.Categories)
             .ToListAsync();
     }
 
     public async Task<Book?> GetBookById(Guid bookId)
     {
         return await _context.Books
-            .Include(c => c.BookCategories)
+            .Include(c => c.Categories)
             .FirstOrDefaultAsync(b => b.Id == bookId);
+    }
+
+    public async Task<IReadOnlyCollection<Book>> GetByIdsAsync(IEnumerable<Guid> bookIds)
+    {
+        return await _context.Books
+        .Where(b => bookIds.Contains(b.Id))
+        .Include(b => b.Categories)
+        .ToListAsync();
     }
 
     public async Task<bool> SaveChanges()

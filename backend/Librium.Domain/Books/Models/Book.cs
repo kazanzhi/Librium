@@ -5,16 +5,14 @@ namespace Librium.Domain.Books.Models;
 
 public class Book
 {
-    private readonly List<BookCategory> _categories = new();
-    private readonly List<UserBook> _userBooks = new();
+    private readonly List<Category> _categories = new();
     private Book() { }
     public Guid Id { get; private set; }
     public string Title { get; private set; } = string.Empty;
     public string Author { get; private set; } = string.Empty;
     public string Content { get; private set; } = string.Empty;
     public int PublishedYear { get; private set; }
-    public IReadOnlyCollection<UserBook> UserBooks => _userBooks;
-    public IReadOnlyCollection<BookCategory> BookCategories => _categories;
+    public IReadOnlyCollection<Category> Categories => _categories;
 
     public static ValueOrResult<Book> Create(string title, string author, string content, int publishedYear)
     {
@@ -64,7 +62,7 @@ public class Book
         return ValueOrResult.Success();
     }
     
-    public ValueOrResult AddCategory(BookCategory category)
+    public ValueOrResult AddCategory(Category category)
     {
         if (category is null)
             return ValueOrResult.Failure("Category is required.");
@@ -77,7 +75,7 @@ public class Book
         return ValueOrResult.Success();
     }
 
-    public ValueOrResult RemoveCategory(BookCategory category)
+    public ValueOrResult RemoveCategory(Category category)
     {
         if (category is null)
             return ValueOrResult.Failure("Category is required.");

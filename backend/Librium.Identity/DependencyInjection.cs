@@ -1,5 +1,9 @@
-﻿using Librium.Domain.Users.Services;
+﻿using Librium.Application.Security;
+using Librium.Application.Services.Identity;
+using Librium.Identity.Models;
+using Librium.Identity.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -10,7 +14,7 @@ namespace Librium.Identity;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddIdentityInfrastructure(this IServiceCollection services, IConfiguration config)
+    public static IdentityBuilder AddIdentityInfrastructure(this IServiceCollection services, IConfiguration config)
     {
         services.AddScoped<IIdentityService, IdentityService>();
         services.AddScoped<IJwtTokenService, JwtTokenService>();
@@ -35,6 +39,12 @@ public static class DependencyInjection
             };
         });
 
-        return services;
+        return services
+            .AddIdentityCore<AppIdentityUser>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+            })
+            .AddRoles<IdentityRole<Guid>>()
+            .AddSignInManager();
     }
 }

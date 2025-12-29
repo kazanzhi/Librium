@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Librium.Application\Librium.Application.csproj" />
     <ProjectReference Include="..\Librium.Domain\Librium.Domain.csproj" />
+    <ProjectReference Include="..\Librium.Identity\Librium.Identity.csproj" />
   </ItemGroup>
 
 </Project>
