@@ -18,4 +18,8 @@ export class TokenService {
   clear(): void {
     localStorage.removeItem(this.key);
   }
+
+  isAuthenticated(): boolean {
+    return !!this.get();
+  }
 }
