@@ -1,1 +1,6 @@
-<p>book-card works!</p>
+<div>
+  <strong>{{ book.title }}</strong><br>
+  <span>{{ book.author }}</span><br>
+
+  <a [routerLink]="['/books', book.id]">View</a>
+</div>

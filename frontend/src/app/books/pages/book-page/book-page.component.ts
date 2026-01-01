@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BooksService } from '../../services/books.service';
+import { Book } from 'src/app/shared/models/book';
 
 @Component({
   selector: 'app-book-page',
@@ -6,10 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./book-page.component.scss']
 })
 export class BookPageComponent implements OnInit {
+  books: Book[] = [];
+  loading = true;
 
-  constructor() { }
+  constructor(private booksService: BooksService) { }
 
   ngOnInit(): void {
+    this.booksService.getAll().subscribe({
+      next: books => {
+        this.books = books;
+        this.loading = false;
+      },
+      error: err => {
+        console.error('Error fetching books:', err);
+        this.loading = false;
+      }
+    })
   }
-
 }

@@ -1,1 +1,12 @@
-<p>book-page works!</p>
+<h2>Books</h2>
+
+<div *ngIf="loading">Loading...</div>
+
+<div *ngIf="!loading && books.length === 0">
+  No books found
+</div>
+
+<ul *ngIf="!loading">
+  <app-book-card *ngFor="let book of books" [book]="book">
+  </app-book-card>
+</ul>
