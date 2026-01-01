@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TokenService } from 'src/app/core/services/token.service';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth-form',
@@ -10,13 +11,15 @@ import { AuthService } from '../../services/auth.service';
 })
 export class AuthFormComponent implements OnInit {
   @Input() mode!: 'login' | 'register';
+  @Output() registered = new EventEmitter<void>();
 
   form!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -39,15 +42,15 @@ export class AuthFormComponent implements OnInit {
     const data = this.form.value;
 
     if (this.mode === 'login') {
-    this.authService.login(data).subscribe(response => {
+      this.authService.login(data).subscribe(response => {
       this.tokenService.save(response.token);
-      console.log('LOGIN OK');
-      });
+      this.router.navigate(['/books']);
+    }); 
     }
 
     if (this.mode === 'register') {
       this.authService.register(data).subscribe(() => {
-        console.log('REGISTER OK');
+        this.registered.emit();
       });
     }
   }
