@@ -2,6 +2,7 @@ using Librium.Application;
 using Librium.Identity;
 using Librium.Persistence;
 using Librium.Persistence.Identity;
+using Librium.Presentation.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Librium.Presentation;
@@ -24,8 +25,9 @@ public class Program
             .AddIdentityInfrastructure(builder.Configuration)
             .AddEntityFrameworkStores<LibriumDbContext>();
 
-
         builder.Services.AddPersistenceInfrastructure(builder.Configuration);
+
+        builder.Services.AddFrontendCors(builder.Configuration);
 
         builder.Services.AddSwaggerGen();
 
@@ -51,6 +53,7 @@ public class Program
 
         app.UseHttpsRedirection();
         app.UseRouting();
+        app.UseCors("Frontend");
         app.UseAuthentication();
         app.UseAuthorization();
 
