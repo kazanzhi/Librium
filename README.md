@@ -4,186 +4,97 @@ Librium is a modular, extensible Library Management System built with Clean Arch
 The project demonstrates production-grade backend engineering: rich domain models, domain invariants, strict separation of layers, repository abstraction, token-based authentication, and a full test suite for domain logic.
 
 ## Core Features
-### Books & Categories
+###📚 Global Book Catalog
+* Create, update, delete, and retrieve books
+* Manage book categories
+* Many-to-many relationship: Book ↔ Category
+* All validations and invariants enforced inside the domain
+* Domain entities are created only via factory methods
 
-* Create, update, retrieve books
+### 👤 User Personal Library
+* Each user has a personal library
+* Users can:
+   * add books to their library
+   * remove books from their library
+* Implemented as a DDD aggregate:
+   * UserLibrary (aggregate root)
+   * LibraryBook (internal entity)
+* Book does not depend on users
+* Deleting a book from the global catalog removes it from all user libraries
+* Removing a book from a user library does not affect the global catalog
 
-* Create and manage book categories
-
-* Domain-level validation and invariants
-
-* Many-to-one relationship (Books → Category)
-
-### User Personal Library
-
-* Users can add/remove books to their personal library
-
-* Relationship modeled through the UserBook entity
-
-* Business rules enforced inside domain models (AppUser.AddBook, RemoveBook, UserBook.Create)
-
-### Authentication & Authorization
-
+### 🔐 Authentication & Authorization
 * JWT-based authentication
+* Role-based authorization:
+   * User
+   * Admin
+* Clear responsibility split:
+   * Application layer — use cases (Login, Register)
+   * Identity layer (Infrastructure) — ASP.NET Identity, UserManager, RoleManager
+* Login returns JWT
+* Registration does not return a token
 
-* Issuer/Audience validation
-
-* Role-based authorization (User, Admin)
+### Domain-Driven Design
+* Rich domain models (no anemic entities)
+* Domain layer has no dependency on:
+   * ASP.NET
+   * Identity
+   * EF Core
+* All business rules enforced in domain entities
+* Constructors are private; creation via factory methods only
 
 ### Testing
+* Unit tests for:
+   * Domain layer
+   * Application layer
+* Tools:
+   * xUnit
+   * FluentAssertions
+   * Moq
+* Tests focus on behavior, not infrastructure
+* Explicit error handling via ValueOrResult<T>
 
-* Full domain-level test coverage (BookTests, BookCategoryTests, UserBookTests, etc.)
+### Core Domain Models
+* Book
+* Root entity of the global catalog
+* Fields:
+   * Title
+   * Author
+   * Content
+   * PublishedYear
+   * Categories
+* Owns its invariants
+* Completely independent from users
 
-* xUnit + FluentAssertions
+### Category
+* Represents a book category
+* Many-to-many relationship with Book
 
-* Domain entities created exclusively via factory methods (Create)
+### UserLibrary (Aggregate Root)
+* Represents a user’s personal library
+* Contains a collection of LibraryBook
+* Responsible for:
+   * AddBook
+   * RemoveBook
 
-### Clean Architecture
+### LibraryBook
+* Internal entity inside UserLibrary
+* Stores only BookId
+* Not an aggregate root
 
-The solution follows a strict multi-layer design:
-
-Librium
-│
-- └── backend
-   - ├── Librium.Domain          → Domain Models, DTOs, Interfaces
-   - ├── Librium.Application     → Use Cases, Services, Business Logic
-   - ├── Librium.Persistence     → EF Core, DbContext, Configurations, Repositories
-   - ├── Librium.Identity        → JWT Token Service, Identity Infrastructure
-   - ├── Librium.Presentation    → ASP.NET  Core API, Controllers, Swagger
-   - └── Librium.Tests           → Unit Tests for Domain/Application
-
-## Technologies Used
-### Backend
-
-* .NET 9 (ASP.NET  Core)
-
-* C# 12
-
-* EF Core 9
-
-* JWT Authentication
-
-* FluentValidation
-
-* Moq (unit tests)
-
-* xUnit + FluentAssertions
-
-### Architecture
-
-* Clean Architecture
-
-* Domain-Driven Design
-
-* Repository Pattern
-
-* Dependency Injection
-
-* DTO Mapping
-
-* Domain events-ready structure
-## Docker Support
-Librium API is packaged as a Docker image for cloud deployment.
-
-Dockerfile location:
+## ValueOrResult Pattern
+The project uses an explicit result type instead of exceptions or nulls:
 ```
-backend/Librium.Presentation/Dockerfile
+ValueOrResult
+ValueOrResult<T>
 ```
-Build locally:
-```
-docker build -t librium-api ./backend -f ./backend/Librium.Presentation/Dockerfile
-```
-## CI/CD Pipeline (GitHub Actions + Docker + Azure)
 
-Librium uses production-grade automated pipelines with GitHub Actions:
-
-### CI Pipeline (ci.yml)
-
-Runs automatically on every pull request to master.
-
-Includes:
-
-* .NET 9 restore, build, test
-
-* Domain + application test suite
-
-* Docker image build
-
-* Push to Azure Container Registry (ACR)
-
-## CD Pipeline (cd.yml)
-
-Runs automatically on every push to master.
-
-Deploys image from ACR to Azure Web App for Containers.
-
-## Domain Model Overview
-## Book
-
-Rich domain entity with strict invariants:
-```
-var result = Book.Create(title, author, categoryId, content, year);
-```
-Validations include:
-
-* `title != null`
+Benefits:
+* Predictable error handling
+* Explicit control flow
+* Clean use-case orchestration
+* No hidden exceptions
   
-* `author != null`
-
-* `categoryId != Guid.Empty`
-
-* `content != null`
-
-* `year >= 0`
-
-## BookCategory
-
-Created via:
-```
-var category = BookCategory.Create(name);
-```
-## AppUser
-
-Inherits from IdentityUser and contains domain logic:
-```
-user.AddBook(bookId);
-user.RemoveBook(bookId);
-```
-## UserBook
-
-Join entity representing a book added by a user.
-
-## Testing Coverage
-* xUnit
-
-* FluentAssertions
-
-* Moq
-
-Example Test (Book Create)
-```
-[Fact]
-public void Create_ShouldReturnFailure_WhenTitleIsNull()
-{
-var result = Book.Create(null, "Author", Guid.NewGuid(), "Content", 2000);
-
-result.IsSuccess.Should().BeFalse();
-result.ErrorMessage.Should().Be("Title is required.");
-}
-```
-Example Test (Book Update)
-```
-[Fact]
-public void Update_ShouldReturnFailure_WhenContentIsNull()
-{
-var book = Book.Create("A", "B", Guid.NewGuid(), "C", 2000).Value!;
-var category = BookCategory.Create("Sci").Value!;
-
-var result = book.Update("New", "New", null, 2020, category);
-
-result.IsSuccess.Should().BeFalse();
-}
-```
 ## Database & Persistence
 ### EF Core Configurations
 
@@ -219,15 +130,37 @@ Encoding.UTF8.GetBytes(config["JwtOptions:Key"]!)
 };
 ```
 ## Roles:
-
 * User
-
 * Admin
 
-Protected controllers use:
+Protected endpoints use:
 ```
 [Authorize(Roles = UserRoles.User)]
+[Authorize(Roles = UserRoles.Admin)]
 ```
+## Docker Support
+Librium API is packaged as a Docker image for cloud deployment.
+
+Dockerfile location:
+```
+backend/Librium.Presentation/Dockerfile
+```
+Build locally:
+```
+docker build -t librium-api ./backend -f ./backend/Librium.Presentation/Dockerfile
+```
+## CI/CD Pipeline (GitHub Actions + Docker + Azure)
+
+* GitHub Actions
+* CI:
+   * build
+   * test
+   * docker build
+   * Push to Azure Container Registry (ACR)
+* CD:
+   * push image
+   * deploy to Azure Web App for Containers
+
 ## How to Run Tests
 Run all tests:
 ```
@@ -237,16 +170,15 @@ Run only Book tests:
 ```
 dotnet test --filter FullyQualifiedName~BookTests
 ```
-## How to Run (5 Minutes!)
+## How to Run (5 Minutes)
 ### 1. Clone the repo
 ```
 git clone https://github.com/yourname/Librium.git
-cd PristineIt
+cd Librium/backend
 ```
-### 2. Set up SQL Server
+### 2. Configure SQL Server
+Create database and update appsettings.json
 
-Create a database: librium_db
-Update connection string in appsettings.json
 ### 3. Run migrations
 ```
 cd Librium.Persistence
@@ -258,3 +190,4 @@ dotnet run --project Librium.Presentation
 ```
 ### 5. Try it out!
 Open `https://localhost:7213/swagger` and play with tasks
+
