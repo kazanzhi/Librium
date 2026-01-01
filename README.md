@@ -4,7 +4,7 @@ Librium is a modular, extensible Library Management System built with Clean Arch
 The project demonstrates production-grade backend engineering: rich domain models, domain invariants, strict separation of layers, repository abstraction, token-based authentication, and a full test suite for domain logic.
 
 ## Core Features
-###📚 Global Book Catalog
+### 📚 Global Book Catalog
 * Create, update, delete, and retrieve books
 * Manage book categories
 * Many-to-many relationship: Book ↔ Category
@@ -190,4 +190,5 @@ dotnet run --project Librium.Presentation
 ```
 ### 5. Try it out!
 Open `https://localhost:7213/swagger` and play with tasks
+
 
