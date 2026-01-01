@@ -5,4 +5,5 @@ export interface Book {
   title: string;
   author: string;
   categories: Category[];
+  publishedYear: number;
 }
