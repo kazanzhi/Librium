@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-auth-page',
   templateUrl: './auth-page.component.html',
   styleUrls: ['./auth-page.component.scss']
 })
-export class AuthPageComponent implements OnInit {
+export class AuthPageComponent {
+  mode: 'login' | 'register' = 'login';
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private route: ActivatedRoute) {
+    const mode = this.route.snapshot.queryParamMap.get('mode');
+    if (mode === 'register') {
+      this.mode = 'register';
+    }
   }
-
 }
