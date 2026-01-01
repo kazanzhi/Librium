@@ -3,6 +3,9 @@ name: CD
 on:
   push:
     branches: ["master"]
+  paths:
+    - 'backend/**'
+    - '.github/workflows/cd.yml'
 
 jobs:
   deploy:
