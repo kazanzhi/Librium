@@ -38,14 +38,17 @@ export class AuthFormComponent implements OnInit {
 
     const data = this.form.value;
 
-    const request =
-      this.mode === 'login'
-        ? this.authService.login(data)
-        : this.authService.register(data);
-
-    request.subscribe(response => {
+    if (this.mode === 'login') {
+    this.authService.login(data).subscribe(response => {
       this.tokenService.save(response.token);
-      console.log('AUTH OK', response);
-    });
+      console.log('LOGIN OK');
+      });
+    }
+
+    if (this.mode === 'register') {
+      this.authService.register(data).subscribe(() => {
+        console.log('REGISTER OK');
+      });
+    }
   }
 }
