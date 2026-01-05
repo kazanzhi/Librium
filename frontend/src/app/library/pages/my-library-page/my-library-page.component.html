@@ -1,1 +1,5 @@
-<p>my-library-page works!</p>
+<li *ngFor="let book of books">
+  {{ book.title }}
+  <a [routerLink]="['/books', book.id]">Details</a>
+  <button (click)="remove(book.id)">Remove</button>
+</li>

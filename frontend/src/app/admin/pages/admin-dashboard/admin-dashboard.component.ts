@@ -5,7 +5,6 @@ import { CategoryService } from 'src/app/categories/services/category.service';
 import { BookService} from 'src/app/books/services/books.service';
 import { TokenService } from 'src/app/core/services/token.service';
 import { Router } from '@angular/router';
-import { templateJitUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-admin-dashboard',
