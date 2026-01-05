@@ -1,1 +1,31 @@
-<p>admin-dashboard works!</p>
+<h2>Admin</h2>
+
+<div *ngIf="loading">loading...</div>
+
+<button (click)="showAdminCreation = !showAdminCreation">Admin creation</button>
+<app-admin-creation *ngIf="showAdminCreation"></app-admin-creation>
+<button (click)="logout()">logout</button>
+
+<hr>
+
+<div *ngIf="!loading">
+  <h4>Search book</h4>
+  <input type="text" placeholder="Search book...">
+  <ul>
+    <li *ngFor="let book of books">
+      {{ book.title }} — {{ book.author }}
+      <button (click)="edit(book)">Edit</button>
+    </li>
+  </ul>
+  <button (click)="showManageBooks = !showManageBooks" (click)="createNew()">Create Book</button>
+  <app-book-editor
+    *ngIf="showManageBooks"
+    [book]="selectedBook"
+    [categories]="categories"
+    (saved)="onBookSaved()">
+  </app-book-editor>
+</div>
+
+<hr>
+<button (click)="showManageCategories = !showManageCategories">Manage Categories</button>
+<app-category-editor *ngIf="showManageCategories" [categories]="categories" (saved)="loadAll()"></app-category-editor>
