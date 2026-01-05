@@ -6,7 +6,7 @@ import { Book } from 'src/app/shared/models/book';
 @Injectable({
   providedIn: 'root'
 })
-export class BooksService {
+export class BookService {
   private readonly apiUrl = 'http://localhost:5106/api/book';
 
   constructor(private http: HttpClient) { }

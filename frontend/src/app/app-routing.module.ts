@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
+import { AdminGuard } from './core/guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -10,7 +12,13 @@ const routes: Routes = [
   {
     path: 'books',
     loadChildren: () =>
-      import('./books/books.module').then(m => m.BooksModule),
+      import('./books/books.module').then(m => m.BooksModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./admin/admin.module').then(m => m.AdminModule),
+    canActivate: [AuthGuard, AdminGuard]
   }
 ];
 

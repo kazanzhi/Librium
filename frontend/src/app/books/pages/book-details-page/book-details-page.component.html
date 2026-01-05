@@ -10,7 +10,7 @@
   <p>Published Year: {{ book.publishedYear }}</p>
     <p>Categories:
         <span *ngFor="let category of book.categories; let isLast=last">
-        {{ category.name }}<span *ngIf="!isLast">, </span>
+        {{ category }}<span *ngIf="!isLast">, </span>
         </span>
     </p>
     <a [routerLink]="['/books']">Back to books</a>

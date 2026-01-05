@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Book } from 'src/app/shared/models/book';
-import { BooksService } from '../../services/books.service';
+import { BookService } from '../../services/books.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -14,7 +14,7 @@ export class BookDetailsPageComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private bookService: BooksService
+    private bookService: BookService
   ) { }
 
   ngOnInit(): void {

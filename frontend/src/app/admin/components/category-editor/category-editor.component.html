@@ -1,1 +1,20 @@
-<p>category-editor works!</p>
+<h3>Categories</h3>
+
+<ul>
+  <li *ngFor="let c of categories">
+    {{ c.name }}
+    <button (click)="select(c)">Edit</button>
+    <button (click)="delete(c)">Delete</button>
+  </li>
+</ul>
+
+<form [formGroup]="form">
+  <input formControlName="name" placeholder="Category name" />
+
+  <button
+    type="button"
+    (click)="selectedCategory ? update() : create()"
+    [disabled]="loading || form.invalid">
+    {{ selectedCategory ? 'Update' : 'Create' }}
+  </button>
+</form>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-admin-creation',
@@ -6,10 +8,37 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-creation.component.scss']
 })
 export class AdminCreationComponent implements OnInit {
+  form!: FormGroup;
+  loading = false;
+  message = '';
 
-  constructor() { }
+  constructor(private fb: FormBuilder, private adminService: AdminService) {}
 
   ngOnInit(): void {
+    this.form = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
+  submit(): void {
+    if (this.form.invalid) return;
+
+    this.loading = true;
+    this.message = '';
+
+    this.adminService.registerAdmin(this.form.value).subscribe({
+      next: () => {
+        this.loading = false;
+        this.message = 'Admin created';
+        this.form.reset();
+      },
+      error: err => {
+        this.loading = false;
+        this.message = 'Failed to create admin';
+        console.error(err);
+      }
+    });
+  }
 }

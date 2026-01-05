@@ -1,5 +1,7 @@
 ﻿using Librium.Domain.Users.DTOs;
+using Librium.Domain.Users.Models;
 using Librium.Domain.Users.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Librium.Presentation.Controllers;
@@ -26,7 +28,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("register-admin")]
-    //[Authorize(Roles = UserRoles.Admin)]
+    [Authorize(Roles = UserRoles.Admin)]
     public async Task<IActionResult> RegisterAdmin([FromBody] RegisterDto registerDto)
     {
         var result = await _authService.RegisterAdminAsync(registerDto);

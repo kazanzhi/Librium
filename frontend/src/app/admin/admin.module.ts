@@ -6,6 +6,7 @@ import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard
 import { BookEditorComponent } from './components/book-editor/book-editor.component';
 import { CategoryEditorComponent } from './components/category-editor/category-editor.component';
 import { AdminCreationComponent } from './components/admin-creation/admin-creation.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { AdminCreationComponent } from './components/admin-creation/admin-creati
   ],
   imports: [
     CommonModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class AdminModule { }
