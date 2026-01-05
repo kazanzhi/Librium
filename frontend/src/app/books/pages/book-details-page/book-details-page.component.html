@@ -14,4 +14,11 @@
         </span>
     </p>
     <a [routerLink]="['/books']">Back to books</a>
+    <button *ngIf="!isInMyLibrary" (click)="addToLibrary()">
+      Add to My Library
+    </button>
+
+    <button *ngIf="isInMyLibrary" (click)="removeFromLibrary()">
+      Remove from My Library
+    </button>
 </div>

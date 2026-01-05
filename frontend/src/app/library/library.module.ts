@@ -3,17 +3,17 @@ import { CommonModule } from '@angular/common';
 
 import { LibraryRoutingModule } from './library-routing.module';
 import { MyLibraryPageComponent } from './pages/my-library-page/my-library-page.component';
-import { LibraryBookCardComponent } from './components/library-book-card/library-book-card.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
   declarations: [
-    MyLibraryPageComponent,
-    LibraryBookCardComponent
+    MyLibraryPageComponent
   ],
   imports: [
     CommonModule,
-    LibraryRoutingModule
+    LibraryRoutingModule,
+    RouterModule
   ]
 })
 export class LibraryModule { }
