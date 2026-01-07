@@ -1,11 +1,13 @@
 <h3>Categories</h3>
 
 <ul>
-  <li *ngFor="let c of categories">
-    {{ c.name }}
-    <button (click)="select(c)">Edit</button>
-    <button (click)="delete(c)">Delete</button>
-  </li>
+  @for (c of categories; track c) {
+    <li>
+      {{ c.name }}
+      <button (click)="select(c)">Edit</button>
+      <button (click)="delete(c)">Delete</button>
+    </li>
+  }
 </ul>
 
 <form [formGroup]="form">

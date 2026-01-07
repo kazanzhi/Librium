@@ -1,22 +1,23 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CategoryService } from 'src/app/categories/services/category.service';
 import { Category } from 'src/app/shared/models/category';
 
 @Component({
-  selector: 'app-category-editor',
-  templateUrl: './category-editor.component.html',
-  styleUrls: ['./category-editor.component.scss']
+    selector: 'app-category-editor',
+    templateUrl: './category-editor.component.html',
+    styleUrls: ['./category-editor.component.scss'],
+    standalone: false
 })
 export class CategoryEditorComponent implements OnInit {
   @Input() categories: Category[] = [];
   @Output() saved = new EventEmitter<void>();
 
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   selectedCategory?: Category;
   loading = false;
 
-  constructor(private categoryService: CategoryService, private fb: FormBuilder) { }
+  constructor(private categoryService: CategoryService, private fb: UntypedFormBuilder) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({

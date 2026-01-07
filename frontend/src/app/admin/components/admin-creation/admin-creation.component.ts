@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
-  selector: 'app-admin-creation',
-  templateUrl: './admin-creation.component.html',
-  styleUrls: ['./admin-creation.component.scss']
+    selector: 'app-admin-creation',
+    templateUrl: './admin-creation.component.html',
+    styleUrls: ['./admin-creation.component.scss'],
+    standalone: false
 })
 export class AdminCreationComponent implements OnInit {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   loading = false;
   message = '';
 
-  constructor(private fb: FormBuilder, private adminService: AdminService) {}
+  constructor(private fb: UntypedFormBuilder, private adminService: AdminService) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({

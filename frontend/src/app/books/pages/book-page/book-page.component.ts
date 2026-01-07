@@ -5,9 +5,10 @@ import { TokenService } from 'src/app/core/services/token.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-book-page',
-  templateUrl: './book-page.component.html',
-  styleUrls: ['./book-page.component.scss']
+    selector: 'app-book-page',
+    templateUrl: './book-page.component.html',
+    styleUrls: ['./book-page.component.scss'],
+    standalone: false
 })
 export class BookPageComponent implements OnInit {
   books: Book[] = [];
