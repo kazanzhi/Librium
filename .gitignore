@@ -453,4 +453,4 @@ yarn-error.log*
 Thumbs.db
 
 # Cache
-/.angular/cache
+.angular/cache
