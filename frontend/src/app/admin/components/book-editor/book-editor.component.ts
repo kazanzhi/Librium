@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Book } from 'src/app/shared/models/book';
 import { AdminBookService } from '../../services/admin-book.service';
 import { Category } from 'src/app/shared/models/category';
@@ -14,10 +14,10 @@ export class BookEditorComponent implements OnInit {
   @Input() categories: Category[] = [];
   @Output() saved = new EventEmitter<void>();
 
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   loading = false;
 
-  constructor(private fb: FormBuilder, private adminBookService: AdminBookService) { }
+  constructor(private fb: UntypedFormBuilder, private adminBookService: AdminBookService) { }
 
   ngOnInit(): void {
     this.buildForm();

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TokenService } from 'src/app/core/services/token.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -13,10 +13,10 @@ export class AuthFormComponent implements OnInit {
   @Input() mode!: 'login' | 'register';
   @Output() registered = new EventEmitter<void>();
 
-  form!: FormGroup;
+  form!: UntypedFormGroup;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private authService: AuthService,
     private tokenService: TokenService,
     private router: Router

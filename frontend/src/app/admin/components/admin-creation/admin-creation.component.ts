@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
@@ -8,11 +8,11 @@ import { AdminService } from '../../services/admin.service';
   styleUrls: ['./admin-creation.component.scss']
 })
 export class AdminCreationComponent implements OnInit {
-  form!: FormGroup;
+  form!: UntypedFormGroup;
   loading = false;
   message = '';
 
-  constructor(private fb: FormBuilder, private adminService: AdminService) {}
+  constructor(private fb: UntypedFormBuilder, private adminService: AdminService) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
