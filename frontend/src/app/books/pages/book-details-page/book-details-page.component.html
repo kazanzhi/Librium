@@ -1,24 +1,37 @@
-<div *ngIf="loading">Loading...</div>
+@if (loading) {
+  <div>Loading...</div>
+}
 
-<div *ngIf="!loading && !book">
-  Book not found
-</div>
+@if (!loading && !book) {
+  <div>
+    Book not found
+  </div>
+}
 
-<div *ngIf="!loading && book">
-  <h2>{{ book.title }}</h2>
-  <p>Author: {{ book.author }}</p>
-  <p>Published Year: {{ book.publishedYear }}</p>
+@if (!loading && book) {
+  <div>
+    <h2>{{ book.title }}</h2>
+    <p>Author: {{ book.author }}</p>
+    <p>Published Year: {{ book.publishedYear }}</p>
     <p>Categories:
-        <span *ngFor="let category of book.categories; let isLast=last">
-        {{ category }}<span *ngIf="!isLast">, </span>
-        </span>
-    </p>
-    <a [routerLink]="['/books']">Back to books</a>
-    <button *ngIf="!isInMyLibrary" (click)="addToLibrary()">
+      @for (category of book.categories; track category; let isLast = $last) {
+        <span>
+          {{ category }}@if (!isLast) {
+          <span>, </span>
+        }
+      </span>
+    }
+  </p>
+  <a [routerLink]="['/books']">Back to books</a>
+  @if (!isInMyLibrary) {
+    <button (click)="addToLibrary()">
       Add to My Library
     </button>
-
-    <button *ngIf="isInMyLibrary" (click)="removeFromLibrary()">
+  }
+  @if (isInMyLibrary) {
+    <button (click)="removeFromLibrary()">
       Remove from My Library
     </button>
+  }
 </div>
+}

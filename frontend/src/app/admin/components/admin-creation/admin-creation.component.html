@@ -21,4 +21,6 @@
   </button>
 </form>
 
-<div *ngIf="message">{{ message }}</div>
+@if (message) {
+  <div>{{ message }}</div>
+}

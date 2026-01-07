@@ -1,31 +1,42 @@
 <h2>Admin</h2>
 
-<div *ngIf="loading">loading...</div>
+@if (loading) {
+  <div>loading...</div>
+}
 
 <button (click)="showAdminCreation = !showAdminCreation">Admin creation</button>
-<app-admin-creation *ngIf="showAdminCreation"></app-admin-creation>
+@if (showAdminCreation) {
+  <app-admin-creation></app-admin-creation>
+}
 <button (click)="logout()">logout</button>
 
 <hr>
 
-<div *ngIf="!loading">
-  <h4>Search book</h4>
-  <input type="text" placeholder="Search book...">
-  <ul>
-    <li *ngFor="let book of books">
-      {{ book.title }} — {{ book.author }}
-      <button (click)="edit(book)">Edit</button>
-    </li>
-  </ul>
-  <button (click)="showManageBooks = !showManageBooks" (click)="createNew()">Create Book</button>
-  <app-book-editor
-    *ngIf="showManageBooks"
-    [book]="selectedBook"
-    [categories]="categories"
-    (saved)="onBookSaved()">
-  </app-book-editor>
-</div>
+  @if (!loading) {
+    <div>
+      <h4>Search book</h4>
+      <input type="text" placeholder="Search book...">
+      <ul>
+        @for (book of books; track book) {
+          <li>
+            {{ book.title }} — {{ book.author }}
+            <button (click)="edit(book)">Edit</button>
+          </li>
+        }
+      </ul>
+      <button (click)="showManageBooks = !showManageBooks" (click)="createNew()">Create Book</button>
+      @if (showManageBooks) {
+        <app-book-editor
+          [book]="selectedBook"
+          [categories]="categories"
+          (saved)="onBookSaved()">
+        </app-book-editor>
+      }
+    </div>
+  }
 
-<hr>
-<button (click)="showManageCategories = !showManageCategories">Manage Categories</button>
-<app-category-editor *ngIf="showManageCategories" [categories]="categories" (saved)="loadAll()"></app-category-editor>
+  <hr>
+    <button (click)="showManageCategories = !showManageCategories">Manage Categories</button>
+    @if (showManageCategories) {
+      <app-category-editor [categories]="categories" (saved)="loadAll()"></app-category-editor>
+    }

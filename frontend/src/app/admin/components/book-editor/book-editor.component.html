@@ -27,37 +27,44 @@
 
 </form>
 
-<button
-  *ngIf="book"
-  type="button"
-  (click)="delete()"
-  [disabled]="loading">
-  Delete Book
-</button>
-
-<div *ngIf="book">
-  <ul>
-    <li *ngFor="let c of book.categories">
-      {{ c }}
-      <button type="button" (click)="removeCategory(c)">
-        Remove
-      </button>
-    </li>
-  </ul>
-</div>
-
-<div *ngIf="book">
-  <label>Add category:</label>
-
-  <select #selectedCategory>
-    <option *ngFor="let c of categories" [value]="c.name">
-      {{ c.name }}
-    </option>
-  </select>
-
+@if (book) {
   <button
     type="button"
-    (click)="addCategory(selectedCategory.value)">
-    Add
+    (click)="delete()"
+    [disabled]="loading">
+    Delete Book
   </button>
-</div>
+}
+
+@if (book) {
+  <div>
+    <ul>
+      @for (c of book.categories; track c) {
+        <li>
+          {{ c }}
+          <button type="button" (click)="removeCategory(c)">
+            Remove
+          </button>
+        </li>
+      }
+    </ul>
+  </div>
+}
+
+@if (book) {
+  <div>
+    <label>Add category:</label>
+    <select #selectedCategory>
+      @for (c of categories; track c) {
+        <option [value]="c.name">
+          {{ c.name }}
+        </option>
+      }
+    </select>
+    <button
+      type="button"
+      (click)="addCategory(selectedCategory.value)">
+      Add
+    </button>
+  </div>
+}

@@ -5,10 +5,12 @@
     <input class="form-control" formControlName="email">
   </div>
 
-  <div *ngIf="mode === 'register'" class="mb-3">
-    <label>Username</label>
-    <input class="form-control" formControlName="username">
-  </div>
+  @if (mode === 'register') {
+    <div class="mb-3">
+      <label>Username</label>
+      <input class="form-control" formControlName="username">
+    </div>
+  }
 
   <div class="mb-3">
     <label>Password</label>
