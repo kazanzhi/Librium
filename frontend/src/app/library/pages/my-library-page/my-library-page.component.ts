@@ -17,7 +17,7 @@ export class MyLibraryPageComponent implements OnInit {
     this.loadMyLibrary();
   }
 
-  loadMyLibrary() {
+  loadMyLibrary(): void {
     this.loading = true;
 
     this.libraryService.getMyLibrary().subscribe({
@@ -32,14 +32,14 @@ export class MyLibraryPageComponent implements OnInit {
     });
   }
 
-  remove(bookId: string) {
+  remove(bookId: string): void {
+    this.loading = true;
+
     this.libraryService.removeBook(bookId).subscribe({
-      next: () => {
-        console.log('Book removed from library');
-        this.loadMyLibrary();
-      },
-      error: (error) => {
-        console.error('Error removing book from library:', error);
+      next: () => this.loadMyLibrary(),
+      error: error => {
+        console.error(error);
+        this.loading = false;
       }
     });
   }

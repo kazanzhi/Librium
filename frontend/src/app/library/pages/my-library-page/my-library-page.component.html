@@ -1,5 +1,9 @@
 <li *ngFor="let book of books">
   {{ book.title }}
   <a [routerLink]="['/books', book.id]">Details</a>
-  <button (click)="remove(book.id)">Remove</button>
+  <button (click)="remove(book.id)" [disabled]="loading">Remove</button>
 </li>
+
+<div *ngIf="!loading && books.length === 0">
+  Your library is empty
+</div>
