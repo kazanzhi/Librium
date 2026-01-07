@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpInterceptor
-} from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpInterceptor } from '@angular/common/http';
 import { TokenService } from '../services/token.service';
 
 @Injectable()
