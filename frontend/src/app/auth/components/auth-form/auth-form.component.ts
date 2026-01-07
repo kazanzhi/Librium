@@ -5,9 +5,10 @@ import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-auth-form',
-  templateUrl: './auth-form.component.html',
-  styleUrls: ['./auth-form.component.scss']
+    selector: 'app-auth-form',
+    templateUrl: './auth-form.component.html',
+    styleUrls: ['./auth-form.component.scss'],
+    standalone: false
 })
 export class AuthFormComponent implements OnInit {
   @Input() mode!: 'login' | 'register';

@@ -5,9 +5,10 @@ import { AdminBookService } from '../../services/admin-book.service';
 import { Category } from 'src/app/shared/models/category';
 
 @Component({
-  selector: 'app-book-editor',
-  templateUrl: './book-editor.component.html',
-  styleUrls: ['./book-editor.component.scss']
+    selector: 'app-book-editor',
+    templateUrl: './book-editor.component.html',
+    styleUrls: ['./book-editor.component.scss'],
+    standalone: false
 })
 export class BookEditorComponent implements OnInit {
   @Input() book?: Book;

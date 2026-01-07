@@ -4,9 +4,10 @@ import { CategoryService } from 'src/app/categories/services/category.service';
 import { Category } from 'src/app/shared/models/category';
 
 @Component({
-  selector: 'app-category-editor',
-  templateUrl: './category-editor.component.html',
-  styleUrls: ['./category-editor.component.scss']
+    selector: 'app-category-editor',
+    templateUrl: './category-editor.component.html',
+    styleUrls: ['./category-editor.component.scss'],
+    standalone: false
 })
 export class CategoryEditorComponent implements OnInit {
   @Input() categories: Category[] = [];

@@ -5,9 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { LibraryService } from 'src/app/library/services/library.service';
 
 @Component({
-  selector: 'app-book-details-page',
-  templateUrl: './book-details-page.component.html',
-  styleUrls: ['./book-details-page.component.scss']
+    selector: 'app-book-details-page',
+    templateUrl: './book-details-page.component.html',
+    styleUrls: ['./book-details-page.component.scss'],
+    standalone: false
 })
 export class BookDetailsPageComponent implements OnInit {
   book?: Book;

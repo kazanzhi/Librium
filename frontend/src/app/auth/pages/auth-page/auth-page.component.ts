@@ -3,9 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TokenService } from 'src/app/core/services/token.service';
 
 @Component({
-  selector: 'app-auth-page',
-  templateUrl: './auth-page.component.html',
-  styleUrls: ['./auth-page.component.scss']
+    selector: 'app-auth-page',
+    templateUrl: './auth-page.component.html',
+    styleUrls: ['./auth-page.component.scss'],
+    standalone: false
 })
 export class AuthPageComponent {
   mode: 'login' | 'register' = 'login';

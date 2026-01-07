@@ -3,9 +3,10 @@ import { Book } from 'src/app/shared/models/book';
 import { LibraryService } from '../../services/library.service';
 
 @Component({
-  selector: 'app-my-library-page',
-  templateUrl: './my-library-page.component.html',
-  styleUrls: ['./my-library-page.component.scss']
+    selector: 'app-my-library-page',
+    templateUrl: './my-library-page.component.html',
+    styleUrls: ['./my-library-page.component.scss'],
+    standalone: false
 })
 export class MyLibraryPageComponent implements OnInit {
   books: Book[] = [];
