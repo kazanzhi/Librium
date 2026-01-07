@@ -45,7 +45,7 @@ export class BookDetailsPageComponent implements OnInit {
       this.loading = false;
     }
   });
-}
+  }
 
 
   addToLibrary(): void {
