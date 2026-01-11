@@ -1,8 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, output } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { TokenService } from 'src/app/core/services/token.service';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
