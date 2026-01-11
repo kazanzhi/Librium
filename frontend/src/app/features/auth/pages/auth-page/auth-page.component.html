@@ -1,0 +1,8 @@
+<div>
+  <app-auth-form 
+  [mode]="mode" 
+  (registered)="onRegistered()" 
+  (loggedIn)="onLoggedIn($event)"
+  (modeChange)="onModeChange($event)">
+</app-auth-form>
+</div>

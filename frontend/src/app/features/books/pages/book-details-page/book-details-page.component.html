@@ -1,0 +1,28 @@
+@if (loading) {
+  <div>Loading...</div>
+}
+
+@if (!loading && book) {
+  <div>
+    <h2>{{ book.title }}</h2>
+    <p>Author: {{ book.author }}</p>
+    <p>Published Year: {{ book.publishedYear }}</p>
+    <p>Categories:
+      @for (category of book.categories; track category; let isLast = $last) {
+        <span>
+          {{ category }}@if (!isLast) {
+          <span>, </span>
+        }
+      </span>
+    }
+  </p>
+  <a [routerLink]="['/books']">Back to books</a>
+  <button (click)="onLibraryAction()">
+    @if (!isAuthenticated || !isInMyLibrary) {
+      Add to library
+    } @else {
+      Remove from library
+    }
+  </button>
+</div>
+}

@@ -41,21 +41,20 @@ export class TokenService {
   }
 }
 
-getRoles(): string[] {
-  const payload = this.getPayload();
-  if (!payload) return [];
+  getRoles(): string[] {
+    const payload = this.getPayload();
+    if (!payload) return [];
 
-  const role =
-    payload['role'] ??
-    payload['roles'] ??
-    payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+    const role =
+      payload['role'] ??
+      payload['roles'] ??
+      payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
 
-  if (!role) return [];
-  return Array.isArray(role) ? role : [String(role)];
-}
+    if (!role) return [];
+    return Array.isArray(role) ? role : [String(role)];
+  }
 
-hasRole(role: string): boolean {
-  return this.getRoles().includes(role);
-}
-
+  hasRole(role: string): boolean {
+    return this.getRoles().includes(role);
+  }
 }

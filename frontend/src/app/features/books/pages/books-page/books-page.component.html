@@ -1,0 +1,19 @@
+<h2>Books</h2>
+
+@if (!loading && books.length === 0) {
+  <div>
+    No books found
+  </div>
+}
+
+@if (!loading) {
+  <ul>
+    @for (book of books; track book.id) {
+      <app-book-card [book]="book"></app-book-card>
+    }
+  </ul>
+} @else {
+  <div>Loading...</div>
+}
+
+<button (click)="logout()">Logout</button>
