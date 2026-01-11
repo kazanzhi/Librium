@@ -1,0 +1,26 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+
+  <div>
+    <label>Email</label>
+    <input class="form-control" formControlName="email">
+  </div>
+
+  @if (mode === 'register') {
+    <div>
+      <label>Username</label>
+      <input class="form-control" formControlName="username">
+    </div>
+  }
+
+  <div>
+    <label>Password</label>
+    <input type="password" class="form-control" formControlName="password">
+  </div>
+
+  <button type="submit">
+    {{ mode === 'login' ? 'Sign in' : 'Create Account' }}
+  </button>
+  <button type="button" (click)="toggleMode()">
+    {{ mode === 'login' ? 'Need an account? Sign Up' : 'Already have an account? Sign In' }}
+  </button>
+</form>
