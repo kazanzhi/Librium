@@ -38,7 +38,11 @@ export class AuthPageComponent {
 
   onLoggedIn(token: string): void {
     this.tokenService.save(token);
-    this.router.navigate(['/books']);
+    if(this.tokenService.hasRole('Admin')){
+      this.router.navigate(['/admin']);
+    }else{
+      this.router.navigate(['/books']);
+    }
   }
 
   onModeChange(mode: 'login' | 'register'): void {

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BookService } from '../../services/books.service';
 import { Book } from 'src/app/shared/models/book';
-import { TokenService } from 'src/app/core/services/token.service';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BookCardComponent } from '../../components/book-card/book-card.component';
 
@@ -18,9 +16,7 @@ export class BooksPageComponent implements OnInit {
   loading = true;
 
   constructor(
-    private booksService: BookService, 
-    private tokenService: TokenService,
-    private router: Router
+    private booksService: BookService
   ) { }
 
   ngOnInit(): void {
@@ -34,10 +30,5 @@ export class BooksPageComponent implements OnInit {
         this.loading = false;
       }
     })
-  }
-
-  logout(): void {
-    this.tokenService.clear();
-    this.router.navigate(['/auth']);
   }
 }

@@ -1,0 +1,22 @@
+<div style="border: 2px solid black; padding: 20px; margin: 10px;">
+    <button (click)="onBrowse()">
+        Browse
+    </button>
+    
+    <input type="text" placeholder="Search book...">
+
+    
+    @if (authenticated) {
+
+        @if (isAdmin) {
+            <button (click)="onAdmin()">Admin</button>
+        } @else {
+            <button (click)="onMyLibrary()">My Library</button>
+        }
+
+        <button (click)="onLogout()">Logout</button>
+
+    } @else {
+            <button (click)="onLogin()">Login</button>
+    }
+</div>
