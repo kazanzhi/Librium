@@ -14,19 +14,25 @@ export class AdminCreationComponent implements OnInit {
   form!: UntypedFormGroup;
   loading = false;
   message = '';
+  errorMessage: string | null = null;
 
   constructor(private fb: UntypedFormBuilder, private adminService: AdminService) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      username: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   submit(): void {
-    if (this.form.invalid) return;
+    this.errorMessage = null;
+
+    if (this.form.invalid){
+      this.form.markAllAsTouched()
+      return;
+    }
 
     this.loading = true;
     this.message = '';
@@ -34,13 +40,31 @@ export class AdminCreationComponent implements OnInit {
     this.adminService.registerAdmin(this.form.value).subscribe({
       next: () => {
         this.loading = false;
+        this.errorMessage = null;
         this.message = 'Admin created';
         this.form.reset();
       },
       error: err => {
         this.loading = false;
-        this.message = 'Failed to create admin';
-        console.error(err);
+
+        if(err.status === 400)
+        {
+          if(typeof err.error === 'string')
+          {
+            this.errorMessage = err.error;
+            return;
+          }
+
+          if (err.error?.errors?.Username) {
+              this.form.controls['username']
+                .setErrors({ server: err.error.errors.Username[0] });
+                return;
+          }
+
+          this.errorMessage = 'Invalid input data.';
+        } else {
+            this.errorMessage = 'An unexpected error occurred.';
+        }
       }
     });
   }

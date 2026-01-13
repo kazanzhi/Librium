@@ -15,6 +15,7 @@ import { RouterLink } from '@angular/router';
 export class MyLibraryPageComponent implements OnInit {
   books: Book[] = [];
   loading = false;
+  removeError: string | null = null;
 
   constructor(private libraryService: LibraryService) { }
 
@@ -30,21 +31,25 @@ export class MyLibraryPageComponent implements OnInit {
         this.books = books;
         this.loading = false;
       },
-      error: (error) => {
-        console.error('Error loading library:', error);
+      error: err => {
         this.loading = false;
       }
     });
   }
 
   remove(bookId: string): void {
+    this.removeError = null;
     this.loading = true;
 
     this.libraryService.removeBook(bookId).subscribe({
       next: () => this.loadMyLibrary(),
-      error: error => {
-        console.error(error);
+      error: err => {
         this.loading = false;
+        if (err.status === 400 && typeof err.error === 'string') {
+          this.removeError = err.error;
+        } else {
+          this.removeError = 'Failed to remove book.';
+        }
       }
     });
   }

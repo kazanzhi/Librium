@@ -19,4 +19,10 @@
     [disabled]="loading || form.invalid">
     {{ selectedCategory ? 'Update' : 'Create' }}
   </button>
+  @if(errorMessage)
+  {
+    <div>
+      {{errorMessage}}
+    </div>
+  }
 </form>

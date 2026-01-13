@@ -19,6 +19,8 @@ export class BookDetailsPageComponent implements OnInit {
 
   isAuthenticated = false;  
   isInMyLibrary = false;
+  errorMessage: string | null = null;
+  errorActionBookMessage: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -55,8 +57,16 @@ export class BookDetailsPageComponent implements OnInit {
           this.loading = false;
         }
       },
-      error: () => {
+      error: err => {
         this.loading = false;
+        if(err.status === 400){
+          if(typeof err.error === 'string')
+          {
+            this.errorMessage = err.error;
+          }
+        }else{
+          this.errorMessage = 'An unexpected error occurred.';
+        }
       }
     });
   }
@@ -68,12 +78,36 @@ export class BookDetailsPageComponent implements OnInit {
     }
 
     if (this.isInMyLibrary) {
-      this.libraryService.removeBook(this.book!.id).subscribe(() => {
-        this.isInMyLibrary = false;
+      this.libraryService.removeBook(this.book!.id).subscribe({
+        next: () => {
+          this.isInMyLibrary = false;
+        },
+        error: err => {
+          if(err.status === 400){
+            if(typeof err.rrror === 'string')
+            {
+              this.errorActionBookMessage = err.error;
+            }
+          }else{
+            this.errorActionBookMessage = 'An unexpected error occurred.';
+          }
+        }
       });
     } else {
-      this.libraryService.addBook(this.book!.id).subscribe(() => {
-        this.isInMyLibrary = true;
+      this.libraryService.addBook(this.book!.id).subscribe({
+        next: () => {
+          this.isInMyLibrary = true;
+        },
+        error: err => {
+          if(err.status === 400){
+            if(typeof err.rrror === 'string')
+            {
+              this.errorActionBookMessage = err.error;
+            }
+          }else{
+            this.errorActionBookMessage = 'An unexpected error occurred.';
+          }
+        }
       });
     }
   }

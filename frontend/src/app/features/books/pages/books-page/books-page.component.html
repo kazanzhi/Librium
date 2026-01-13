@@ -1,17 +1,26 @@
-<h2>Books</h2>
+<div>
+  <h2>Books</h2>
 
-@if (!loading && books.length === 0) {
-  <div>
-    No books found
-  </div>
-}
+  @if (!loading && books.length === 0) {
+    <div>
+      No books found
+    </div>
+  }
 
-@if (!loading) {
-  <ul>
-    @for (book of books; track book.id) {
-      <app-book-card [book]="book"></app-book-card>
-    }
-  </ul>
-} @else {
-  <div>Loading...</div>
-}
+  @if(errorMessage)
+  {
+    <div>
+      {{errorMessage}}
+    </div>
+  }
+
+  @if (!loading) {
+    <ul>
+      @for (book of books; track book.id) {
+        <app-book-card [book]="book"></app-book-card>
+      }
+    </ul>
+  } @else {
+    <div>Loading...</div>
+  }
+</div>
