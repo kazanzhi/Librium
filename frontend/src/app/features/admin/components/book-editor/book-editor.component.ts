@@ -19,6 +19,7 @@ export class BookEditorComponent implements OnInit {
 
   form!: UntypedFormGroup;
   loading = false;
+  errorMessage: string | null = null;
 
   constructor(private fb: UntypedFormBuilder, private adminBookService: AdminBookService) { }
 
@@ -42,6 +43,8 @@ export class BookEditorComponent implements OnInit {
   }
 
   submit(): void {
+    this.errorMessage = null;
+
     if(this.form.invalid) return;
     
     this.loading = true;
@@ -56,13 +59,17 @@ export class BookEditorComponent implements OnInit {
         this.saved.emit();
       },
       error: (err) => {
-        console.error(err);
         this.loading = false;
+        if(err.status === 400){
+          this.errorMessage = err.error;
+        }
       }
     });
   }
 
   delete(): void {
+    this.errorMessage = null;
+
     if(!this.book) return;
 
     this.loading = true;
@@ -73,27 +80,41 @@ export class BookEditorComponent implements OnInit {
         this.saved.emit();
       },
       error: (err) => {
-        console.error(err);
         this.loading = false;
+        if(err.status === 400){
+          this.errorMessage = err.error;
+        }
       }
     });
   }
 
   addCategory(categoryName: string): void {
+    this.errorMessage = null;
+
     if (!this.book) return;
 
     this.adminBookService.addCategory(this.book.id, categoryName).subscribe({
       next: () => this.saved.emit(),
-      error: err => console.error(err)
+      error: err => {
+        if(err.status === 400){
+          this.errorMessage = err.error;
+        }
+      }
     });
   }
 
   removeCategory(categoryName: string): void {
+    this.errorMessage = null;
+    
     if (!this.book) return;
 
     this.adminBookService.removeCategory(this.book.id, categoryName).subscribe({
       next: () => this.saved.emit(),
-      error: err => console.error(err)
+      error: err => {
+        if(err.status === 400){
+          this.errorMessage = err.error;
+        }
+      }
     });
   }
 }

@@ -42,6 +42,9 @@
       @if (form.controls.password.errors?.['required']){
         Password is required
       }
+      @if (form.controls.password.errors?.['minlength']) {
+        Password must be at least 6 characters
+      }
     </div>
   }
 

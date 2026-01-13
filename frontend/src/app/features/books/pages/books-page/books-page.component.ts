@@ -14,6 +14,7 @@ import { BookCardComponent } from '../../components/book-card/book-card.componen
 export class BooksPageComponent implements OnInit {
   books: Book[] = [];
   loading = true;
+  errorMessage: string | null = null;
 
   constructor(
     private booksService: BookService
@@ -23,10 +24,6 @@ export class BooksPageComponent implements OnInit {
     this.booksService.getAll().subscribe({
       next: books => {
         this.books = books;
-        this.loading = false;
-      },
-      error: err => {
-        console.error('Error fetching books:', err);
         this.loading = false;
       }
     })

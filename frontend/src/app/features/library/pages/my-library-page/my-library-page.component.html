@@ -1,13 +1,21 @@
-@for (book of books; track book) {
-  <li>
-    {{ book.title }}
-    <a [routerLink]="['/books', book.id]">Details</a>
-    <button (click)="remove(book.id)" [disabled]="loading">Remove</button>
-  </li>
-}
+<div>
+  @for (book of books; track book) {
+    <li>
+      {{ book.title }}
+      <a [routerLink]="['/books', book.id]">Details</a>
+      <button (click)="remove(book.id)" [disabled]="loading">Remove</button>
+        @if(removeError)
+        {
+          <div>
+            {{removeError}}
+          </div>
+        }
+    </li>
+  }
 
-@if (!loading && books.length === 0) {
-  <div>
-    Your library is empty
-  </div>
-}
+  @if (!loading && books.length === 0) {
+    <div>
+      Your library is empty
+    </div>
+  }
+</div>

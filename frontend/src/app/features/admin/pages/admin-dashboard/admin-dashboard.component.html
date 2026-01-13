@@ -1,21 +1,26 @@
-<h2>Admin</h2>
+<div>
+  <h2>Admin</h2>
 
-@if (loading) {
-  <div>loading...</div>
-}
+  @if (loading) {
+    <div>loading...</div>
+  }
 
-<button (click)="showAdminCreation = !showAdminCreation">Admin creation</button>
-@if (showAdminCreation) {
-  <app-admin-creation></app-admin-creation>
-}
-<button (click)="logout()">logout</button>
+  <button (click)="showAdminCreation = !showAdminCreation">Admin creation</button>
+  @if (showAdminCreation) {
+    <app-admin-creation></app-admin-creation>
+  }
 
-<hr>
+  <hr>
 
   @if (!loading) {
     <div>
       <h4>Search a book</h4>
       <input type="text" placeholder="Search book...">
+      @if (errorBookMessage) {
+        <div>
+          {{ errorBookMessage }}
+        </div>
+      }
       <ul>
         @for (book of books; track book) {
           <li>
@@ -24,8 +29,11 @@
           </li>
         }
       </ul>
-      <button (click)="showManageBooks = !showManageBooks" (click)="createNew()">Create Book</button>
-      @if (showManageBooks) {
+      @if (!showManageBooks) {
+        <button (click)="createNew()">Create Book</button>
+      }
+      @if (showManageBooks) 
+      {
         <app-book-editor
           [book]="selectedBook"
           [categories]="categories"
@@ -36,7 +44,15 @@
   }
 
   <hr>
-    <button (click)="showManageCategories = !showManageCategories">Manage Categories</button>
-    @if (showManageCategories) {
-      <app-category-editor [categories]="categories" (saved)="loadAll()"></app-category-editor>
-    }
+  @if (errorCategoryMessage) {
+    <div class="error">
+      {{ errorCategoryMessage }}
+    </div>
+  }
+  <button (click)="showManageCategories = !showManageCategories">Manage Categories</button>
+  @if (showManageCategories) 
+  {
+    <app-category-editor [categories]="categories" (saved)="loadAll()"></app-category-editor>
+  }
+  
+</div>  

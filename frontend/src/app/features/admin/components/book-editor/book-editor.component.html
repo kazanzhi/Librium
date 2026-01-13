@@ -3,23 +3,65 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
   <div>
     <label for="title">Title:</label>
-    <input id="title" formControlName="title" />
+    <input id="title" formControlName="title" placeholder="Enter book title"/>
+    @if(form.controls.title.touched && form.controls.title.invalid)
+    {
+      <div>
+        @if(form.controls.title.errors?.['required'])
+        {
+          Title is required
+        }
+      </div>
+    }
   </div>
 
   <div>
     <label for="author">Author:</label>
-    <input id="author" formControlName="author" />
+    <input id="author" formControlName="author" placeholder="Enter book author"/>
+    @if(form.controls.author.touched && form.controls.author.invalid)
+    {
+      <div>
+        @if(form.controls.author.errors?.['required'])
+        {
+          Author is required
+        }
+      </div>
+    }
   </div>
 
   <div>
     <label for="content">Content:</label>
-    <textarea id="content" formControlName="content"></textarea>
+    <textarea id="content" formControlName="content" placeholder="Enter book content"></textarea>
+    @if(form.controls.content.touched && form.controls.content.invalid)
+    {
+      <div>
+        @if(form.controls.content.errors?.['required'])
+        {
+          Content is required
+        }
+      </div>
+    }
   </div>
 
   <div>
     <label for="publishedYear">Published Year:</label>
-    <input id="publishedYear" type="number" formControlName="publishedYear" />
+    <input id="publishedYear" type="number" formControlName="publishedYear" placeholder="Enter book published year"/>
+    @if(form.controls.publishedYear.touched && form.controls.publishedYear.invalid)
+    {
+      <div>
+        @if(form.controls.publishedYear.errors?.['required'])
+        {
+          Published Year is required
+        }
+      </div>
+    }
   </div>
+  @if(errorMessage)
+  {
+    <div>
+      {{errorMessage}}
+    </div>
+  }
 
   <button type="submit" [disabled]="form.invalid || loading">
     {{ book ? 'Update Book' : 'Create Book' }}

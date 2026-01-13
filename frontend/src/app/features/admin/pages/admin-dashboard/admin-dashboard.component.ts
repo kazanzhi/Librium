@@ -27,6 +27,8 @@ export class AdminDashboardComponent implements OnInit {
   showManageCategories = false;
   showAdminCreation = false;
   showManageBooks = false;
+  errorCategoryMessage: string | null = null;
+  errorBookMessage: string | null = null;
   
   constructor(
     private bookService: BookService,
@@ -40,6 +42,9 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   loadAll(): void {
+    this.errorBookMessage = null;
+    this.errorCategoryMessage = null;
+
     this.loading = true;
 
     this.bookService.getAll().subscribe({
@@ -48,17 +53,18 @@ export class AdminDashboardComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.error('Error fetching books:', err);
         this.loading = false;
+        if(err.status === 400){
+          this.errorBookMessage = err.error;
+        } else {
+          this.errorBookMessage = 'An unexpected error occurred.';
+        }
       }
     });
 
     this.categoryService.getAll().subscribe({
       next: (categories) => {
         this.categories = categories;
-      },
-      error: (err) => {
-        console.error('Error fetching categories:', err);
       }
     });
   }
