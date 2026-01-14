@@ -3,7 +3,7 @@
         Browse
     </button>
     
-    <input type="text" placeholder="Search book...">
+    <input type="text" placeholder="Search book..." (input)="onSearch($event.target.value)">
 
     
     @if (authenticated) {

@@ -4,6 +4,7 @@ import { Book } from 'src/app/shared/models/book';
 import { AdminBookService } from '../../services/admin-book.service';
 import { Category } from 'src/app/shared/models/category';
 import { CommonModule } from '@angular/common';
+import { SearchService } from 'src/app/core/services/search.service';
 
 @Component({
     selector: 'app-book-editor',
@@ -21,7 +22,10 @@ export class BookEditorComponent implements OnInit {
   loading = false;
   errorMessage: string | null = null;
 
-  constructor(private fb: UntypedFormBuilder, private adminBookService: AdminBookService) { }
+  constructor(
+    private fb: UntypedFormBuilder, 
+    private adminBookService: AdminBookService
+  ) { }
 
   ngOnInit(): void {
     this.buildForm();

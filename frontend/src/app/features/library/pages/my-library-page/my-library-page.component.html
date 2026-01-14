@@ -1,5 +1,5 @@
 <div>
-  @for (book of books; track book) {
+  @for (book of books; track book.id) {
     <li>
       {{ book.title }}
       <a [routerLink]="['/books', book.id]">Details</a>

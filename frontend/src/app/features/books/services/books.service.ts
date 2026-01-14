@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Book } from 'src/app/shared/models/book';
@@ -11,11 +11,16 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
 
-  getAll() : Observable<Book[]> {
-    return this.http.get<Book[]>(`${this.apiUrl}`);
+  getAll(search?: string) {
+    let params = new HttpParams();
+
+    if (search) {
+      params = params.set('search', search);
+    }
+    return this.http.get<Book[]>(this.apiUrl, { params });
   }
 
-  getById(id: string) : Observable<Book> {
+  getById(id: string) {
     return this.http.get<Book>(`${this.apiUrl}/${id}`);
   }
 }

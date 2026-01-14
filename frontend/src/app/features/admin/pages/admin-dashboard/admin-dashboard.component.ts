@@ -23,7 +23,8 @@ export class AdminDashboardComponent implements OnInit {
 
   selectedBook?: Book;
   loading = true;
-
+  searchTerm = '';
+  private searchTimeout: any;
   showManageCategories = false;
   showAdminCreation = false;
   showManageBooks = false;
@@ -38,35 +39,47 @@ export class AdminDashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadAll();
+    this.loadBooks();
+    this.loadCategories();
   }
 
-  loadAll(): void {
-    this.errorBookMessage = null;
-    this.errorCategoryMessage = null;
-
+  loadBooks(search?: string): void {
     this.loading = true;
+    this.errorBookMessage = null;
 
-    this.bookService.getAll().subscribe({
-      next: (books) => {
+    this.bookService.getAll(search).subscribe({
+      next: books => {
         this.books = books;
         this.loading = false;
       },
-      error: (err) => {
+      error: err => {
         this.loading = false;
-        if(err.status === 400){
-          this.errorBookMessage = err.error;
-        } else {
-          this.errorBookMessage = 'An unexpected error occurred.';
-        }
+        this.errorBookMessage =
+          typeof err.error === 'string'
+            ? err.error
+            : 'Failed to load books';
       }
     });
+  }
 
+  loadCategories(): void {
     this.categoryService.getAll().subscribe({
-      next: (categories) => {
+      next: categories => {
         this.categories = categories;
+      },
+      error: () => {
+        this.errorCategoryMessage = 'Failed to load categories';
       }
     });
+  }
+
+  onSearch(value: string): void {
+    this.searchTerm = value;
+
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+      this.loadBooks(this.searchTerm);
+    }, 300);
   }
 
   edit(book: Book): void {
@@ -83,7 +96,7 @@ export class AdminDashboardComponent implements OnInit {
     this.showManageBooks = true;
   }
   onBookSaved(): void {
-    this.loadAll();
+    this.loadBooks(this.searchTerm);
     this.showManageBooks = false;
     this.selectedBook = undefined;
   }

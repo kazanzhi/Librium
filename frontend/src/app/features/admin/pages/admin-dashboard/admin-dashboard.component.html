@@ -1,21 +1,21 @@
 <div>
   <h2>Admin</h2>
 
-  @if (loading) {
-    <div>loading...</div>
-  }
-
   <button (click)="showAdminCreation = !showAdminCreation">Admin creation</button>
   @if (showAdminCreation) {
     <app-admin-creation></app-admin-creation>
   }
 
-  <hr>
+  @if (loading) {
+    <div>loading...</div>
+  }
 
+  <hr>
+  <h4>Search a book</h4>
+  <input type="text" placeholder="Search book..." (input) = "onSearch($event.target.value)">
   @if (!loading) {
     <div>
-      <h4>Search a book</h4>
-      <input type="text" placeholder="Search book...">
+      
       @if (errorBookMessage) {
         <div>
           {{ errorBookMessage }}
@@ -52,7 +52,7 @@
   <button (click)="showManageCategories = !showManageCategories">Manage Categories</button>
   @if (showManageCategories) 
   {
-    <app-category-editor [categories]="categories" (saved)="loadAll()"></app-category-editor>
+    <app-category-editor [categories]="categories" (saved)="loadCategories()"></app-category-editor>
   }
   
 </div>  
