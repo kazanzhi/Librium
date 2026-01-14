@@ -3,6 +3,8 @@ import { BookService } from '../../services/books.service';
 import { Book } from 'src/app/shared/models/book';
 import { CommonModule } from '@angular/common';
 import { BookCardComponent } from '../../components/book-card/book-card.component';
+import { SearchService } from 'src/app/core/services/search.service';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 @Component({
     selector: 'app-books-page',
@@ -14,18 +16,30 @@ import { BookCardComponent } from '../../components/book-card/book-card.componen
 export class BooksPageComponent implements OnInit {
   books: Book[] = [];
   loading = true;
-  errorMessage: string | null = null;
 
   constructor(
-    private booksService: BookService
+    private booksService: BookService,
+    private searchService: SearchService
   ) { }
 
   ngOnInit(): void {
-    this.booksService.getAll().subscribe({
-      next: books => {
-        this.books = books;
-        this.loading = false;
-      }
-    })
+    this.searchService.search$
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap(search => {
+          this.loading = true;
+          return this.booksService.getAll(search);
+        })
+      )
+      .subscribe({
+        next: books => {
+          this.books = books;
+          this.loading = false;
+        },
+        error: () => {
+          this.loading = false;
+        }
+      });
   }
 }

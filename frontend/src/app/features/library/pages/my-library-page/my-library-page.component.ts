@@ -3,6 +3,8 @@ import { Book } from 'src/app/shared/models/book';
 import { LibraryService } from '../../services/library.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { SearchService } from 'src/app/core/services/search.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
     selector: 'app-my-library-page',
@@ -13,14 +15,41 @@ import { RouterLink } from '@angular/router';
 
 })
 export class MyLibraryPageComponent implements OnInit {
+  allBooks: Book[] = [];
   books: Book[] = [];
   loading = false;
   removeError: string | null = null;
 
-  constructor(private libraryService: LibraryService) { }
+  constructor(
+    private libraryService: LibraryService, 
+    private searchService: SearchService
+  ) { }
 
   ngOnInit(): void {
     this.loadMyLibrary();
+
+    this.searchService.search$
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged()
+      )
+      .subscribe(search => {
+        this.applyFilter(search);
+      });
+  }
+
+  private applyFilter(search: string): void {
+    if (!search) {
+      this.books = this.allBooks;
+      return;
+    }
+
+    const value = search.toLowerCase();
+
+    this.books = this.allBooks.filter(book =>
+      book.title.toLowerCase().includes(value) ||
+      book.author.toLowerCase().includes(value)
+    );
   }
 
   loadMyLibrary(): void {
@@ -28,6 +57,7 @@ export class MyLibraryPageComponent implements OnInit {
 
     this.libraryService.getMyLibrary().subscribe({
       next: (books) => {
+        this.allBooks = books;
         this.books = books;
         this.loading = false;
       },

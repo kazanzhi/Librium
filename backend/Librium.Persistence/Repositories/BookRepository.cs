@@ -30,9 +30,19 @@ public class BookRepository : IBookRepository
             .AnyAsync(b => b.Author == author && b.Title == title);
     }
 
-    public async Task<List<Book>> GetAllBooks()
+    public async Task<List<Book>> GetAllBooks(string? search)
     {
-        return await _context.Books
+        var query = _context.Books.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            query = query.Where(book =>
+                book.Title.Contains(search) ||
+                book.Author.Contains(search)
+            );
+        }
+
+        return await query
             .Include(c => c.Categories)
             .ToListAsync();
     }

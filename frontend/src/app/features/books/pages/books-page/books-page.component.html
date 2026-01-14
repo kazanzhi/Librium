@@ -1,16 +1,13 @@
 <div>
   <h2>Books</h2>
 
+  @if (loading) {
+    <div>Loading...</div>
+  }
+
   @if (!loading && books.length === 0) {
     <div>
       No books found
-    </div>
-  }
-
-  @if(errorMessage)
-  {
-    <div>
-      {{errorMessage}}
     </div>
   }
 
@@ -20,7 +17,6 @@
         <app-book-card [book]="book"></app-book-card>
       }
     </ul>
-  } @else {
-    <div>Loading...</div>
   }
+
 </div>

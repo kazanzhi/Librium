@@ -68,9 +68,9 @@ public class BookService : IBookService
         return ValueOrResult.Success();
     }
 
-    public async Task<List<BookResponseDto>> GetAllBooksAsync()
+    public async Task<List<BookResponseDto>> GetAllBooksAsync(string? search)
     {
-        var books = await _bookRepo.GetAllBooks();
+        var books = await _bookRepo.GetAllBooks(search);
 
         return books.Select(book => new BookResponseDto
         {
