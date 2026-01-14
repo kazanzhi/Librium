@@ -10,6 +10,7 @@ The project demonstrates production-grade backend engineering: rich domain model
 * Many-to-many relationship: Book ↔ Category
 * All validations and invariants enforced inside the domain
 * Domain entities are created only via factory methods
+* Server-side filtering via query parameters (title/author)
 
 ### 👤 User Personal Library
 * Each user has a personal library
@@ -190,5 +191,6 @@ dotnet run --project Librium.Presentation
 ```
 ### 5. Try it out!
 Open `https://localhost:7213/swagger` and play with tasks
+
 
 
