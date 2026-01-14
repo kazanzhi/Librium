@@ -142,10 +142,10 @@ public class BookServiceTests
         var book1 = Book.Create("TestTitle", "TestAuthor", "TestContent", 2000).Value!;
         var book2 = Book.Create("NewTitle", "NewtAuthor", "NewContent", 2025).Value!;
 
-        _bookRepo.Setup(r => r.GetAllBooks()).ReturnsAsync(new List<Book> { book1, book2 });
+        _bookRepo.Setup(r => r.GetAllBooks(null)).ReturnsAsync(new List<Book> { book1, book2 });
 
         //act
-        var result = await _service.GetAllBooksAsync();
+        var result = await _service.GetAllBooksAsync(null);
 
         //assert
         result.Should().HaveCount(2);
@@ -167,13 +167,28 @@ public class BookServiceTests
     public async Task GetAllBooksAsync_ShouldReturnEmptyList_WhenNoBooks()
     {
         //arrange
-        _bookRepo.Setup(r => r.GetAllBooks()).ReturnsAsync(new List<Book>());
+        _bookRepo.Setup(r => r.GetAllBooks(null)).ReturnsAsync(new List<Book>());
 
         //act
-        var result = await _service.GetAllBooksAsync();
+        var result = await _service.GetAllBooksAsync(null);
 
         //assert
         result.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task GetAllBooksAsync_ShouldPassSearchToRepository()
+    {
+        //arrange
+        var search = "test";
+
+        _bookRepo.Setup(r => r.GetAllBooks(search)).ReturnsAsync(new List<Book>());
+
+        //act
+        var result = await _service.GetAllBooksAsync(search);
+
+        //assert
+        _bookRepo.Verify(r => r.GetAllBooks(search), Times.Once);
     }
 
     //getById
