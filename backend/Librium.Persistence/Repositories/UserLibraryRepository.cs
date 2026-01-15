@@ -1,6 +1,6 @@
-﻿using Librium.Domain.Users.Models;
-using Librium.Domain.Users.Repositories;
+﻿using Librium.Domain.Libraries.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Librium.Domain.Libraries;
 
 namespace Librium.Persistence.Repositories;
 

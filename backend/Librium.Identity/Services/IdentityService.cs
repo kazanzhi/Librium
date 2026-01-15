@@ -1,5 +1,5 @@
-﻿using Librium.Application.Services.Identity;
-using Librium.Domain.Common;
+﻿using Librium.Domain.Common;
+using Librium.Identity.Contracts;
 using Librium.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 

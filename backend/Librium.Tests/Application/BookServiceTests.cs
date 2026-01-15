@@ -1,9 +1,10 @@
 ﻿using FluentAssertions;
-using Librium.Application.Services;
-using Librium.Domain.Books.DTOs;
-using Librium.Domain.Books.Models;
+using Librium.Application.DTOs.Books;
+using Librium.Application.Services.Books;
+using Librium.Domain.Books;
 using Librium.Domain.Books.Repositories;
-using Librium.Domain.DTOs.Books;
+using Librium.Domain.Categories;
+using Librium.Domain.Categories.Repositories;
 using Moq;
 
 namespace Librium.Tests.Application;

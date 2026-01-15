@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
-using Librium.Domain.Books.Models;
+using Librium.Domain.Books;
+using Librium.Domain.Categories;
 
 namespace Librium.Tests.Domain;
 

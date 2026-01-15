@@ -1,4 +1,4 @@
-﻿using Librium.Domain.Books.Models;
+﻿using Librium.Domain.Books;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
