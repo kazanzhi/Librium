@@ -1,4 +1,4 @@
-﻿using Librium.Application.Security;
+﻿using Librium.Application.Abstractions.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

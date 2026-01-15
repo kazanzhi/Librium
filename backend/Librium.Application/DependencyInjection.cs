@@ -1,6 +1,8 @@
-﻿using Librium.Application.Services;
-using Librium.Domain.Books.Services;
-using Librium.Domain.Users.Services;
+﻿using Librium.Application.Abstractions.Services;
+using Librium.Application.Services.Auth;
+using Librium.Application.Services.Books;
+using Librium.Application.Services.Categories;
+using Librium.Application.Services.Libraries;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Librium.Application;

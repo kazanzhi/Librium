@@ -1,5 +1,6 @@
-﻿using Librium.Domain.Books.Models;
-using Librium.Domain.Users.Models;
+﻿using Librium.Domain.Books;
+using Librium.Domain.Categories;
+using Librium.Domain.Libraries;
 using Librium.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;

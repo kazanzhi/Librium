@@ -1,4 +1,4 @@
-﻿using Librium.Application.Security;
+﻿using Librium.Application.Abstractions.Security;
 using Librium.Application.Services.Identity;
 using Librium.Identity.Models;
 using Librium.Identity.Services;

@@ -1,5 +1,5 @@
-﻿using Librium.Domain.Users.Models;
-using Librium.Domain.Users.Services;
+﻿using Librium.Application.Abstractions.Services;
+using Librium.Domain.Common.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;

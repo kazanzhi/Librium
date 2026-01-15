@@ -1,5 +1,4 @@
-﻿using Librium.Domain.Books.Models;
-using Librium.Domain.Common.Repositories;
+﻿using Librium.Domain.Common.Repositories;
 
 namespace Librium.Domain.Books.Repositories;
 

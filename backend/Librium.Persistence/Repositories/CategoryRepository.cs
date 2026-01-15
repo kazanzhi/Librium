@@ -1,5 +1,5 @@
-﻿using Librium.Domain.Books.Models;
-using Librium.Domain.Books.Repositories;
+﻿using Librium.Domain.Categories;
+using Librium.Domain.Categories.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Librium.Persistence.Repositories;
