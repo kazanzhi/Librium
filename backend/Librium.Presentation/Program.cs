@@ -1,7 +1,7 @@
 using Librium.Application;
 using Librium.Identity;
+using Librium.Identity.Seed;
 using Librium.Persistence;
-using Librium.Persistence.Identity;
 using Librium.Presentation.Extensions;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,4 +1,4 @@
-﻿namespace Librium.Domain.Common.Authorization;
+﻿namespace Librium.Identity.Authorization;
 
 public class UserRoles
 {

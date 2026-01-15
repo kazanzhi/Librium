@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Librium.Persistence.Identity;
+namespace Librium.Identity.Seed;
 
 public static class IdentitySeed
 {
