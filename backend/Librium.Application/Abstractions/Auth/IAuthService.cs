@@ -1,7 +1,7 @@
 ﻿using Librium.Application.DTOs.Auth;
 using Librium.Domain.Common;
 
-namespace Librium.Application.Abstractions.Services;
+namespace Librium.Application.Abstractions.Auth;
 
 public interface IAuthService
 {

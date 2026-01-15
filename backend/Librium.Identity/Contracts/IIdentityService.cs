@@ -1,6 +1,6 @@
 ﻿using Librium.Domain.Common;
 
-namespace Librium.Application.Services.Identity;
+namespace Librium.Identity.Contracts;
 
 public interface IIdentityService
 {

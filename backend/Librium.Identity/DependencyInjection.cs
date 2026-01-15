@@ -1,7 +1,9 @@
-﻿using Librium.Application.Abstractions.Security;
-using Librium.Application.Services.Identity;
+﻿using Librium.Application.Abstractions.Auth;
+using Librium.Application.Abstractions.Security;
+using Librium.Identity.Contracts;
 using Librium.Identity.Models;
 using Librium.Identity.Services;
+using Librium.Identity.Services.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -18,6 +20,7 @@ public static class DependencyInjection
     {
         services.AddScoped<IIdentityService, IdentityService>();
         services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<IAuthService, AuthService>();
 
         services.AddAuthentication(options =>
         {

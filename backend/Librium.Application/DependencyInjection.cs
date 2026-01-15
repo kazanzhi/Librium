@@ -1,5 +1,4 @@
 ﻿using Librium.Application.Abstractions.Services;
-using Librium.Application.Services.Auth;
 using Librium.Application.Services.Books;
 using Librium.Application.Services.Categories;
 using Librium.Application.Services.Libraries;
@@ -14,7 +13,6 @@ public static class DependencyInjection
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IBookService, BookService>();
         services.AddScoped<IUserLibraryService, UserLibraryService>();
-        services.AddScoped<IAuthService, AuthService>();
 
         return services;
     }

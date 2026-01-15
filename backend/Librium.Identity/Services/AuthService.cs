@@ -1,11 +1,11 @@
-﻿using Librium.Application.Abstractions.Security;
-using Librium.Application.Abstractions.Services;
+﻿using Librium.Application.Abstractions.Auth;
+using Librium.Application.Abstractions.Security;
 using Librium.Application.DTOs.Auth;
-using Librium.Application.Services.Identity;
 using Librium.Domain.Common;
 using Librium.Domain.Common.Authorization;
+using Librium.Identity.Contracts;
 
-namespace Librium.Application.Services.Auth;
+namespace Librium.Identity.Services;
 
 public class AuthService : IAuthService
 {

@@ -5,7 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Librium.Identity;
+namespace Librium.Identity.Services.Security;
 
 public class JwtTokenService : IJwtTokenService
 {
