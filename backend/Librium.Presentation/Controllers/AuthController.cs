@@ -1,6 +1,6 @@
 ﻿using Librium.Application.Abstractions.Auth;
 using Librium.Application.DTOs.Auth;
-using Librium.Domain.Common.Authorization;
+using Librium.Identity.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
