@@ -1,5 +1,6 @@
 ﻿using Librium.Domain.Books;
 using Librium.Domain.Categories;
+using Librium.Domain.Comments;
 using Librium.Domain.Libraries;
 using Librium.Identity.Models;
 using Microsoft.AspNetCore.Identity;
@@ -24,4 +25,5 @@ public class LibriumDbContext : IdentityDbContext<AppIdentityUser, IdentityRole<
     public DbSet<UserLibrary> UserLibraries { get; set; }
     public DbSet<LibraryBook> LibraryBooks { get; set; }
     public DbSet<Category> Categories { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 }

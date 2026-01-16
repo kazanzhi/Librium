@@ -1,5 +1,6 @@
 ﻿using Librium.Domain.Books.Repositories;
 using Librium.Domain.Categories.Repositories;
+using Librium.Domain.Comments.Repositories;
 using Librium.Domain.Libraries.Repositories;
 using Librium.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ public static class DependencyInjection
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IBookRepository, BookRepository>();
         services.AddScoped<IUserLibraryRepository, UserLibraryRepository>();
+        services.AddScoped<ICommentRepository, CommentRepository>();
 
         return services;
     }
