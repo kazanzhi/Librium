@@ -1,6 +1,7 @@
 ﻿using Librium.Application.Abstractions.Services;
 using Librium.Application.DTOs.Comments;
 using Librium.Domain.Comments;
+using Librium.Domain.Comments.Enums;
 using Librium.Domain.Comments.Repositories;
 using Librium.Domain.Common;
 
@@ -51,6 +52,8 @@ public class CommentService : ICommentService
             Id = comment.Id,
             Content = comment.Content,
             CreatedAt = comment.CreatedAt,
+            TotalLikes = comment.TotalLikes,
+            TotalDislikes = comment.TotalDislikes,
             IsEdited = comment.IsEdited,
         };
 
@@ -66,8 +69,25 @@ public class CommentService : ICommentService
             Id = c.Id,
             Content = c.Content,
             CreatedAt = c.CreatedAt,
+            TotalLikes = c.TotalLikes,
+            TotalDislikes = c.TotalDislikes,
             IsEdited = c.IsEdited
         }).ToList();
+    }
+
+    public async Task<ValueOrResult> React(Guid commentId, Guid userId, ReactionType reactionType)
+    {
+        var comment = await _commentRepository.GetByIdAsync(commentId);
+        if (comment is null)
+            return ValueOrResult.Failure("Comment is not found.");
+
+        var reactionResult = comment.React(userId, reactionType);
+        if (!reactionResult.IsSuccess)
+            return ValueOrResult.Failure(reactionResult.ErrorMessage);
+
+        await _commentRepository.SaveChangesAsync();
+
+        return ValueOrResult.Success();
     }
 
     public async Task<ValueOrResult> Update(Guid commentId, Guid userId, CommentDto dto)

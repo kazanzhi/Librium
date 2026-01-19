@@ -4,9 +4,10 @@ namespace Librium.Domain.Comments;
 public class CommentReaction
 {
     private CommentReaction() { }
-    public Guid Id { get; set; }
-    public Guid UserId { get; set; }
-    public ReactionType ReactionType { get; set; }
+    public Guid Id { get; private set; }
+    public Guid CommentId { get; private set; }
+    public Guid UserId { get; private set; }
+    public ReactionType ReactionType { get; private set; }
 
     internal CommentReaction(Guid userId, ReactionType reactionType)
     {

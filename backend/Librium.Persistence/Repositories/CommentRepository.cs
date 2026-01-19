@@ -18,16 +18,17 @@ public class CommentRepository : ICommentRepository
     public async Task<IReadOnlyList<Comment>> GetByBookIdAsync(Guid bookId)
     {
         return await _context.Comments
-            .Where(b => b.BookId == bookId)
-            .OrderByDescending(d => d.CreatedAt)
-            .AsNoTracking()
+            .Where(c => c.BookId == bookId)
+            .OrderByDescending(c => c.CreatedAt)
+            .Include(c => c.Reactions)
             .ToListAsync();
     }
 
     public async Task<Comment?> GetByIdAsync(Guid commentId)
     {
         return await _context.Comments
-            .FindAsync(commentId);
+            .Include(c => c.Reactions)
+            .FirstOrDefaultAsync(c => c.Id == commentId);
     }
 
     public void Remove(Comment comment)

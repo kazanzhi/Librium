@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Librium.Persistence.Migrations
 {
     [DbContext(typeof(LibriumDbContext))]
-    [Migration("20260116002244_AddComment")]
-    partial class AddComment
+    [Migration("20260119205750_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,6 +102,12 @@ namespace Librium.Persistence.Migrations
                     b.Property<bool>("IsEdited")
                         .HasColumnType("bit");
 
+                    b.Property<int>("TotalDislikes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalLikes")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
@@ -110,6 +116,28 @@ namespace Librium.Persistence.Migrations
                     b.HasIndex("BookId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("Librium.Domain.Comments.CommentReaction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CommentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("ReactionType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommentId", "UserId")
+                        .IsUnique();
+
+                    b.ToTable("Reactions");
                 });
 
             modelBuilder.Entity("Librium.Domain.Libraries.LibraryBook", b =>
@@ -357,6 +385,15 @@ namespace Librium.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Librium.Domain.Comments.CommentReaction", b =>
+                {
+                    b.HasOne("Librium.Domain.Comments.Comment", null)
+                        .WithMany("Reactions")
+                        .HasForeignKey("CommentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Librium.Domain.Libraries.LibraryBook", b =>
                 {
                     b.HasOne("Librium.Domain.Libraries.UserLibrary", null)
@@ -415,6 +452,11 @@ namespace Librium.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Librium.Domain.Comments.Comment", b =>
+                {
+                    b.Navigation("Reactions");
                 });
 
             modelBuilder.Entity("Librium.Domain.Libraries.UserLibrary", b =>
