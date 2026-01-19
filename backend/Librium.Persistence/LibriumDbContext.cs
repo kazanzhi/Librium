@@ -26,4 +26,5 @@ public class LibriumDbContext : IdentityDbContext<AppIdentityUser, IdentityRole<
     public DbSet<LibraryBook> LibraryBooks { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Comment> Comments { get; set; }
+    public DbSet<CommentReaction> Reactions { get; set; }
 }

@@ -70,11 +70,23 @@ namespace Librium.Presentation.Controllers
         public async Task<IActionResult> Update(Guid commentId, [FromBody] CommentDto dto)
         {
             var userId = GetUserId();
-            var result = await _commentService.Update(commentId, userId, dto);
+            var updateResult = await _commentService.Update(commentId, userId, dto);
 
-            return result.IsSuccess
+            return updateResult.IsSuccess
                 ? NoContent()
-                : BadRequest(result.ErrorMessage);
+                : BadRequest(updateResult.ErrorMessage);
+        }
+
+        [HttpPost("comments/{commentId:guid}/reaction")]
+        [Authorize(Roles = UserRoles.User)]
+        public async Task<IActionResult> Reaction(Guid commentId, [FromBody] ReactToCommentRequest request)
+        {
+            var userId = GetUserId();
+            var reacttionResult = await _commentService.React(commentId, userId, request.ReactionType);
+
+            return reacttionResult.IsSuccess
+                ? NoContent()
+                : BadRequest(reacttionResult.ErrorMessage);
         }
     }
 }

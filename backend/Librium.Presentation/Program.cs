@@ -31,6 +31,14 @@ public class Program
 
         builder.Services.AddSwaggerGen();
 
+        builder.Services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(
+                    new System.Text.Json.Serialization.JsonStringEnumConverter()
+                );
+            });
+
         var app = builder.Build();
 
         using (var scope = app.Services.CreateScope())
