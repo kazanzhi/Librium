@@ -1,6 +1,12 @@
 ﻿using Librium.Application.Abstractions.Services;
-using Librium.Application.DTOs.Categories;
+using Librium.Application.Categories.Commands.CreateCategory;
+using Librium.Application.Categories.Commands.DeleteCategory;
+using Librium.Application.Categories.Commands.UpdateCategory;
+using Librium.Application.Categories.DTOs;
+using Librium.Application.Categories.Queries.GetAllCategories;
+using Librium.Application.Categories.Queries.GetCategoryById;
 using Librium.Identity.Authorization;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,38 +16,43 @@ namespace Librium.Presentation.Controllers;
 [ApiController]
 public class CategoryController : ControllerBase
 {
-    private readonly ICategoryService _service;
+    private readonly ISender _sender;
 
-    public CategoryController(ICategoryService service)
+    public CategoryController(ISender sender)
     {
-        _service = service;
+        _sender = sender;
     }
 
     [HttpPost]
     [Authorize(Roles = UserRoles.Admin)]
-    public async Task<IActionResult> Create([FromBody] CategoryDto categoryDto)
+    public async Task<IActionResult> Create([FromBody] CategoryDto dto)
     {
-        var result = await _service.CreateBookCategoryAsync(categoryDto);
+        var result = await _sender.Send(new CreateCategoryCommand(dto));
+
         return result.IsSuccess
             ? CreatedAtAction(nameof(GetById), new { Id = result.Value }, result.Value)
             : BadRequest(result.ErrorMessage);
     }
 
-    [HttpGet("{Id}")]
-    [Authorize(Roles = UserRoles.Admin)]
+    [HttpGet("{Id:guid}")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetById(Guid Id)
     {
-        var category = await _service.GetBookCategoryById(Id);
-        return category == null ? NotFound() : Ok(category);
+        var category = await _sender.Send(new GetCategoryByIdQuery(Id));
+
+        return category is null 
+            ? NotFound() 
+            : Ok(category);
     }
 
-    [HttpDelete("{Id}")]
+    [HttpDelete("{Id:guid}")]
     [AllowAnonymous]
     public async Task<IActionResult> Delete(Guid Id)
     {
-        var result = await _service.DeleteBookCategoryAsync(Id);
+        var result = await _sender.Send(new DeleteCategoryCommand(Id));
+
         return result.IsSuccess
-            ? Ok()
+            ? NoContent()
             : BadRequest(result.ErrorMessage);
     }
 
@@ -49,17 +60,19 @@ public class CategoryController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> GetAll()
     {
-        var result = await _service.GetAllBookCategoriesAsync();
+        var result = await _sender.Send(new GetAllCategoriesQuery());
+
         return Ok(result);
     }
 
-    [HttpPut("{Id}")]
+    [HttpPut("{Id:guid}")]
     [Authorize(Roles = UserRoles.Admin)]
-    public async Task<IActionResult> Update(Guid Id, [FromBody] CategoryDto categoryDto)
+    public async Task<IActionResult> Update(Guid Id, [FromBody] CategoryDto dto)
     {
-        var result = await _service.UpdateBookCategoryAsync(Id, categoryDto);
+        var result = await _sender.Send(new UpdateCategoryCommand(Id, dto));
+
         return result.IsSuccess
-            ? Ok()
+            ? NoContent()
             : BadRequest(result.ErrorMessage);
     }
 }

@@ -1,4 +1,4 @@
-﻿using Librium.Application.DTOs.Books;
+﻿using Librium.Application.Books.DTOs;
 using Librium.Domain.Common;
 
 namespace Librium.Application.Abstractions.Services;

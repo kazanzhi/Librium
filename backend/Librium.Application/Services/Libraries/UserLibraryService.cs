@@ -1,5 +1,6 @@
 ﻿using Librium.Application.Abstractions.Services;
-using Librium.Application.DTOs.Books;
+using Librium.Application.Books.DTOs;
+using Librium.Application.Categories.DTOs;
 using Librium.Domain.Books.Repositories;
 using Librium.Domain.Common;
 using Librium.Domain.Libraries;
@@ -60,7 +61,11 @@ public class UserLibraryService : IUserLibraryService
             Author = b.Author,
             Content = b.Content,
             PublishedYear = b.PublishedYear,
-            Categories = b.Categories.Select(c => c.Name).ToList()
+            Categories = b.Categories.Select(c => new CategoryResponseDto
+            {
+                Id = c.Id,
+                Name = c.Name,
+            }).ToList()
         }).ToList();
     }
 
