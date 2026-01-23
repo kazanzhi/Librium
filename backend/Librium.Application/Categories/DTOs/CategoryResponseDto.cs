@@ -1,4 +1,4 @@
-﻿namespace Librium.Application.DTOs.Categories;
+﻿namespace Librium.Application.Categories.DTOs;
 
 public class CategoryResponseDto
 {
