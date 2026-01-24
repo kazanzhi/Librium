@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Librium.Application.DTOs.Auth;
+namespace Librium.Application.Abstractions.Auth.DTOs;
 
-public class LoginDto
+public record LoginDto
 {
     [Required(ErrorMessage = "Email is required")]
     public string? Email { get; set; }

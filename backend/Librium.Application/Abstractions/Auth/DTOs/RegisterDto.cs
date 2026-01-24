@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Librium.Application.DTOs.Auth;
+namespace Librium.Application.Abstractions.Auth.DTOs;
 
-public class RegisterDto
+public record RegisterDto
 {
     [Required(ErrorMessage = "Username is required")]
     [MinLength(6, ErrorMessage = "Username must be at least 6 characters long")]

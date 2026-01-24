@@ -1,7 +1,5 @@
 ﻿using Librium.Application.Abstractions.Auth;
-using Librium.Application.DTOs.Auth;
-using Librium.Identity.Authorization;
-using Microsoft.AspNetCore.Authorization;
+using Librium.Application.Abstractions.Auth.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Librium.Presentation.Controllers;

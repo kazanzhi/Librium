@@ -1,6 +1,6 @@
 ﻿namespace Librium.Application.Comments.DTOs;
 
-public class CommentResponseDto
+public record CommentResponseDto
 {
     public Guid Id { get; set; }
     public string Content { get; set; }

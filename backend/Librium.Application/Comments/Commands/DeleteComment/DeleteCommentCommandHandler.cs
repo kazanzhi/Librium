@@ -20,7 +20,7 @@ public sealed class DeleteCommentCommandHandler : IRequestHandler<DeleteCommentC
         if (comment.UserId != request.UserId)
             return ValueOrResult.Failure("You are not allowed to modify this comment.");
 
-        _commentRepo.Remove(comment);
+        _commentRepo.Delete(comment);
         await _commentRepo.SaveChangesAsync();
 
         return ValueOrResult.Success();

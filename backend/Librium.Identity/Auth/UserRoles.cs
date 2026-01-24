@@ -1,6 +1,6 @@
-﻿namespace Librium.Identity.Authorization;
+﻿namespace Librium.Identity.Auth;
 
-public class UserRoles
+public record UserRoles
 {
     public const string Admin = "Admin";
     public const string User = "User";

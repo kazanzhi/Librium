@@ -1,5 +1,4 @@
-﻿using Librium.Application.Books.DTOs;
-using Librium.Application.Libraries.Repositories;
+﻿using Librium.Application.Libraries.Repositories;
 using Librium.Domain.Books;
 using Librium.Persistence.Models;
 using Microsoft.EntityFrameworkCore;

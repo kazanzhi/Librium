@@ -6,7 +6,7 @@ using Librium.Application.Books.Commands.UpdateBook;
 using Librium.Application.Books.DTOs;
 using Librium.Application.Books.Queries.GetAllBooks;
 using Librium.Application.Books.Queries.GetBookById;
-using Librium.Identity.Authorization;
+using Librium.Identity.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

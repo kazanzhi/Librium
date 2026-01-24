@@ -1,5 +1,5 @@
 ﻿namespace Librium.Application.Categories.DTOs;
-public class CategoryDto
+public record CategoryDto
 {
     public string? Name { get; set; }
 }

@@ -1,8 +1,8 @@
 ﻿using Librium.Application.Abstractions.Auth;
+using Librium.Application.Abstractions.Auth.DTOs;
 using Librium.Application.Abstractions.Security;
-using Librium.Application.DTOs.Auth;
 using Librium.Domain.Common;
-using Librium.Identity.Authorization;
+using Librium.Identity.Auth;
 using Librium.Identity.Contracts;
 
 namespace Librium.Identity.Services;
