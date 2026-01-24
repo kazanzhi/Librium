@@ -1,7 +1,7 @@
 ﻿using Librium.Application.Libraries.Commands.AddBookToUserLibrary;
 using Librium.Application.Libraries.Commands.RemoveBookFromUserLibrary;
 using Librium.Application.Libraries.Queries.GetUserLibrary;
-using Librium.Identity.Authorization;
+using Librium.Identity.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

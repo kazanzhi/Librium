@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Librium.Identity.Auth;
+namespace Librium.Application.Abstractions.Auth.DTOs;
 
 public record LoginDto
 {

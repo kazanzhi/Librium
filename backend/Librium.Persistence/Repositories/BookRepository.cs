@@ -30,7 +30,7 @@ public class BookRepository : IBookRepository
             .AnyAsync(b => b.Author == author && b.Title == title);
     }
 
-    public async Task<List<Book>> GetAllBooks(string? search)
+    public async Task<IReadOnlyList<Book>> GetAllBooks(string? search)
     {
         var query = _context.Books.AsQueryable();
 

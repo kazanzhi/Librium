@@ -31,7 +31,7 @@ public class CategoryRepository : ICategoryRepository
             .FirstOrDefaultAsync(c => c.Name == name);
     }
 
-    public async Task<List<Category>> GetAllBookCategoriesAsync()
+    public async Task<IReadOnlyList<Category>> GetAllBookCategoriesAsync()
     {
         return await _context.Categories
             .ToListAsync();

@@ -5,7 +5,7 @@ using Librium.Application.Comments.Commands.UpdateComment;
 using Librium.Application.Comments.DTOs;
 using Librium.Application.Comments.Queries.GetCommentById;
 using Librium.Application.Comments.Queries.GetCommentsForBook;
-using Librium.Identity.Authorization;
+using Librium.Identity.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

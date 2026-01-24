@@ -1,4 +1,4 @@
-﻿using Librium.Application.DTOs.Auth;
+﻿using Librium.Application.Abstractions.Auth.DTOs;
 using Librium.Domain.Common;
 
 namespace Librium.Application.Abstractions.Auth;

@@ -4,7 +4,7 @@ using Librium.Application.Categories.Commands.UpdateCategory;
 using Librium.Application.Categories.DTOs;
 using Librium.Application.Categories.Queries.GetAllCategories;
 using Librium.Application.Categories.Queries.GetCategoryById;
-using Librium.Identity.Authorization;
+using Librium.Identity.Auth;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
