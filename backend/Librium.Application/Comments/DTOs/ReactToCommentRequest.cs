@@ -1,6 +1,6 @@
 ﻿using Librium.Domain.Comments.Enums;
 
-namespace Librium.Application.DTOs.Comments;
+namespace Librium.Application.Comments.DTOs;
 
 public class ReactToCommentRequest
 {

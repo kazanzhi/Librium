@@ -1,4 +1,4 @@
-﻿namespace Librium.Application.DTOs.Comments;
+﻿namespace Librium.Application.Comments.DTOs;
 public class CommentDto
 {
     public string Content { get; set; }

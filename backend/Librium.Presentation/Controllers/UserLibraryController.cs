@@ -1,5 +1,4 @@
-﻿using Librium.Application.Abstractions.Services;
-using Librium.Application.Libraries.Commands.AddBookToUserLibrary;
+﻿using Librium.Application.Libraries.Commands.AddBookToUserLibrary;
 using Librium.Application.Libraries.Commands.RemoveBookFromUserLibrary;
 using Librium.Application.Libraries.Queries.GetUserLibrary;
 using Librium.Identity.Authorization;
