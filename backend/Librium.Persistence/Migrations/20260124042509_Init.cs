@@ -78,17 +78,6 @@ namespace Librium.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserLibraries",
-                columns: table => new
-                {
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserLibraries", x => x.UserId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -219,6 +208,24 @@ namespace Librium.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserBooks",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BookId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserBooks", x => new { x.UserId, x.BookId });
+                    table.ForeignKey(
+                        name: "FK_UserBooks_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "BookCategory",
                 columns: table => new
                 {
@@ -239,24 +246,6 @@ namespace Librium.Persistence.Migrations
                         column: x => x.CategoriesId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LibraryBooks",
-                columns: table => new
-                {
-                    BookId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserLibraryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LibraryBooks", x => new { x.UserLibraryId, x.BookId });
-                    table.ForeignKey(
-                        name: "FK_LibraryBooks_UserLibraries_UserLibraryId",
-                        column: x => x.UserLibraryId,
-                        principalTable: "UserLibraries",
-                        principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -334,6 +323,11 @@ namespace Librium.Persistence.Migrations
                 table: "Reactions",
                 columns: new[] { "CommentId", "UserId" },
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserBooks_BookId",
+                table: "UserBooks",
+                column: "BookId");
         }
 
         /// <inheritdoc />
@@ -358,10 +352,10 @@ namespace Librium.Persistence.Migrations
                 name: "BookCategory");
 
             migrationBuilder.DropTable(
-                name: "LibraryBooks");
+                name: "Reactions");
 
             migrationBuilder.DropTable(
-                name: "Reactions");
+                name: "UserBooks");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -371,9 +365,6 @@ namespace Librium.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
-
-            migrationBuilder.DropTable(
-                name: "UserLibraries");
 
             migrationBuilder.DropTable(
                 name: "Comments");

@@ -1,5 +1,9 @@
 ﻿using Librium.Application.Abstractions.Services;
+using Librium.Application.Libraries.Commands.AddBookToUserLibrary;
+using Librium.Application.Libraries.Commands.RemoveBookFromUserLibrary;
+using Librium.Application.Libraries.Queries.GetUserLibrary;
 using Librium.Identity.Authorization;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -11,11 +15,11 @@ namespace Librium.Presentation.Controllers;
 [ApiController]
 public class UserLibraryController : ControllerBase
 {
-    private readonly IUserLibraryService _libraryService;
+    private readonly ISender _sender;
 
-    public UserLibraryController(IUserLibraryService libraryService)
+    public UserLibraryController(ISender sender)
     {
-        _libraryService = libraryService;
+        _sender = sender;
     }
     private Guid GetUserId()
     {
@@ -29,7 +33,7 @@ public class UserLibraryController : ControllerBase
     {
         var userId = GetUserId();
 
-        var result = await _libraryService.AddBookAsync(userId, bookId);
+        var result = await _sender.Send(new AddBookToLibraryCommand(userId, bookId));
 
         return result.IsSuccess
             ? Ok()
@@ -37,11 +41,11 @@ public class UserLibraryController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetMyLibrary()
+    public async Task<IActionResult> GetUserLibrary()
     {
         var userId = GetUserId();
 
-        var result = await _libraryService.GetUserLibraryAsync(userId);
+        var result = await _sender.Send(new GetUserLibraryQuery(userId));
 
         return Ok(result);
     }
@@ -51,7 +55,7 @@ public class UserLibraryController : ControllerBase
     {
         var userId = GetUserId();
 
-        var result = await _libraryService.RemoveBookAsync(userId, bookId);
+        var result = await _sender.Send(new RemoveBookFromUserLibraryCommand(userId, bookId));
 
         return result.IsSuccess
             ? Ok()
