@@ -137,30 +137,6 @@ namespace Librium.Persistence.Migrations
                     b.ToTable("Reactions");
                 });
 
-            modelBuilder.Entity("Librium.Domain.Libraries.LibraryBook", b =>
-                {
-                    b.Property<Guid>("UserLibraryId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BookId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("UserLibraryId", "BookId");
-
-                    b.ToTable("LibraryBooks");
-                });
-
-            modelBuilder.Entity("Librium.Domain.Libraries.UserLibrary", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("UserLibraries");
-                });
-
             modelBuilder.Entity("Librium.Identity.Models.AppIdentityUser", b =>
                 {
                     b.Property<Guid>("Id")
@@ -225,6 +201,21 @@ namespace Librium.Persistence.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Librium.Persistence.Models.UserBook", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "BookId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("UserBooks");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -391,11 +382,11 @@ namespace Librium.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Librium.Domain.Libraries.LibraryBook", b =>
+            modelBuilder.Entity("Librium.Persistence.Models.UserBook", b =>
                 {
-                    b.HasOne("Librium.Domain.Libraries.UserLibrary", null)
-                        .WithMany("Books")
-                        .HasForeignKey("UserLibraryId")
+                    b.HasOne("Librium.Domain.Books.Book", null)
+                        .WithMany()
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -454,11 +445,6 @@ namespace Librium.Persistence.Migrations
             modelBuilder.Entity("Librium.Domain.Comments.Comment", b =>
                 {
                     b.Navigation("Reactions");
-                });
-
-            modelBuilder.Entity("Librium.Domain.Libraries.UserLibrary", b =>
-                {
-                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

@@ -54,13 +54,6 @@ public class BookRepository : IBookRepository
             .FirstOrDefaultAsync(b => b.Id == bookId);
     }
 
-    public async Task<IReadOnlyCollection<Book>> GetByIdsAsync(IEnumerable<Guid> bookIds)
-    {
-        return await _context.Books
-        .Where(b => bookIds.Contains(b.Id))
-        .Include(b => b.Categories)
-        .ToListAsync();
-    }
 
     public async Task<bool> SaveChanges()
     {
