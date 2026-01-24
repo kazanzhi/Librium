@@ -2,7 +2,7 @@
 
 namespace Librium.Application.Comments.DTOs;
 
-public class ReactToCommentRequest
+public record ReactToCommentRequest
 {
     public ReactionType ReactionType { get; set; }
 }

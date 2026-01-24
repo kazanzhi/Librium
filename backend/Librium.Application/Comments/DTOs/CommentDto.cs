@@ -1,5 +1,5 @@
 ﻿namespace Librium.Application.Comments.DTOs;
-public class CommentDto
+public record CommentDto
 {
     public string Content { get; set; }
 }

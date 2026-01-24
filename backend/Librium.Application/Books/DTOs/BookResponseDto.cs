@@ -2,7 +2,7 @@
 
 namespace Librium.Application.Books.DTOs;
 
-public class BookResponseDto
+public record BookResponseDto
 {
     public Guid Id { get; set; }
     public string? Title { get; set; }
