@@ -1,6 +1,12 @@
-﻿using Librium.Application.Abstractions.Services;
-using Librium.Application.DTOs.Comments;
+﻿using Librium.Application.Comments.Commands.CreateComment;
+using Librium.Application.Comments.Commands.DeleteComment;
+using Librium.Application.Comments.Commands.ReactToComment;
+using Librium.Application.Comments.Commands.UpdateComment;
+using Librium.Application.Comments.DTOs;
+using Librium.Application.Comments.Queries.GetCommentById;
+using Librium.Application.Comments.Queries.GetCommentsForBook;
 using Librium.Identity.Authorization;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -11,10 +17,10 @@ namespace Librium.Presentation.Controllers
     [ApiController]
     public class CommentController : ControllerBase
     {
-        private readonly ICommentService _commentService;
-        public CommentController(ICommentService commentService)
+        private readonly ISender _sender;
+        public CommentController(ISender sender)
         {
-            _commentService = commentService;
+            _sender = sender;
         }
 
         private Guid GetUserId()
@@ -29,7 +35,7 @@ namespace Librium.Presentation.Controllers
         public async Task<IActionResult> Create([FromBody] CommentDto dto, Guid bookId)
         {
             var userId = GetUserId();
-            var result = await _commentService.Create(userId, bookId, dto);
+            var result = await _sender.Send(new CreateCommentCommand(userId, bookId, dto));
 
             return result.IsSuccess
                 ? CreatedAtAction(nameof(GetById), new { commentId = result.Value }, result.Value)
@@ -41,7 +47,7 @@ namespace Librium.Presentation.Controllers
         public async Task<IActionResult> Delete(Guid commentId)
         {
             var userId = GetUserId();
-            var result = await _commentService.Delete(commentId, userId);
+            var result = await _sender.Send(new DeleteCommentCommand(commentId, userId));
 
             return result.IsSuccess
                 ? NoContent()
@@ -51,7 +57,7 @@ namespace Librium.Presentation.Controllers
         [HttpGet("comments/{commentId:guid}")]
         public async Task<IActionResult> GetById(Guid commentId)
         {
-            var result = await _commentService.GetById(commentId);
+            var result = await _sender.Send(new GetCommentByIdQuery(commentId));
 
             return result.IsSuccess
                 ? Ok(result.Value)
@@ -61,7 +67,7 @@ namespace Librium.Presentation.Controllers
         [HttpGet("books/{bookId:guid}/comments")]
         public async Task<IActionResult> GetForBook(Guid bookId)
         {
-            var comments = await _commentService.GetForBook(bookId);
+            var comments = await _sender.Send(new GetCommentsForBookQuery(bookId));
             return Ok(comments);
         }
 
@@ -70,7 +76,7 @@ namespace Librium.Presentation.Controllers
         public async Task<IActionResult> Update(Guid commentId, [FromBody] CommentDto dto)
         {
             var userId = GetUserId();
-            var updateResult = await _commentService.Update(commentId, userId, dto);
+            var updateResult = await _sender.Send(new UpdateCommentCommand(commentId, userId, dto));
 
             return updateResult.IsSuccess
                 ? NoContent()
@@ -82,7 +88,7 @@ namespace Librium.Presentation.Controllers
         public async Task<IActionResult> Reaction(Guid commentId, [FromBody] ReactToCommentRequest request)
         {
             var userId = GetUserId();
-            var reacttionResult = await _commentService.React(commentId, userId, request.ReactionType);
+            var reacttionResult = await _sender.Send(new ReactToCommentCommand(commentId, userId, request.ReactionType));
 
             return reacttionResult.IsSuccess
                 ? NoContent()
