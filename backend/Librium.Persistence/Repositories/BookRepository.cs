@@ -13,10 +13,9 @@ public class BookRepository : IBookRepository
         _context = context;
     }
 
-    public async Task<Book> AddBook(Book book)
+    public void Add(Book book)
     {
-        var result = await _context.Books.AddAsync(book);
-        return result.Entity;
+        _context.Books.Add(book);
     }
 
     public void Delete(Book entity)
@@ -54,8 +53,7 @@ public class BookRepository : IBookRepository
             .FirstOrDefaultAsync(b => b.Id == bookId);
     }
 
-
-    public async Task<bool> SaveChanges()
+    public async Task<bool> SaveChangesAsync()
     {
         return await _context.SaveChangesAsync() > 0;
     }

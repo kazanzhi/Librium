@@ -26,8 +26,8 @@ public sealed class CreateBookCommandHandler : IRequestHandler<CreateBookCommand
 
         var book = bookResult.Value!;
 
-        await _repo.AddBook(book);
-        await _repo.SaveChanges();
+        _repo.Add(book);
+        await _repo.SaveChangesAsync();
 
         return ValueOrResult<Guid>.Success(book.Id);
     }

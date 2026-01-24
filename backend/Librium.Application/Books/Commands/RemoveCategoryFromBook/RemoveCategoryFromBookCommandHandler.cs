@@ -28,7 +28,7 @@ public sealed class RemoveCategoryFromBookCommandHandler : IRequestHandler<Remov
         if (!addResult.IsSuccess)
             return ValueOrResult.Failure(addResult.ErrorMessage!);
 
-        await _bookRepo.SaveChanges();
+        await _bookRepo.SaveChangesAsync();
 
         return ValueOrResult.Success();
     }

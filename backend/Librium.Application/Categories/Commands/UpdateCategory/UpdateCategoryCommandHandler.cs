@@ -24,7 +24,7 @@ public sealed class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategor
         if (!updateResult.IsSuccess)
             return ValueOrResult.Failure(updateResult.ErrorMessage!);
 
-        await _repo.SaveChanges();
+        await _repo.SaveChangesAsync();
 
         return ValueOrResult.Success();
     }

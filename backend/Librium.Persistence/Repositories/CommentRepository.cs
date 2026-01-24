@@ -31,7 +31,7 @@ public class CommentRepository : ICommentRepository
             .FirstOrDefaultAsync(c => c.Id == commentId);
     }
 
-    public void Remove(Comment comment)
+    public void Delete(Comment comment)
     {
         _context.Comments.Remove(comment);
     }

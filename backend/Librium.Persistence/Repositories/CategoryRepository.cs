@@ -13,11 +13,9 @@ public class CategoryRepository : ICategoryRepository
         _context = context;
     }
 
-    public async Task<Category> AddBookCategory(Category category)
+    public void Add(Category category)
     {
-        var result = await _context.Categories.AddAsync(category);
-
-        return result.Entity;
+        _context.Categories.Add(category);
     }
 
     public void Delete(Category entity)
@@ -43,7 +41,7 @@ public class CategoryRepository : ICategoryRepository
             .FindAsync(categoryId);
     }
 
-    public async Task<bool> SaveChanges()
+    public async Task<bool> SaveChangesAsync()
     {
         return await _context.SaveChangesAsync() > 0;
     }

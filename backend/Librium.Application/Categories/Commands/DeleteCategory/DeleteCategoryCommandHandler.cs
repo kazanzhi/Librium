@@ -18,7 +18,7 @@ public sealed class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategor
             return ValueOrResult.Failure("Category not found.");
 
         _repo.Delete(category);
-        await _repo.SaveChanges();
+        await _repo.SaveChangesAsync();
 
         return ValueOrResult.Success();
     }

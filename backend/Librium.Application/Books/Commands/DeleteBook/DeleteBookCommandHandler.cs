@@ -18,7 +18,7 @@ public sealed class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand
             return ValueOrResult.Failure("Book not found.");
 
         _repo.Delete(book);
-        await _repo.SaveChanges();
+        await _repo.SaveChangesAsync();
 
         return ValueOrResult.Success();
     }

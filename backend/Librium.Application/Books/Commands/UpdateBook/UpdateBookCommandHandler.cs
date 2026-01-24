@@ -29,7 +29,7 @@ public sealed class UpdateBookCommandHandler : IRequestHandler<UpdateBookCommand
         if (!updatedResult.IsSuccess)
             return ValueOrResult.Failure(updatedResult.ErrorMessage!);
 
-        await _repo.SaveChanges();
+        await _repo.SaveChangesAsync();
 
         return ValueOrResult.Success();
     }

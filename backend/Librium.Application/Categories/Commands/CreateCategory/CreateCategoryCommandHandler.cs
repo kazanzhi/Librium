@@ -26,8 +26,8 @@ public sealed class CreateCategoryCommandHandler : IRequestHandler<CreateCategor
 
         var category = categoryResult.Value;
 
-        await _repo.AddBookCategory(category);
-        await _repo.SaveChanges();
+        _repo.Add(category);
+        await _repo.SaveChangesAsync();
 
         return ValueOrResult<Guid>.Success(category.Id);
     }

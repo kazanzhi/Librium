@@ -1,11 +1,11 @@
-﻿using Librium.Domain.Common.Repositories;
+﻿namespace Librium.Domain.Categories.Repositories;
 
-namespace Librium.Domain.Categories.Repositories;
-
-public interface ICategoryRepository : IBaseRepository<Category>
+public interface ICategoryRepository
 {
     Task<Category?> GetBookCategoryByIdAsync(Guid categoryId);
     Task<IReadOnlyList<Category>> GetAllBookCategoriesAsync();
-    Task<Category> AddBookCategory(Category category);
     Task<Category?> GetByNameAsync(string category);
+    Task<bool> SaveChangesAsync();
+    void Add(Category category);
+    void Delete(Category category);
  }
