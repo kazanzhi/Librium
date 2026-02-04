@@ -13,7 +13,7 @@ public sealed class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategor
     }
     public async Task<ValueOrResult> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
     {
-        var category = await _repo.GetBookCategoryByIdAsync(request.CategoryId);
+        var category = await _repo.GetCategoryByIdAsync(request.CategoryId);
         if (category is null)
             return ValueOrResult.Failure("Category not found.");
 

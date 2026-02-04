@@ -20,7 +20,7 @@ public sealed class RemoveCategoryFromBookCommandHandler : IRequestHandler<Remov
         if (book is null)
             return ValueOrResult.Failure("Book not found.");
 
-        var category = await _categoryRepo.GetBookCategoryByIdAsync(request.CategoryId);
+        var category = await _categoryRepo.GetCategoryByIdAsync(request.CategoryId);
         if (category is null)
             return ValueOrResult.Failure($"Category not found.");
 

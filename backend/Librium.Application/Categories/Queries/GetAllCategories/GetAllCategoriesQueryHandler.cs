@@ -13,7 +13,7 @@ public sealed class GetAllCategoriesQueryHandler : IRequestHandler<GetAllCategor
     }
     public async Task<IReadOnlyList<CategoryResponseDto>> Handle(GetAllCategoriesQuery request, CancellationToken cancellationToken)
     {
-        var categories = await _repo.GetAllBookCategoriesAsync();
+        var categories = await _repo.GetAllCategoriesAsync();
 
         return categories.Select(category => new CategoryResponseDto
         {
