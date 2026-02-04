@@ -13,8 +13,8 @@ public class Category
         if (string.IsNullOrWhiteSpace(name))
             return ValueOrResult<Category>.Failure("Category name is required.");
 
-        if (name.Length > 100)
-            return ValueOrResult<Category>.Failure("Category name cannot exceed 100 characters.");
+        if (name.Length > 50)
+            return ValueOrResult<Category>.Failure("Category name cannot exceed 50 characters.");
 
         var category = new Category
         {
@@ -30,8 +30,8 @@ public class Category
         if (string.IsNullOrWhiteSpace(name))
             return ValueOrResult.Failure("Category name is required.");
 
-        if (name.Length > 100)
-            return ValueOrResult<Category>.Failure("Category name cannot exceed 100 characters.");
+        if (name.Length > 50)
+            return ValueOrResult<Category>.Failure("Category name cannot exceed 50 characters.");
 
         Name = name.Trim();
 

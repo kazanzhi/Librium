@@ -1,6 +1,4 @@
-﻿using Librium.Application.Categories.DTOs;
-using Librium.Domain.Categories;
-using Librium.Domain.Categories.Repositories;
+﻿using Librium.Domain.Categories.Repositories;
 using Librium.Domain.Common;
 using MediatR;
 
@@ -16,7 +14,7 @@ public sealed class UpdateCategoryCommandHandler : IRequestHandler<UpdateCategor
 
     public async Task<ValueOrResult> Handle(UpdateCategoryCommand request, CancellationToken cancellationToken)
     {
-        var category = await _repo.GetBookCategoryByIdAsync(request.CategoryId);
+        var category = await _repo.GetCategoryByIdAsync(request.CategoryId);
         if (category is null)
             return ValueOrResult.Failure("Category not found.");
 

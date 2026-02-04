@@ -2,8 +2,8 @@
 
 public interface ICategoryRepository
 {
-    Task<Category?> GetBookCategoryByIdAsync(Guid categoryId);
-    Task<IReadOnlyList<Category>> GetAllBookCategoriesAsync();
+    Task<Category?> GetCategoryByIdAsync(Guid categoryId);
+    Task<IReadOnlyList<Category>> GetAllCategoriesAsync();
     Task<Category?> GetByNameAsync(string category);
     Task<bool> SaveChangesAsync();
     void Add(Category category);

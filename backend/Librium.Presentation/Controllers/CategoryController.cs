@@ -37,11 +37,11 @@ public class CategoryController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> GetById(Guid Id)
     {
-        var category = await _sender.Send(new GetCategoryByIdQuery(Id));
+        var result = await _sender.Send(new GetCategoryByIdQuery(Id));
 
-        return category is null 
-            ? NotFound() 
-            : Ok(category);
+        return result.IsSuccess
+            ? Ok(result.Value)
+            : NotFound(result.ErrorMessage);
     }
 
     [HttpDelete("{Id:guid}")]

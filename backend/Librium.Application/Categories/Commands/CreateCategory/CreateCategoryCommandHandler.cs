@@ -1,5 +1,4 @@
-﻿using Librium.Application.Categories.DTOs;
-using Librium.Domain.Categories;
+﻿using Librium.Domain.Categories;
 using Librium.Domain.Categories.Repositories;
 using Librium.Domain.Common;
 using MediatR;

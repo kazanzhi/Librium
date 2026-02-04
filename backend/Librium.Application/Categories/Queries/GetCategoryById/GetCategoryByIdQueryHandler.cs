@@ -1,11 +1,11 @@
 ﻿using Librium.Application.Categories.DTOs;
-using Librium.Domain.Categories;
 using Librium.Domain.Categories.Repositories;
+using Librium.Domain.Common;
 using MediatR;
 
 namespace Librium.Application.Categories.Queries.GetCategoryById;
 
-public sealed class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery, CategoryResponseDto>
+public sealed class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByIdQuery, ValueOrResult<CategoryResponseDto>>
 {
     private readonly ICategoryRepository _repo;
     public GetCategoryByIdQueryHandler(ICategoryRepository repo)
@@ -13,14 +13,17 @@ public sealed class GetCategoryByIdQueryHandler : IRequestHandler<GetCategoryByI
         _repo = repo;
     }
 
-    public async Task<CategoryResponseDto> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
+    public async Task<ValueOrResult<CategoryResponseDto>> Handle(GetCategoryByIdQuery request, CancellationToken cancellationToken)
     {
-        var category = await _repo.GetBookCategoryByIdAsync(request.Id);
+        var category = await _repo.GetCategoryByIdAsync(request.Id);
 
-        return new CategoryResponseDto
+        if (category is null)
+            return ValueOrResult<CategoryResponseDto>.Failure("Category not found.");
+
+        return ValueOrResult<CategoryResponseDto>.Success(new CategoryResponseDto
         {
-            Id = category!.Id,
-            Name = category.Name
-        };
+            Id = category.Id,
+            Name = category.Name,
+        });
     }
 }

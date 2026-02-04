@@ -28,8 +28,6 @@
   <ItemGroup>
     <Folder Include="Application\Books\Commands\" />
     <Folder Include="Application\Books\Queries\" />
-    <Folder Include="Application\Categories\Commands\" />
-    <Folder Include="Application\Categories\Queries\" />
   </ItemGroup>
 
 </Project>

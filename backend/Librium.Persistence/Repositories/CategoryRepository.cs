@@ -29,13 +29,13 @@ public class CategoryRepository : ICategoryRepository
             .FirstOrDefaultAsync(c => c.Name == name);
     }
 
-    public async Task<IReadOnlyList<Category>> GetAllBookCategoriesAsync()
+    public async Task<IReadOnlyList<Category>> GetAllCategoriesAsync()
     {
         return await _context.Categories
             .ToListAsync();
     }
 
-    public async Task<Category?> GetBookCategoryByIdAsync(Guid categoryId)
+    public async Task<Category?> GetCategoryByIdAsync(Guid categoryId)
     {
         return await _context.Categories
             .FindAsync(categoryId);
