@@ -59,7 +59,7 @@ public class UpdateCategoryCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handle_ShouldFail_WhenCategoryUpdateIsInvalid()
+    public async Task Handle_ShouldFail_WhenDtoIsInvalid()
     {
         //arrange
         var category = Category.Create("Test").Value!;

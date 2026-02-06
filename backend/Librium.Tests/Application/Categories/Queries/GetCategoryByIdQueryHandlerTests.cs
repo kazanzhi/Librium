@@ -10,7 +10,7 @@ namespace Librium.Tests.Application.Categories.Queries;
 public class GetCategoryByIdQueryHandlerTests
 {
     [Fact]
-    public async Task Handle_ShouldReturnMappedCategory_WhenCategoryExist()
+    public async Task Handle_ShouldReturnMappedCategory_WhenCategoryExists()
     {
         //arrange
         var category = Category.Create("Science").Value!;
