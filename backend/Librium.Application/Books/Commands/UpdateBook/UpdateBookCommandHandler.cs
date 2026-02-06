@@ -1,5 +1,4 @@
-﻿using Librium.Application.Books.DTOs;
-using Librium.Domain.Books.Repositories;
+﻿using Librium.Domain.Books.Repositories;
 using Librium.Domain.Common;
 using MediatR;
 
