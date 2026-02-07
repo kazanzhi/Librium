@@ -1,5 +1,4 @@
 ﻿using Librium.Application.Books.DTOs;
-using Librium.Domain.Common;
 using MediatR;
 
 namespace Librium.Application.Libraries.Queries.GetUserLibrary;
