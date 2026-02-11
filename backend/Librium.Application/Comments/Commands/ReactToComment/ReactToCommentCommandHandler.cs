@@ -1,5 +1,4 @@
-﻿using Librium.Domain.Comments.Enums;
-using Librium.Domain.Comments.Repositories;
+﻿using Librium.Domain.Comments.Repositories;
 using Librium.Domain.Common;
 using MediatR;
 

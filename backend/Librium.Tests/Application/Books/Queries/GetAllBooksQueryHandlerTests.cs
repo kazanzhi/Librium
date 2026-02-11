@@ -5,7 +5,6 @@ using Librium.Application.Categories.DTOs;
 using Librium.Domain.Books;
 using Librium.Domain.Books.Repositories;
 using Moq;
-using System.Net;
 
 namespace Librium.Tests.Application.Books.Queries;
 
